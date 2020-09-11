@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fragment_add_1">
+
+    <fragment
+        android:id="@+id/fragment_add_1"
+        android:name="com.mozzarelly.cbthelper.AddEntry1Fragment"
+        android:label="@string/first_fragment_label"
+        tools:layout="@layout/fragment_add_1_situation">
+
+        <action
+            android:id="@+id/action_add_frag1_to_frag2"
+            app:destination="@id/fragment_add_2" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_add_2"
+        android:name="com.mozzarelly.cbthelper.AddEntry2Fragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second">
+
+        <action
+            android:id="@+id/action_add_frag2_to_frag1"
+            app:destination="@id/fragment_add_1" />
+
+        <action
+            android:id="@+id/action_add_frag2_to_frag3"
+            app:destination="@id/fragment_add_3" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_add_3"
+        android:name="com.mozzarelly.cbthelper.AddEntry3Fragment"
+        android:label="@string/second_fragment_label"
+        tools:layout="@layout/fragment_second">
+
+        <action
+            android:id="@+id/action_add_frag3_to_frag2"
+            app:destination="@id/fragment_add_1" />
+
+<!--        <action-->
+<!--            android:id="@+id/action_SecondFragment_to_FirstFragment"-->
+<!--            app:destination="@id/fragment_add_1" />-->
+    </fragment>
+</navigation>
