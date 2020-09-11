@@ -1,11 +1,14 @@
 package com.mozzarelly.cbthelper
 
+import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -93,4 +96,5 @@ abstract class AddEntryFragment(private val viewModel: EditEntryViewModel) : Fra
             isEnabled = it != null && it.toString().isNotBlank()
         }
     }
+
 }

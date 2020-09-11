@@ -51,7 +51,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/readMore"
-        android:inputType="textMultiLine|textCapSentences"
+        android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
         android:textIsSelectable="true"
         android:longClickable="true"
         android:focusable="true"

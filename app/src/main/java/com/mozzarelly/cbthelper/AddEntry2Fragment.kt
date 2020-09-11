@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import com.mozzarelly.cbthelper.databinding.FragmentAdd2ExperienceBinding
 
 class AddEntry2Fragment(private val viewModel: EditEntryViewModel) : AddEntryFragment(viewModel) {
@@ -37,6 +39,7 @@ class AddEntry2Fragment(private val viewModel: EditEntryViewModel) : AddEntryFra
                             emotionGroups.setSelection(0)
                             emotions.setSelection(0)
                             writeIn.setText("")
+                            hideKeyboard()
                             true
                         }
                         else {

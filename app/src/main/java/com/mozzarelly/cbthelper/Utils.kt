@@ -1,5 +1,6 @@
 package com.mozzarelly.cbthelper
 
+import android.app.Activity
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -15,8 +16,10 @@ import java.util.*
 
 import android.os.Binder
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.BundleCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -287,3 +290,20 @@ fun Context.doAfterConfirm(message: Int, ok: Int = R.string.ok, cancel: Int = R.
         .create()
         .show()
 }
+
+fun Activity.hideKeyboard() {
+    currentFocus?.let {
+        val imm =
+            ContextCompat.getSystemService(this, InputMethodManager::class.java)
+        imm?.hideSoftInputFromWindow(it.windowToken, 0)
+    }
+}
+
+fun Fragment.hideKeyboard() {
+    activity?.currentFocus?.let {
+        val imm =
+            ContextCompat.getSystemService(requireActivity(), InputMethodManager::class.java)
+        imm?.hideSoftInputFromWindow(it.windowToken, 0)
+    }
+}
+

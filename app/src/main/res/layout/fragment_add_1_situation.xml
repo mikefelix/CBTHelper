@@ -96,12 +96,13 @@
         app:layout_constraintBottom_toTopOf="@id/textView3"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:inputType="textMultiLine|textCapSentences"
+        android:inputType="textCapSentences|textAutoCorrect"
         android:textIsSelectable="true"
         android:longClickable="true"
         android:focusable="true"
         android:gravity="start|top"
         android:importantForAutofill="no"
+        android:imeOptions="actionDone"
         />
 
     <TextView
