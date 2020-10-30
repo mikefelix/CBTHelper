@@ -1,8 +1,8 @@
 package com.mozzarelly.cbthelper
 
 object Emotions {
-    val emotionGroups = arrayOf("- Select -", "Fear", "Anger", "Sadness", "Shame", "Disgust", "Surprise", "Low energy",
-        "Joy", "Love", "Worth", "Confidence", "Other")
+    val emotionGroups = arrayOf("- Select -", "Fear-type", "Anger-type", "Sadness-type", "Shame-type", "Disgust-type", "Surprise-type", "Low-energy-type",
+        "Joy-type", "Love-type", "Worth-type", "Confidence-type", "Other")
 
     val emotions = arrayOf(
         arrayOf("- Select -"),

@@ -1,26 +1,32 @@
-@file:Suppress("EXPERIMENTAL_API_USAGE")
+@file:Suppress("EXPERIMENTAL_API_USAGE", "EXPERIMENTAL_OVERRIDE")
 
-package com.mozzarelly.cbthelper
+package com.mozzarelly.cbthelper.editentry
 
-import androidx.lifecycle.*
-import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.asFlow
+import android.os.Handler
+import android.os.Looper
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.mozzarelly.cbthelper.*
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDateTime
 
-class EditEntryViewModel(private val numPages: Int, private val dao: EntryDao) : ViewModel(), EntryModel {
+class EditEntryViewModel : PagingViewModel(), EntryModel {
+
+    val dao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
 
     fun loadNewEntry() {
         viewModelScope.launch {
             dao.deleteIncomplete()
             copyFrom(createAndLoadNew())
+            changePage(1)
         }
     }
 
     fun loadEntryInProgress(){
         viewModelScope.launch {
-            val entry = dao.getIncompleteAsync() ?: createAndLoadNew()
+            val entry = dao.getIncomplete() ?: createAndLoadNew()
             copyFrom(entry)
             changePage(when {
                 situation.isNullOrBlank() -> 1
@@ -37,6 +43,7 @@ class EditEntryViewModel(private val numPages: Int, private val dao: EntryDao) :
     fun loadEntry(id: Int) {
         viewModelScope.launch {
             copyFrom(dao.get(id))
+            changePage(1)
         }
     }
 
@@ -60,7 +67,7 @@ class EditEntryViewModel(private val numPages: Int, private val dao: EntryDao) :
         }
 
     val idValue = MutableLiveData<Int>()
-    val situationTypeValue = MutableLiveData<Boolean>(false)
+    val situationTypeValue = MutableLiveData(false)
     val situationValue = MutableLiveData<String?>()
     val situationDetailValue = MutableLiveData<String?>()
 
@@ -75,7 +82,9 @@ class EditEntryViewModel(private val numPages: Int, private val dao: EntryDao) :
     val relationshipsValue = MutableLiveData<String?>()
     val assumptionsValue = MutableLiveData<String?>()
 
-    val emotionsChosenValue = Triple(emotion1Value, emotion2Value, emotion3Value).map { e1, e2, e3 -> emotionText(e1, e2, e3) }
+    val emotionsChosenValue = Triple(emotion1Value, emotion2Value, emotion3Value).map { e1, e2, e3 ->
+        emotionText(e1, e2, e3)
+    }
 
 //    val canAddEmotions = emotion3Value.map { it == null }
     val canAddEmotions = MediatorLiveData<Boolean>().apply {
@@ -84,24 +93,21 @@ class EditEntryViewModel(private val numPages: Int, private val dao: EntryDao) :
         }
     }
 
-    var page = MutableLiveData<Pair<Int, Int?>>(Pair(1, null))
-
-    private val changingPageChannel = BroadcastChannel<Pair<Int, Int?>>(Channel.BUFFERED)
-    val changingPage = changingPageChannel.asFlow()
-
     val selectedEmotionGroupIndex = MutableLiveData(0)
     val selectedEmotionIndex = MutableLiveData(0).apply {
-        observeForever {
-            val emotion = it.takeIf { it > 0 }?.let { Emotions.emotions[selectedEmotionGroupIndex.valueNotNull()][it] }
-            val liveData = when {
-                emotion3Value.value != null -> null
-                emotion2Value.value != null -> emotion3Value
-                emotion1Value.value != null -> emotion2Value
-                else -> emotion1Value
-            }
+        Handler(Looper.getMainLooper()).post {
+            observeForever {
+                val emotion = it.takeIf { it > 0 }?.let { Emotions.emotions[selectedEmotionGroupIndex.valueNotNull()][it] }
+                val liveData = when {
+                    emotion3Value.value != null -> null
+                    emotion2Value.value != null -> emotion3Value
+                    emotion1Value.value != null -> emotion2Value
+                    else -> emotion1Value
+                }
 
-            if (liveData != null && emotion != liveData.value){
-                liveData.value = emotion
+                if (liveData != null && emotion != liveData.value){
+                    liveData.value = emotion
+                }
             }
         }
     }
@@ -151,34 +157,16 @@ class EditEntryViewModel(private val numPages: Int, private val dao: EntryDao) :
 
     private fun <T> LiveData<T>.valueNotNull() = value!!
 
-    fun save() {
+    override val title: LiveData<String?> = Pair(completeValue, page).map { complete, page ->
+        if (complete)
+            "Completed entry"
+        else
+            "Add entry - ${page.first}/$numPages"
+    }
+
+    override fun save() {
         viewModelScope.launch {
             dao.update(Entry.from(this@EditEntryViewModel))
-        }
-    }
-
-    private val currPage: Int
-        get() = page.value?.first ?: 1
-
-    fun previousPage(){
-        changePage(currPage - 1)
-        save()
-    }
-
-    fun nextPage(){
-        changePage(currPage + 1)
-        save()
-    }
-
-    private fun changePage(newPage: Int){
-        val oldPage = currPage
-        val anim = newPage.compareTo(currPage)
-
-        Pair(newPage.coerceAtLeast(1).coerceAtMost(numPages), anim).let {
-            page.value = it
-
-            if (it.first != oldPage)
-                changingPageChannel.offer(it)
         }
     }
 

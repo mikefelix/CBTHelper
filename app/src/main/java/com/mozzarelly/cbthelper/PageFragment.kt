@@ -1,33 +1,27 @@
+@file:Suppress("EXPERIMENTAL_API_USAGE")
+
 package com.mozzarelly.cbthelper
 
-import android.app.Activity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.RadioButton
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.mozzarelly.cbthelper.editentry.AddEntryActivity
+import com.mozzarelly.cbthelper.editentry.EditEntryViewModel
 
-abstract class AddEntryFragment(private val viewModel: EditEntryViewModel) : Fragment() {
+abstract class PageFragment<V: PagingViewModel>() : CBTFragment() {
+    abstract val viewModel: V
 
     protected val act by lazy {
-        requireActivity() as AddEntryActivity
-    }
-
-    fun <T: View, R> LiveData<R>.showValueIn(view: T, transform: ((R?) -> String?) = { it?.toString() }){
-        observe(viewLifecycleOwner, Observer {
-            when (view){
-                is TextView -> view.text = transform(value)
-                is CheckBox -> view.isChecked = value.toBoolean()
-                else -> error("Can't support ${view::class.qualifiedName}")
-            }
-        })
+        @Suppress("UNCHECKED_CAST")
+        requireActivity() as CBTActivity<V>
     }
 
     val updateOps = mutableListOf<() -> Unit>()
@@ -48,14 +42,31 @@ abstract class AddEntryFragment(private val viewModel: EditEntryViewModel) : Fra
         viewModel.nextPage()
     }
 
-    inline fun <reified V: View, reified T: Any?> V.bindTo(liveData: MutableLiveData<T>){
+    protected fun <T: Any?> Button.enableWhenHasValue(value: LiveData<T>) {
+        viewLifecycleOwner.observe(value){
+            isEnabled = it != null && it.toString().isNotBlank()
+        }
+    }
+
+    inline fun <reified V: View, reified T: Any?> V.bindTo(liveData: MutableLiveData<T>, text: Int? = null, value: Any? = null){
         when (this) {
-            is CheckBox -> //updateOps += { liveData.value = isChecked as T }
+            is RadioButton -> { //updateOps += { liveData.value = isChecked as T }
+                text?.let { this.text = getString(it) }
+                this.setTag(value)
+                this.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked && value != liveData.value)
+                        liveData.value = (value as? T) ?: error("Need value for radio")
+                }
+            }
+            is CheckBox -> {//updateOps += { liveData.value = isChecked as T }
+                text?.let { this.text = getString(it) }
                 this.setOnCheckedChangeListener { _, isChecked ->
                     if (isChecked != liveData.value)
                         liveData.value = isChecked as T
                 }
-            is TextView -> //updateOps += { liveData.value = text.toString() as T }
+            }
+            is TextView -> {//updateOps += { liveData.value = text.toString() as T }
+                text?.let { this.text = getString(it) }
                 this.addTextChangedListener(object: TextWatcher {
                     override fun afterTextChanged(s: Editable?) {}
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -65,12 +76,16 @@ abstract class AddEntryFragment(private val viewModel: EditEntryViewModel) : Fra
                             liveData.value = new as T
                     }
                 })
-
+            }
             else -> error("Can't handle ${this::class.java.name} && ${T::class.java.name}")
         }
 
         liveData.observe(viewLifecycleOwner, Observer { new ->
             when (this){
+                is RadioButton -> (new as? Int).let {
+                    if (this.getTag() == it)
+                        this.isChecked = true
+                }
                 is CheckBox -> new.toBoolean().let {
                     if (this.isChecked != it)
                         this.isChecked = it
@@ -83,18 +98,4 @@ abstract class AddEntryFragment(private val viewModel: EditEntryViewModel) : Fra
             }
         })
     }
-
-    fun <T: Any?> T?.toBoolean(): Boolean = when (this){
-        null -> false
-        true -> true
-        "true" -> true
-        else -> false
-    }
-
-    protected fun <T: Any?> Button.enableWhenHasValue(value: LiveData<T>) {
-        viewLifecycleOwner.observe(value){
-            isEnabled = it != null && it.toString().isNotBlank()
-        }
-    }
-
 }

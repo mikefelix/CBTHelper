@@ -169,13 +169,13 @@ inline fun <reified A, reified B, R> Pair<LiveData<A>, LiveData<B>>.flatMap(cros
 }
 
 inline fun <reified A, reified B, reified C, R> Triple<LiveData<A>, LiveData<B>, LiveData<C>>.map(crossinline convert: (A, B, C) -> R): LiveData<R> = MediatorLiveData<R>().apply {
-    addSource<A>(first) {
+    addSource(first) {
         value = convert(first.data(), second.data(), third.data())
     }
-    addSource<B>(second) {
+    addSource(second) {
         value = convert(first.data(), second.data(), third.data())
     }
-    addSource<C>(third) {
+    addSource(third) {
         value = convert(first.data(), second.data(), third.data())
     }
 }

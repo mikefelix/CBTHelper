@@ -5,7 +5,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddEntry1Fragment"
+    tools:context=".editentry.AddEntry1Fragment"
     >
 
     <TextView
@@ -20,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/textView1"
         app:layout_constraintVertical_chainStyle="spread_inside"
+        android:visibility="gone"
         tools:ignore="HardcodedText"
         />
 
@@ -31,7 +32,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="How did the way you expressed/hid your emotions affect the people around you? In other words, how did they respond to what you said and did?"
+        android:text="@string/relationshipsQuestion"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,6 +57,7 @@
         android:textIsSelectable="true"
         android:longClickable="true"
         android:focusable="true"
+        android:hint="@string/relationshipsHint"
         />
 
     <include

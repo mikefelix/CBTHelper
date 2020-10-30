@@ -1,4 +1,4 @@
-package com.mozzarelly.cbthelper
+package com.mozzarelly.cbthelper.viewentries
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,27 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.*
+import com.mozzarelly.cbthelper.*
+import com.mozzarelly.cbthelper.analyze.AnalyzeEntryActivity
+import com.mozzarelly.cbthelper.editentry.AddEntryActivity
 import kotlinx.android.synthetic.main.activity_view_entries.*
-import kotlinx.coroutines.launch
 import org.threeten.bp.format.DateTimeFormatter
-import java.text.SimpleDateFormat
-import java.util.*
 
 
-class ViewEntriesActivity : AppCompatActivity() {
-
-    private val dao: EntryDao by lazy { CBTDatabase.getEntryDao(this) }
-
-    private lateinit var viewModel: EntriesViewModel
-
-    private val viewModelProvider = viewModelProviderFactory {
-        EntriesViewModel(dao)
-    }
+class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +28,7 @@ class ViewEntriesActivity : AppCompatActivity() {
 
         title = "Completed entries"
 
-        viewModel = viewModelProvider.get()
+        viewModel.loadEntries()
 
         fab.setOnClickListener {
             startActivity(Intent(this, AddEntryActivity::class.java))
@@ -53,7 +42,7 @@ class ViewEntriesActivity : AppCompatActivity() {
                 setOnItemClickListener(object : EntryAdapter.OnItemClickListener {
                     override fun onItemClick(entry: Entry?) {
                         entry?.id ?: return
-                        startActivity(Intent(this@ViewEntriesActivity, AddEntryActivity::class.java)
+                        startActivity(Intent(this@ViewEntriesActivity, AnalyzeEntryActivity::class.java)
                             .putExtra("id", entry.id)
                         )
                     }
@@ -76,6 +65,16 @@ class ViewEntriesActivity : AppCompatActivity() {
             }))
         }
     }
+
+//    override fun getActivityViewModel() = viewModelProvider.getAndInit<EntriesViewModel>()
+    override val viewModel: EntriesViewModel by viewModels { viewModelProvider }
+
+    override fun onSupportNavigateUp(): Boolean {
+//        onBackPressed()
+        finish()
+        return true
+    }
+
 }
 
 fun RecyclerView.attachHelper(helper: ItemTouchHelper) {
@@ -100,13 +99,18 @@ class EntryAdapter : ListAdapter<Entry, EntryAdapter.EntryListItemHolder?>(DIFF_
     fun getEntryAt(position: Int): Entry = getItem(position)
 
     inner class EntryListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val textViewTitle: TextView = itemView.findViewById(R.id.firstLine)
-        private val textViewSubtitle: TextView = itemView.findViewById(R.id.secondLine)
+        private val title: TextView = itemView.findViewById(R.id.firstLine)
+        private val subtitle: TextView = itemView.findViewById(R.id.secondLine)
 
         @SuppressLint("SetTextI18n")
         fun bind(entry: Entry){
-            textViewTitle.text = """A ${if (entry.situationType) "situation" else "conversation"} at ${formatter.format(entry.date)}"""
-            textViewSubtitle.text = """You felt ${emotionText(entry.emotion1, entry.emotion2, entry.emotion3)?.toLowerCase(Locale.US) ?: " emotions"}."""
+            if (entry.situationType)
+                title.text = "A situation at ${entry.situationDetail}"
+            else
+                title.text = "A conversation with ${entry.situationDetail}"
+
+            //emotions.text = """You felt ${emotionText(entry.emotion1, entry.emotion2, entry.emotion3)?.toLowerCase(Locale.US) ?: " emotions"}."""
+            subtitle.text = formatter.format(entry.date)
 
             itemView.setOnClickListener {
                 val position = adapterPosition
@@ -132,28 +136,3 @@ class EntryAdapter : ListAdapter<Entry, EntryAdapter.EntryListItemHolder?>(DIFF_
     }
 }
 
-class EntriesViewModel(private val dao: EntryDao) : ViewModel() {
-
-    val allEntries = dao.getAllComplete()
-
-    val incompleteEntry = dao.getIncomplete()
-
-    fun delete(entry: Entry) {
-        viewModelScope.launch {
-            dao.delete(entry.id)
-        }
-    }
-
-}
-
-inline fun <T> MutableList<T>.removeWhere(filter: (T) -> Boolean): Boolean {
-    var removed = false
-    val each = iterator()
-    while (each.hasNext()) {
-        if (filter(each.next())) {
-            each.remove()
-            removed = true
-        }
-    }
-    return removed
-}

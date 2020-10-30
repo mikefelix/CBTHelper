@@ -15,9 +15,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:text="CBT Helper"
-            app:itemBackground="@color/colorPrimary"
+            app:itemBackground="@color/colorPrimaryDark"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             />
 
@@ -51,31 +51,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/continueButton"
-            />
-
-
-        <Button
-            android:id="@+id/continueButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Continue entry"
-            android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/message"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/addButton"
-            tools:visibility="visible"
             />
+
 
         <Button
             android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Add an entry"
-            app:layout_constraintTop_toBottomOf="@id/continueButton"
+            android:text="Create an entry"
+            app:layout_constraintTop_toBottomOf="@id/message"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@id/viewButton"

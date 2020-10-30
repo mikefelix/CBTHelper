@@ -5,7 +5,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddEntry1Fragment"
+    tools:context=".editentry.AddEntry1Fragment"
     >
 
     <TextView
@@ -20,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/textView1"
         app:layout_constraintVertical_chainStyle="spread_inside"
+        android:visibility="gone"
         tools:ignore="HardcodedText"
         />
 
@@ -28,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="What were you thinking that led you to feel that way?"
+        android:text="@string/thoughtsQuestion"
         android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -56,6 +57,7 @@
         android:textIsSelectable="true"
         android:longClickable="true"
         android:focusable="true"
+        android:hint="@string/thoughtsHint"
         />
 
     <include

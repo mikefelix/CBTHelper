@@ -31,9 +31,93 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="discard">Discard</string>
     <string name="cancel">Cancel</string>
-    <string name="discardConfirmMsg">Discard the entry already in progress?</string>
+    <string name="discardConfirmMsg">Continue the entry in progress or start a new one?</string>
     <string name="situationQuestion">Where did it take place?</string>
     <string name="conversationQuestion">Who else was involved?</string>
     <string name="ok">OK</string>
     <string name="deleteConfirm">Delete last entered emotion?</string>
+    <string name="continueButton">Continue</string>
+    <string name="newEntryButton">Start new</string>
+
+    <string name="thoughtsQuestion">What were you thinking that led you to feel that way?</string>
+    <string name="thoughtsHint">Add your thoughts here. Please write only thoughts you had during this situation (or conversation), not what you think about it now.</string>
+
+    <string name="expressionQuestion">What did you do and say that showed the emotions you felt?</string>
+    <string name="expressionHint">For example, “I cried”, or “I yelled at…”</string>
+
+    <string name="relationshipsQuestion">How did the way you showed your emotions affect other people? How did they respond to what you said and did?</string>
+    <string name="relationshipsQuestionBottled">How did the way you hid your emotions affect other people?</string>
+    <string name="relationshipsHint"></string>
+
+    <string name="validityIntro1">Please answer the following questions about these thoughts. No one will see your answers except you, so be as honest as you can.</string>
+    <string name="validityIntro2">You wrote that your thoughts were:</string>
+    <string name="validityQuestion1">Were these thoughts based on facts, or did they stem from your mood and how you were feeling at the time?</string>
+    <string name="validityAnswer1A">My thoughts came mostly from the facts of the situation.</string>
+    <string name="validityAnswer1B">My thoughts came mostly from my emotions/mood at the time.</string>
+    <string name="validityQuestion2">When you had these thoughts, were you looking for information or confirmation? In other words, were you considering all of the facts of the situation, or just those that confirmed what you already believed or wanted to believe?</string>
+    <string name="validityAnswer2A">I was looking for confirmation of what I already believed.</string>
+    <string name="validityAnswer2B">I was looking for confirmation of what I wanted to believe.</string>
+    <string name="validityAnswer2C">I was looking for information and considering honestly all the facts of the situation.</string>
+    <string name="validityQuestion3">Were your thoughts wrong? For example, did you misunderstand the situation or accidentally perceive the meaning of it incorrectly?</string>
+    <string name="validityAnswer3A">Yes</string>
+    <string name="validityAnswer3B">Probably</string>
+    <string name="validityAnswer3C">No</string>
+    <string name="validityQuestion4A">What evidence is there that your thoughts were accurate / true?</string>
+    <string name="validityQuestion4B">What evidence is there that your thoughts were inaccurate / untrue?</string>
+    <string name="validityQuestion5">Did your thoughts realistically match the evidence?</string>
+    <string name="validityAnswer5A">No, because:</string>
+    <string name="validityAnswer5A1">I exaggerated in my mind how bad things actually were. I blew it out of proportion. </string>
+    <string name="validityAnswer5A2">I exaggerated in my mind how good things actually were. I made a bigger deal out it than it really deserved.</string>
+    <string name="validityAnswer5A3">I minimized, downplayed, or ignored things as they actually were. I made a smaller deal out it than it really deserved.</string>
+    <string name="validityAnswer5A4">I assumed I knew what was going to happen without recognizing that I could be wrong (fortune-telling).</string>
+    <string name="validityAnswer5A5">I assumed that because it could happen it likely would happen.</string>
+    <string name="validityAnswer5B">Yes, my thoughts accurately matched the evidence and facts I had at the time.</string>
+    <string name="validityQuestion6">Did you have these thoughts out of habit? Out of personal bias? Or were they unique to this situation?</string>
+    <string name="validityAnswer6A">My thoughts were based on previous situations and conversations rather than on this particular situation.</string>
+    <string name="validityAnswer6B">My thoughts were based on general views and opinions I have rather than this particular situation.</string>
+    <string name="validityAnswer6C">My thoughts were based on the specific facts of this particular situation.</string>
+    <string name="validityQuestion7">Did your thoughts come from assumptions you made about someone else’s intentions, thoughts, or beliefs?</string>
+    <string name="validityAnswer7A">Yes, I reacted to what I assumed he/she was thinking or feeling. I was mind reading.</string>
+    <string name="validityAnswer7B">No, I reacted to what he/she actually said, did, or meant.</string>
+    <string name="validityQuestion8">Did your thoughts come from a too-rigid perspective?</string>
+    <string name="validityAnswer8A">Yes, because:</string>
+    <string name="validityAnswer8A1">I had "black-or-white" type of thinking. I allowed for no shades of gray or nuance.</string>
+    <string name="validityAnswer8A2">I inaccurately used words like “always”, “every”, “never”, "constantly", or other similar absolutes.</string>
+    <string name="validityAnswer8A3">I was unfairly blaming myself (personalizing it) when it wasn’t actually all my fault?</string>
+    <string name="validityAnswer8A4">I was unfairly blaming someone else when it wasn’t actually all their fault?</string>
+    <string name="validityAnswer8B">No, my thoughts took into consideration the complexities and nuance of the situation in a balanced and fair way.</string>
+    <string name="validityQuestion9">Did you have unrealistic expectations about what should be, or what shouldn’t be?</string>
+    <string name="validityAnswer9A">Yes, I had unrealistic expectations…</string>
+    <string name="validityAnswer9A1">of myself.</string>
+    <string name="validityAnswer9A2">of others.</string>
+    <string name="validityAnswer9A3">for things to happen or not happen.</string>
+    <string name="validityAnswer9A4">because I believed that I needed something which I actually just really wanted.</string>
+    <string name="validityAnswer9A5">because I believed I deserved something which I actually didn’t deserve.</string>
+    <string name="validityAnswer9B">No, my expectations were realistic.</string>
+    <string name="validityQuestion10">Think of the person who is the most emotionally healthy person you know. Would that person say that your thinking was:</string>
+    <string name="validityAnswer10A">Rational</string>
+    <string name="validityAnswer10B">Irrational</string>
+    <string name="validityQuestion11">If he/she had been in the same situation or conversation you were, and had the same thoughts you had, what would you tell him/her about these thoughts?</string>
+    <string name="validityQuestion12">Overall, how rational or irrational would you say your thinking was?</string>
+    <string name="validityAnswer12A">Completely\nirrational</string>
+    <string name="validityAnswer12B">Completely\nrational</string>
+
+    <string name="judgement">It appears that your thoughts about this situation were likely flawed. You were likely not thinking as rationally as you could have been. For example, it looks like you made the following thinking errors:</string>
+    <string name="judgement1">These types of thinking errors indicate that there is room to improve your emotional health. The shame (which you said you felt at 7/10 intensity) and anger (8/10 intensity) could have been healthier.</string>
+    <string name="judgement2">Do You Want to Improve?/10 intensity) and anger (8/10 intensity) could have been healthier.</string>
+    <string name="judgement3">Let’s explore how you could have been healthier. Let’s first try replace the irrational thoughts that you had with a more rational way of thinking.</string>
+
+    <string name="noJudgement">It appears that your thoughts about this situation were likely rational and valid. We could find no thinking errors.</string>
+    <string name="noJudgement1">Keep in mind, you may have made thinking errors which were not identifiable by this test. However, let’s suppose you didn’t. Let’s assume that your thoughts were fully rational and therefore led to a healthy emotional experience. This means:</string>
+    <string name="noJudgement2">The anger you felt (which you said you felt at 7/10 intensity) in this situation was likely healthy.\nCongratulations</string>
+    <string name="noJudgement3">What if the emotion you felt was not a positive emotion? How is it healthy to feel negative emotions? If this is a question you have then click to read an explanation of how even negative emotion can be healthy.</string>
+
+    <string name="moveOn">OK. Let’s move on and test whether the way that you expressed what you felt was rational or irrational.</string>
+    <string name="finish">Finish</string>
+
+    <string name="begin_cognition_validity_test">Begin Cognition Validity Test</string>
+    <string name="rational">Rational</string>
+    <string name="irrational">Irrational</string>
+    <string name="title_cogvalid_activity">Cognition Validity Test</string>
+
 </resources>

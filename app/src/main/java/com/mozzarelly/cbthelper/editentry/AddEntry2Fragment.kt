@@ -1,20 +1,17 @@
-package com.mozzarelly.cbthelper
+package com.mozzarelly.cbthelper.editentry
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import com.mozzarelly.cbthelper.*
 import com.mozzarelly.cbthelper.databinding.FragmentAdd2ExperienceBinding
 
-class AddEntry2Fragment(private val viewModel: EditEntryViewModel) : AddEntryFragment(viewModel) {
+class AddEntry2Fragment : AddEntryFragment() {
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         FragmentAdd2ExperienceBinding.inflate(inflater).apply {
@@ -51,7 +48,9 @@ class AddEntry2Fragment(private val viewModel: EditEntryViewModel) : AddEntryFra
                 }
             }
 
-            emotionGroups.adapter = ArrayAdapter(act, android.R.layout.simple_spinner_item, Emotions.emotionGroups)
+            emotionGroups.adapter = ArrayAdapter(act, android.R.layout.simple_spinner_item,
+                Emotions.emotionGroups
+            )
 
             emotionGroups.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -89,7 +88,7 @@ class AddEntry2Fragment(private val viewModel: EditEntryViewModel) : AddEntryFra
                     emotions.setSelection(it)
             }
 
-            viewModel.emotionsChosenValue.showValueIn(emotionsChosen)
+            emotionsChosen.display(viewModel.emotionsChosenValue)
 
             emotionsChosen.setOnClickListener {
                 requireContext().doAfterConfirm(R.string.deleteConfirm) {

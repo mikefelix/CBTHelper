@@ -23,12 +23,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CancellationException
 import java.util.Calendar.DAY_OF_YEAR
 import kotlin.reflect.KProperty
 
-inline fun <reified V : ViewModel> ViewModelProvider.NewInstanceFactory.get(): V = create(V::class.java)
-
-fun FragmentManager.run(tx: FragmentTransaction.() -> Unit){
+fun FragmentManager.runTx(tx: FragmentTransaction.() -> Unit){
     val ft = beginTransaction()
     tx(ft)
     ft.commit()
@@ -118,7 +118,7 @@ class FragmentArgumentDelegate<T : Any>(private val defaultValue: T?) :
 
 fun Context.preferences(): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 inline fun <reified T> Context.setPreference(key: String, value: T) { preferences()[key] = value }
-inline fun <reified T> Context.getPreference(key: String) = preferences().get<T>(key)
+inline fun <reified T> Context.getPreference(key: String) = preferences().getAndInit<T>(key)
 inline fun <reified T> Context.getPreferenceOrInit(key: String, orElse: () -> T) = preferences().getOrInit(key, orElse)
 inline fun <reified T> Context.getPreferenceOrElse(key: String, orElse: () -> T) = preferences().getOrElse(key, orElse)
 
@@ -140,7 +140,7 @@ inline operator fun <reified T> SharedPreferences.set(key: String, value: T?) {
     }
 }
 
-inline operator fun <reified T> SharedPreferences.get(key: String): T? {
+inline fun <reified T> SharedPreferences.getAndInit(key: String): T? {
     return if (contains(key)) {
         when (T::class) {
             String::class -> getString(key, null) as T
@@ -282,6 +282,15 @@ fun emotionText(vararg emotions: String?): String? {
     }
 }
 
+fun Context.presentChoice(message: Int, choice1: Int = R.string.ok, choice2: Int = R.string.cancel, choice1Action: () -> Unit, choice2Action: () -> Unit){
+    AlertDialog.Builder(this)
+        .setMessage(message)
+        .setNegativeButton(choice1) { _, _ -> choice1Action() }
+        .setPositiveButton(choice2) { _, _ -> choice2Action() }
+        .create()
+        .show()
+}
+
 fun Context.doAfterConfirm(message: Int, ok: Int = R.string.ok, cancel: Int = R.string.cancel, action: () -> Unit){
     AlertDialog.Builder(this)
         .setMessage(message)
@@ -293,17 +302,39 @@ fun Context.doAfterConfirm(message: Int, ok: Int = R.string.ok, cancel: Int = R.
 
 fun Activity.hideKeyboard() {
     currentFocus?.let {
-        val imm =
-            ContextCompat.getSystemService(this, InputMethodManager::class.java)
+        val imm = ContextCompat.getSystemService(this, InputMethodManager::class.java)
         imm?.hideSoftInputFromWindow(it.windowToken, 0)
     }
 }
 
 fun Fragment.hideKeyboard() {
     activity?.currentFocus?.let {
-        val imm =
-            ContextCompat.getSystemService(requireActivity(), InputMethodManager::class.java)
+        val imm = ContextCompat.getSystemService(requireActivity(), InputMethodManager::class.java)
         imm?.hideSoftInputFromWindow(it.windowToken, 0)
     }
 }
 
+inline fun <T> MutableList<T>.removeWhere(filter: (T) -> Boolean): Boolean {
+    var removed = false
+    val each = iterator()
+    while (each.hasNext()) {
+        if (filter(each.next())) {
+            each.remove()
+            removed = true
+        }
+    }
+    return removed
+}
+
+fun Exception.rethrowIfCancellation() {
+    if (this is CancellationException)
+        throw this
+}
+
+fun View.longSnackbar(text: String) {
+    Snackbar.make(this, text, Snackbar.LENGTH_LONG).show()
+}
+
+fun View.shortSnackbar(text: String) {
+    Snackbar.make(this, text, Snackbar.LENGTH_SHORT).show()
+}

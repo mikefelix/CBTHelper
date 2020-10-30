@@ -24,7 +24,7 @@ class ReminderRepository(private val context: Context){
     private val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     var reminderTime: Time?
-        get() = prefs.get<String>(key)?.toTime()
+        get() = prefs.getAndInit<String>(key)?.toTime()
         set(time) {
             if (time == null) {
                 prefs.remove(key)
@@ -39,7 +39,7 @@ class ReminderRepository(private val context: Context){
     fun setAlarm(time: Time? = null){
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        (time ?: prefs.get<String>(key)?.toTime())?.let {
+        (time ?: prefs.getAndInit<String>(key)?.toTime())?.let {
             alarmManager.setInexactRepeating(
                 AlarmManager.RTC,
                 it.toLong(),

@@ -1,12 +1,13 @@
-package com.mozzarelly.cbthelper
+package com.mozzarelly.cbthelper.editentry
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.mozzarelly.cbthelper.R
 import com.mozzarelly.cbthelper.databinding.FragmentAdd5RelationshipsBinding
 
-class AddEntry5Fragment(private val viewModel: EditEntryViewModel) : AddEntryFragment(viewModel) {
+class AddEntry5Fragment : AddEntryFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         FragmentAdd5RelationshipsBinding.inflate(inflater).apply {
             buttons.previous.setOnClickListener {
@@ -22,6 +23,12 @@ class AddEntry5Fragment(private val viewModel: EditEntryViewModel) : AddEntryFra
             }
 
             relationships.bindTo(viewModel.relationshipsValue)
+
+            textView1.hint = getString(if (viewModel.bottled)
+                R.string.relationshipsQuestionBottled
+            else
+                R.string.relationshipsQuestion
+            )
 
         }.root
 

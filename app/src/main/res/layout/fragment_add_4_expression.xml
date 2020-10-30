@@ -5,7 +5,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddEntry1Fragment"
+    tools:context=".editentry.AddEntry1Fragment"
     >
 
     <TextView
@@ -20,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/textView1"
         app:layout_constraintVertical_chainStyle="spread_inside"
+        android:visibility="gone"
         tools:ignore="HardcodedText"
         />
 
@@ -29,7 +30,7 @@
         android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="What did you do and say to show the emotions you felt?"
+        android:text="@string/expressionQuestion"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintTop_toBottomOf="@id/title"
@@ -37,6 +38,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/expression"
         tools:ignore="HardcodedText"
+        android:hint="@string/expressionHint"
         />
 
     <EditText
@@ -60,7 +62,7 @@
 
     <CheckBox
         android:id="@+id/bottledCheck"
-        android:text="Check this box if you hid or bottled up your emotions instead of expressing them"
+        android:text="Check this box if you hid or bottled up your emotions instead of showing them"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

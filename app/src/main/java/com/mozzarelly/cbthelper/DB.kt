@@ -12,12 +12,63 @@ import kotlinx.coroutines.coroutineScope
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
-import java.util.*
+import androidx.lifecycle.LiveData
 
-@Database(entities = [Entry::class], version = 1)
+@Dao
+interface EntryDao {
+    @Query("SELECT * FROM entry WHERE id = :id")
+    suspend fun get(id: Int): Entry
+
+    @Query("SELECT * FROM entry WHERE id = :id")
+    fun getAsync(id: Int): LiveData<Entry>
+
+    @Insert(entity = Entry::class)
+    suspend fun insert(entry: Entry): Long
+
+    @Update
+    suspend fun update(entry: Entry)
+
+    @Query("SELECT * FROM entry WHERE complete = 1 ORDER BY date DESC")
+    fun getAllCompleteAsync(): LiveData<List<Entry>>
+
+    @Query("SELECT * FROM entry WHERE complete = 1 ORDER BY date DESC")
+    suspend fun getAllComplete(): List<Entry>
+
+    @Query("SELECT * FROM entry WHERE complete = 0 ORDER BY date DESC LIMIT 1")
+    fun getIncompleteAsync(): LiveData<Entry?>
+
+    @Query("SELECT * FROM entry WHERE complete = 0 ORDER BY date DESC LIMIT 1")
+    suspend fun getIncomplete(): Entry?
+
+    @Query("DELETE FROM entry WHERE complete = 0")
+    suspend fun deleteIncomplete()
+
+    @Query("DELETE FROM entry WHERE id = :id")
+    suspend fun delete(id: Int)
+
+    @Query("DELETE FROM entry")
+    suspend fun deleteAll()
+}
+
+@Dao
+interface CogValidDao {
+
+    @Query("SELECT * FROM cogvalid WHERE id = :id")
+    suspend fun get(id: Int): CogValid?
+
+    @Insert(entity = CogValid::class)
+    suspend fun create(model: CogValid): Long
+
+    @Update
+    suspend fun update(from: CogValid)
+
+}
+
+@Database(entities = [Entry::class, CogValid::class], version = 1)
 @TypeConverters(Converters::class)
 abstract class CBTDatabase : RoomDatabase() {
     abstract fun entryDao(): EntryDao
+    abstract fun cogValidDao(): CogValidDao
 
     companion object {
         @Volatile
@@ -30,6 +81,7 @@ abstract class CBTDatabase : RoomDatabase() {
         }
 
         fun getEntryDao(context: Context): EntryDao = getDatabase(context).entryDao()
+        fun getCogValidDao(context: Context): CogValidDao = getDatabase(context).cogValidDao()
 
         // Create and pre-populate the database. See this article for more details:
         // https://medium.com/google-developers/7-pro-tips-for-room-fbadea4bfbd1#4785

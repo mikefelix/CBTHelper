@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_add_1"
-        android:name="com.mozzarelly.cbthelper.AddEntry1Fragment"
+        android:name="com.mozzarelly.cbthelper.editentry.AddEntry1Fragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_add_1_situation">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_add_2"
-        android:name="com.mozzarelly.cbthelper.AddEntry2Fragment"
+        android:name="com.mozzarelly.cbthelper.editentry.AddEntry2Fragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_add_3"
-        android:name="com.mozzarelly.cbthelper.AddEntry3Fragment"
+        android:name="com.mozzarelly.cbthelper.editentry.AddEntry3Fragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_second">
 

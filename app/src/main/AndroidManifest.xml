@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme.NoActionBar">
 
         <activity
-            android:name=".ViewEntriesActivity"
+            android:name=".viewentries.ViewEntriesActivity"
             android:label="@string/title_activity_view_entries"
             android:theme="@style/AppTheme.NoActionBar"
             />
@@ -24,14 +24,20 @@
             />
 
         <activity
-            android:name=".AddEntryActivity"
+            android:name=".editentry.AddEntryActivity"
             android:label="@string/title_activity_add_entry"
             android:theme="@style/AppTheme.NoActionBar"
             />
 
         <activity
-            android:name=".AnalyzeEntryActivity"
+            android:name=".analyze.AnalyzeEntryActivity"
             android:label="@string/title_activity_analyze_entry"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity
+            android:name=".cogvalid.CogValidActivity"
+            android:label="@string/title_cogvalid_activity"
             android:theme="@style/AppTheme.NoActionBar"
             />
 

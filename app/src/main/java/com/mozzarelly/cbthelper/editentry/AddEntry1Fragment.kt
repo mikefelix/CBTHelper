@@ -1,12 +1,14 @@
-package com.mozzarelly.cbthelper
+package com.mozzarelly.cbthelper.editentry
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.mozzarelly.cbthelper.R
 import com.mozzarelly.cbthelper.databinding.FragmentAdd1SituationBinding
+import com.mozzarelly.cbthelper.observe
 
-class AddEntry1Fragment(private val viewModel: EditEntryViewModel) : AddEntryFragment(viewModel) {
+class AddEntry1Fragment : AddEntryFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         FragmentAdd1SituationBinding.inflate(inflater, container, false).apply {
             buttons.previous.run {
