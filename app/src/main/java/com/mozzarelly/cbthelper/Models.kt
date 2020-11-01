@@ -155,4 +155,26 @@ data class CogValid(
 
         fun new(id: Int): CogValid = CogValid(id)
     }
+
+    val complete: Boolean
+        get() = answer12 != null
+
+    fun thinkingErrors() = listOfNotNull(
+        "Emotional reasoning".takeIf { answer1 == 2 },
+        "Filtering".takeIf { answer2 in 1..2 },
+        "Mislabeling".takeIf { answer3 in 1..2 },
+        "Catastrophizing".takeIf { answer5 == 1 },
+        "Magnifying".takeIf { answer5 == 2 || answer8 == 2 },
+        "Minimizing".takeIf { answer5 == 3 },
+        "Jumping to conclusions".takeIf { answer5 == 4 },
+        "Confusing possible with probable".takeIf { answer5 == 5 },
+        "Overgeneralizing".takeIf { answer6 == 1 },
+        "Self projecting".takeIf { answer6 == 2 },
+        "Mindreading".takeIf { answer7 == 1 },
+        "All-or-nothing thinking".takeIf { answer8 == 1 || answer8 == 2 },
+        "Self-blaming (personalizing)".takeIf { answer8 == 3 },
+        "Overshoulding".takeIf { answer9 in 1..3 },
+        "Confusing wanting and needing".takeIf { answer9 == 4 },
+        "Confusing needing and deserving".takeIf { answer9 == 5 }
+    )
 }

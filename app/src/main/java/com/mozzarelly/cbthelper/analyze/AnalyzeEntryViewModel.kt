@@ -5,14 +5,14 @@ package com.mozzarelly.cbthelper.analyze
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
-import com.mozzarelly.cbthelper.CBTDatabase
-import com.mozzarelly.cbthelper.CBTViewModel
-import com.mozzarelly.cbthelper.emotionText
-import com.mozzarelly.cbthelper.map
+import com.mozzarelly.cbthelper.*
 
 class AnalyzeEntryViewModel : CBTViewModel() {
 
-    val dao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
+    val entryDao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
+    val cogValidDao by lazy { CBTDatabase.getDatabase(applicationContext).cogValidDao() }
+
+    val title = MutableLiveData("Analyze entry")
 
     var id: Int
         get() = idValue.value ?: 0
@@ -24,16 +24,25 @@ class AnalyzeEntryViewModel : CBTViewModel() {
 
     val entry = idValue.switchMap {
         liveData {
-            emit(dao.get(it))
+            emit(entryDao.get(it))
         }
     }
 
-    val situation = entry.map {
+    val cogValid = idValue.switchMap {
+        liveData {
+            emit(cogValidDao.get(it))
+        }
+    }
+
+    val situation = entry.mapValue {
         it.situation
     }
 
-    val emotionsChosen = entry.map {
+    val emotionsChosen = entry.mapValue {
         emotionText(it.emotion1, it.emotion2, it.emotion3)
     }
 
+    val thinkingErrors = cogValid.mapValue {
+        it.thinkingErrors()
+    }
 }

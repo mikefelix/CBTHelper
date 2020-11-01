@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.whenStarted
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
 import com.mozzarelly.cbthelper.viewentries.EntriesViewModel
 import com.mozzarelly.cbthelper.viewentries.ViewEntriesActivity
@@ -22,14 +23,13 @@ const val RequestCodeViewEntries = 3
 
 class MainActivity : CBTActivity<EntriesViewModel>() {
 
-    private val dao: EntryDao by lazy { CBTDatabase.getEntryDao(applicationContext) }
-
+    override val layout = R.layout.activity_main
     override val viewModel: EntriesViewModel by viewModels { viewModelProvider }
+
+    private val dao: EntryDao by lazy { CBTDatabase.getEntryDao(applicationContext) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
 
         viewModel.load()
 /*
@@ -41,27 +41,30 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
 */
         addButton.setOnClickListener {
             lifecycleScope.launch {
-                try {
-                    viewModel.incompleteEntry.collect { entry ->
-                        if (entry != null) {
-    //                        withContext(Dispatchers.Main) {
-                                presentChoice(R.string.discardConfirmMsg, choice1 = R.string.continueButton, choice2 = R.string.newEntryButton,
+                whenStarted {
+                    try {
+                        viewModel.incompleteEntry.collect { entry ->
+                            if (entry != null) {
+                                presentChoice(R.string.discardConfirmMsg,
+                                    choice1 = R.string.continueButton,
+                                    choice2 = R.string.newEntryButton,
                                     choice1Action = {
                                         start<AddEntryActivity>(RequestCodeContinueEntry)
                                     },
                                     choice2Action = {
-                                        start<AddEntryActivity>(RequestCodeStartEntry,"forceNew" to "true")
+                                        start<AddEntryActivity>(RequestCodeStartEntry, "forceNew" to "true")
                                     }
                                 )
-    //                        }
-                        }
-                        else {
-                            start<AddEntryActivity>(RequestCodeStartEntry)
+                            }
+                            else {
+                                start<AddEntryActivity>(RequestCodeStartEntry)
+                            }
                         }
                     }
-                } catch (e: Exception) {
-                    e.rethrowIfCancellation()
-                    e.printStackTrace()
+                    catch (e: Exception) {
+                        e.rethrowIfCancellation()
+                        e.printStackTrace()
+                    }
                 }
             }
         }

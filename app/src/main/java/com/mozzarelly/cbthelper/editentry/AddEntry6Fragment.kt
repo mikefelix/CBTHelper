@@ -25,8 +25,7 @@ class AddEntry6Fragment : AddEntryFragment() {
                 setOnClickListener {
                     viewModel.complete = true
                     viewModel.save()
-                    act.setResult(1)
-                    act.finish()
+                    act.finish(1)
                 }
             }
 

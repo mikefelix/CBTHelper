@@ -26,7 +26,7 @@ class AddEntryActivity : PagingActivity<EditEntryViewModel>() {
         viewModelScope.launch {
             when {
                 intent.hasExtra("forceNew") -> loadNewEntry()
-                intent.hasExtra("id") -> loadEntry(intent.getIntExtra("id", 0))
+                intent.hasExtra("id") -> loadEntry(getIdExtra())
                 dao.getIncomplete() != null -> loadEntryInProgress()
                 else -> loadNewEntry()
             }

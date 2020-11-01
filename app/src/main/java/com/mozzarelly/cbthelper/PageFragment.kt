@@ -19,11 +19,6 @@ import com.mozzarelly.cbthelper.editentry.EditEntryViewModel
 abstract class PageFragment<V: PagingViewModel>() : CBTFragment() {
     abstract val viewModel: V
 
-    protected val act by lazy {
-        @Suppress("UNCHECKED_CAST")
-        requireActivity() as CBTActivity<V>
-    }
-
     val updateOps = mutableListOf<() -> Unit>()
 
     fun previousPage(){

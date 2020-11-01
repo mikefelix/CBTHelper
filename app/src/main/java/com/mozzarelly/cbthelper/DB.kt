@@ -17,7 +17,7 @@ import androidx.lifecycle.LiveData
 @Dao
 interface EntryDao {
     @Query("SELECT * FROM entry WHERE id = :id")
-    suspend fun get(id: Int): Entry
+    suspend fun get(id: Int): Entry?
 
     @Query("SELECT * FROM entry WHERE id = :id")
     fun getAsync(id: Int): LiveData<Entry>

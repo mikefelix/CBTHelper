@@ -1,12 +1,12 @@
 package com.mozzarelly.cbthelper.viewentries
 
-import android.content.Context
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.mozzarelly.cbthelper.CBTDatabase
 import com.mozzarelly.cbthelper.CBTViewModel
 import com.mozzarelly.cbthelper.Entry
 import com.mozzarelly.cbthelper.rethrowIfCancellation
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch

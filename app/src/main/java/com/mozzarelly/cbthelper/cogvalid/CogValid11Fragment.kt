@@ -13,7 +13,7 @@ import com.mozzarelly.cbthelper.databinding.FragmentCogvalQuestionTextBinding
 class CogValid11Fragment : CogValidFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         FragmentCogvalQuestionTextBinding.inflate(inflater, container, false).apply {
-            thoughts.display(viewModel.thoughtsValue)
+            thoughts.text = viewModel.thoughts
             bindQuestion(R.string.validityQuestion11, viewModel.answer11Value)
         }.root
 

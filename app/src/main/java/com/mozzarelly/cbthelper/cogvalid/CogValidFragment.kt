@@ -6,12 +6,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mozzarelly.cbthelper.PageFragment
 import com.mozzarelly.cbthelper.databinding.*
+import com.mozzarelly.cbthelper.observe
 import com.mozzarelly.cbthelper.visible
 
 abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
-    override val viewModel: CogValidViewModel by activityViewModels()// { act.viewModelProvider }
+    override val viewModel: CogValidViewModel by activityViewModels()
 
-    fun FragmentCogvalQuestion2RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, answer1: Int, answer2: Int){
+    protected fun FragmentCogvalQuestion2RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, answer1: Int, answer2: Int){
         buttons.setupButtons(liveData)
 
         question.setText(questionText)
@@ -20,7 +21,7 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
         radioAnswer2.bindTo(liveData, answer2, 2)
     }
 
-    fun FragmentCogvalQuestion3RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, answer1: Int, answer2: Int, answer3: Int){
+    protected fun FragmentCogvalQuestion3RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, answer1: Int, answer2: Int, answer3: Int){
         buttons.setupButtons(liveData)
 
         question.setText(questionText)
@@ -30,14 +31,14 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
         radioAnswer3.bindTo(liveData, answer3, 3)
     }
 
-    fun FragmentCogvalQuestionTextBinding.bindQuestion(questionText: Int, answerData: MutableLiveData<String?>) {
+    protected fun FragmentCogvalQuestionTextBinding.bindQuestion(questionText: Int, answerData: MutableLiveData<String?>) {
         buttons.setupButtons(answerData)
 
         question.setText(questionText)
         answer.bindTo(answerData)
     }
 
-    fun FragmentCogvalQuestion2TextsBinding.bindQuestion(question1Text: Int, answer1Data: MutableLiveData<String?>,
+    protected fun FragmentCogvalQuestion2TextsBinding.bindQuestion(question1Text: Int, answer1Data: MutableLiveData<String?>,
                                                                  question2Text: Int, answer2Data: MutableLiveData<String?>) {
         buttons.setupButtons(answer2Data)
 
@@ -48,7 +49,7 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
         answer2.bindTo(answer2Data)
     }
 
-    fun FragmentCogvalQuestion5NestedradiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, outerAnswers: Pair<Int, Int>, innerAnswers: List<Int>){
+    protected fun FragmentCogvalQuestion5NestedradiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, outerAnswers: Pair<Int, Int>, innerAnswers: List<Int>){
         buttons.setupButtons(liveData)
 
         question.setText(questionText)
@@ -69,7 +70,7 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
         radioAnswer2.bindTo(liveData, outerAnswers.second, 6)
     }
 
-    fun FragmentCogvalQuestion4NestedradiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, outerAnswers: Pair<Int, Int>, innerAnswers: List<Int>){
+    protected fun FragmentCogvalQuestion4NestedradiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, outerAnswers: Pair<Int, Int>, innerAnswers: List<Int>){
         buttons.setupButtons(liveData)
 
         question.setText(questionText)
@@ -89,17 +90,24 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
         radioAnswer2.bindTo(liveData, outerAnswers.second, 6)
     }
 
-    fun FragmentCogvalQuestionSliderBinding.bindQuestion(answerData: MutableLiveData<Int?>, questionText: Int, lowText: Int, highText: Int) {
+    protected fun FragmentCogvalQuestionSliderBinding.bindQuestion(answerData: MutableLiveData<Int?>, questionText: Int, lowText: Int, highText: Int) {
         buttons.setupButtons(answerData)
 
         question.setText(questionText)
         minimumDesc.setText(lowText)
         maximumDesc.setText(highText)
 
+        observe(answerData) {
+            val value = it ?: 4
+            answer.progress = value - 1
+            answerVal.text = value.toString()
+        }
+
         answer.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
             var touched = false
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                answerData.value = progress
+                if (fromUser)
+                    answerData.value = progress + 1
             }
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onStopTrackingTouch(seekBar: SeekBar?) {

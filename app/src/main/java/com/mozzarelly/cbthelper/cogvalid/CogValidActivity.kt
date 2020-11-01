@@ -2,10 +2,13 @@
 
 package com.mozzarelly.cbthelper.cogvalid
 
+import android.content.Intent
 import androidx.activity.viewModels
 import com.mozzarelly.cbthelper.*
 
 class CogValidActivity : PagingActivity<CogValidViewModel>() {
+
+//    val id by extra<String>("entryId")
 
     override val fragmentTypes = listOf(
         CogValidIntroFragment::class,
@@ -25,14 +28,15 @@ class CogValidActivity : PagingActivity<CogValidViewModel>() {
 
     override val layout = R.layout.activity_cogvalid_test
 
-//    override fun getActivityViewModel() = viewModelProvider.getAndInit<CogValidViewModel>()
     override val viewModel: CogValidViewModel by viewModels { viewModelProvider }
 
     override fun CogValidViewModel.setup() {
         numberOfPages = LateInt(fragmentTypes.size)
-
-        load(intent.getIntExtra("id", -1).takeIf { it > 0 } ?: error("Need entry id in intent"))
+        load(getIdExtra())
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+    }
 }
 

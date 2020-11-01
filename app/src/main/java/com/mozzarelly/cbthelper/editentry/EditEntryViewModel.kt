@@ -42,7 +42,7 @@ class EditEntryViewModel : PagingViewModel(), EntryModel {
 
     fun loadEntry(id: Int) {
         viewModelScope.launch {
-            copyFrom(dao.get(id))
+            copyFrom(dao.get(id) ?: error("Entry $id not found."))
             changePage(1)
         }
     }
@@ -56,7 +56,7 @@ class EditEntryViewModel : PagingViewModel(), EntryModel {
     private suspend fun createAndLoadNew() =
         Entry.new()
             .let { dao.insert(it) }
-            .let { dao.get(it.toInt()) }
+            .let { dao.get(it.toInt())!! }
 
     val editingEmotion: MutableLiveData<String?>?
         get() = when {

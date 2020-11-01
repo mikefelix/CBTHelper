@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="The situation you were in:"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:gravity="start"
         android:layout_marginTop="16dp"
         android:layout_marginStart="8dp"

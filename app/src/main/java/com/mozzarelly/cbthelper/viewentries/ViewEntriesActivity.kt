@@ -16,22 +16,23 @@ import com.mozzarelly.cbthelper.editentry.AddEntryActivity
 import kotlinx.android.synthetic.main.activity_view_entries.*
 import org.threeten.bp.format.DateTimeFormatter
 
+const val RequestCodeViewEntry = 154
+const val RequestCodeAddEntry = 397
 
 class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
 
+    override val layout = R.layout.activity_view_entries
+    override val viewModel: EntriesViewModel by viewModels { viewModelProvider }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_entries)
-        setSupportActionBar(findViewById(R.id.toolbar))
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
 
         title = "Completed entries"
 
         viewModel.loadEntries()
 
         fab.setOnClickListener {
-            startActivity(Intent(this, AddEntryActivity::class.java))
+            start<AddEntryActivity>(RequestCodeAddEntry,"forceNew" to "true")
         }
 
         entries.run {
@@ -42,9 +43,7 @@ class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
                 setOnItemClickListener(object : EntryAdapter.OnItemClickListener {
                     override fun onItemClick(entry: Entry?) {
                         entry?.id ?: return
-                        startActivity(Intent(this@ViewEntriesActivity, AnalyzeEntryActivity::class.java)
-                            .putExtra("id", entry.id)
-                        )
+                        start<AnalyzeEntryActivity>(RequestCodeViewEntry,"id" to entry.id.toString())
                     }
                 })
 
@@ -65,9 +64,6 @@ class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
             }))
         }
     }
-
-//    override fun getActivityViewModel() = viewModelProvider.getAndInit<EntriesViewModel>()
-    override val viewModel: EntriesViewModel by viewModels { viewModelProvider }
 
     override fun onSupportNavigateUp(): Boolean {
 //        onBackPressed()

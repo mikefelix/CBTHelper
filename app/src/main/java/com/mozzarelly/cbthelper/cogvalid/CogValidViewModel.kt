@@ -25,8 +25,8 @@ class CogValidViewModel : PagingViewModel(), CogValidModel {
         return "CVVM $cid"
     }
 
-    val cogValidDao by lazy { CBTDatabase.getDatabase(applicationContext).cogValidDao() }
-    val entryDao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
+    private val cogValidDao by lazy { CBTDatabase.getDatabase(applicationContext).cogValidDao() }
+    private val entryDao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
 
     override var id: Int = 0
 
@@ -34,13 +34,19 @@ class CogValidViewModel : PagingViewModel(), CogValidModel {
         this.id = id
 
         viewModelScope.launch {
-            thoughtsValue.value = entryDao.get(id).thoughts ?: error("Can't find entry $id")
+            (entryDao.get(id) ?: error("Can't find entry $id")).let {
+                thoughts = it.thoughts
+                emotions = emotionText(it.emotion1, it.emotion2, it.emotion3)
+            }
 
-            val existing = cogValidDao.get(id)
-            copyFrom(existing ?: CogValid.new(id).also { cogValidDao.create(it) })
+            val cogValid = cogValidDao.get(id) ?: CogValid.new(id).also { cogValidDao.create(it) }
+            copyFrom(cogValid)
+
+            thinkingErrors.value = cogValid.thinkingErrors()
 
             changePage(when {
-                answer11 != null -> 12
+                answer12 != null -> 13
+                answer11 != null -> 13
                 answer10 != null -> 12
                 answer9 != null -> 11
                 answer8 != null -> 10
@@ -78,8 +84,11 @@ class CogValidViewModel : PagingViewModel(), CogValidModel {
     val answer10Value = MutableLiveData<Int?>()
     val answer11Value = MutableLiveData<String?>()
     val answer12Value = MutableLiveData<Int?>()
+    val thinkingErrors = MutableLiveData<List<String>>()
 
-    val thoughtsValue = MutableLiveData<String?>()
+    // From entry
+    var thoughts: String? = null
+    var emotions: String? = null
 
     private val completeValue = answer12Value.map { it != null }
 

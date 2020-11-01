@@ -83,8 +83,8 @@
     <string name="validityAnswer8A">Yes, because:</string>
     <string name="validityAnswer8A1">I had "black-or-white" type of thinking. I allowed for no shades of gray or nuance.</string>
     <string name="validityAnswer8A2">I inaccurately used words like “always”, “every”, “never”, "constantly", or other similar absolutes.</string>
-    <string name="validityAnswer8A3">I was unfairly blaming myself (personalizing it) when it wasn’t actually all my fault?</string>
-    <string name="validityAnswer8A4">I was unfairly blaming someone else when it wasn’t actually all their fault?</string>
+    <string name="validityAnswer8A3">I was unfairly blaming myself (personalizing it) when it wasn’t actually all my fault.</string>
+    <string name="validityAnswer8A4">I was unfairly blaming someone else when it wasn’t actually all their fault.</string>
     <string name="validityAnswer8B">No, my thoughts took into consideration the complexities and nuance of the situation in a balanced and fair way.</string>
     <string name="validityQuestion9">Did you have unrealistic expectations about what should be, or what shouldn’t be?</string>
     <string name="validityAnswer9A">Yes, I had unrealistic expectations…</string>
@@ -102,6 +102,12 @@
     <string name="validityAnswer12A">Completely\nirrational</string>
     <string name="validityAnswer12B">Completely\nrational</string>
 
+    <string name="validitySummary1">It appears that your thoughts about this situation were likely flawed. You were likely not thinking as rationally as you could have been. For example, it looks like you made the following thinking errors:</string>
+    <string name="validitySummary2">Thinking Errors Identified:</string>
+    <string name="validitySummary3">These types of thinking errors indicate that there is room to improve your emotional health. The %1$s could have been healthier.</string>
+    <string name="validitySummary4">Do You Want to Improve?</string>
+    <string name="validitySummary5">Let’s explore how you could have been healthier. Let’s first try replace the irrational thoughts that you had with a more rational way of thinking.</string>
+
     <string name="judgement">It appears that your thoughts about this situation were likely flawed. You were likely not thinking as rationally as you could have been. For example, it looks like you made the following thinking errors:</string>
     <string name="judgement1">These types of thinking errors indicate that there is room to improve your emotional health. The shame (which you said you felt at 7/10 intensity) and anger (8/10 intensity) could have been healthier.</string>
     <string name="judgement2">Do You Want to Improve?/10 intensity) and anger (8/10 intensity) could have been healthier.</string>
@@ -115,6 +121,8 @@
     <string name="moveOn">OK. Let’s move on and test whether the way that you expressed what you felt was rational or irrational.</string>
     <string name="finish">Finish</string>
 
+    <string name="continue_cognition_validity_test">Continue Cognition Validity Test</string>
+    <string name="view_cognition_validity_test">Cognition Validity Test Results</string>
     <string name="begin_cognition_validity_test">Begin Cognition Validity Test</string>
     <string name="rational">Rational</string>
     <string name="irrational">Irrational</string>
