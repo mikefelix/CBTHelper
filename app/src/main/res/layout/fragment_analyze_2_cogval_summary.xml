@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <LinearLayout
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Cognition Validity"
+            android:paddingBottom="8dp"
+            android:gravity="center"
+            android:textSize="26sp"
+            android:background="@drawable/bottom_border"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/validitySummary1"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/validitySummary2"
+            />
+
+        <TextView style="@style/TextViewDatum"
+            android:id="@+id/errors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Overshoulding"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/validitySummary3"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/text4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/validitySummary4"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/text5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/validitySummary5"
+            />
+
+        <!--
+                    style="?android:attr/buttonBarStyle"
+                    style="?android:attr/buttonBarButtonStyle"
+        -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <Button
+                android:id="@+id/beginRationalButton"
+                android:layout_width="wrap_content"
+                android:minWidth="128dp"
+                android:layout_height="wrap_content"
+                android:text="Explore replacement thoughts"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                />
+
+            <Button
+                android:id="@+id/skipRationalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="Skip to behavior"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

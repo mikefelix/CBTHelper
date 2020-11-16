@@ -1,19 +1,32 @@
 package com.mozzarelly.cbthelper.cogvalid
 
-import android.widget.SeekBar
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.mozzarelly.cbthelper.PageFragment
 import com.mozzarelly.cbthelper.databinding.*
-import com.mozzarelly.cbthelper.observe
 import com.mozzarelly.cbthelper.visible
 
 abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
     override val viewModel: CogValidViewModel by activityViewModels()
 
+    /*
+    protected fun AppCompatSeekBar.bind(answerData: MutableLiveData<Int?>, lowText: Int, highText: Int){
+        setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            var touched = false
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser)
+                    answerData.value = progress + 1
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                touched = true
+            }
+        })
+    }
+*/
+
     protected fun FragmentCogvalQuestion2RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, answer1: Int, answer2: Int){
-        buttons.setupButtons(liveData)
+        buttons.setupButtons(enableNextWhenFilled = liveData)
 
         question.setText(questionText)
 
@@ -22,7 +35,7 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
     }
 
     protected fun FragmentCogvalQuestion3RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, answer1: Int, answer2: Int, answer3: Int){
-        buttons.setupButtons(liveData)
+        buttons.setupButtons(enableNextWhenFilled = liveData)
 
         question.setText(questionText)
 
@@ -32,15 +45,16 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
     }
 
     protected fun FragmentCogvalQuestionTextBinding.bindQuestion(questionText: Int, answerData: MutableLiveData<String?>) {
-        buttons.setupButtons(answerData)
+        buttons.setupButtons(enableNextWhenFilled = answerData)
 
         question.setText(questionText)
         answer.bindTo(answerData)
     }
 
     protected fun FragmentCogvalQuestion2TextsBinding.bindQuestion(question1Text: Int, answer1Data: MutableLiveData<String?>,
-                                                                 question2Text: Int, answer2Data: MutableLiveData<String?>) {
-        buttons.setupButtons(answer2Data)
+                                                                   question2Text: Int, answer2Data: MutableLiveData<String?>
+    ) {
+        buttons.setupButtons(enableNextWhenFilled = answer2Data)
 
         question1.setText(question1Text)
         question2.setText(question2Text)
@@ -50,7 +64,7 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
     }
 
     protected fun FragmentCogvalQuestion5NestedradiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, outerAnswers: Pair<Int, Int>, innerAnswers: List<Int>){
-        buttons.setupButtons(liveData)
+        buttons.setupButtons(enableNextWhenFilled = liveData)
 
         question.setText(questionText)
 
@@ -71,7 +85,7 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
     }
 
     protected fun FragmentCogvalQuestion4NestedradiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, outerAnswers: Pair<Int, Int>, innerAnswers: List<Int>){
-        buttons.setupButtons(liveData)
+        buttons.setupButtons(enableNextWhenFilled = liveData)
 
         question.setText(questionText)
 
@@ -91,37 +105,8 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
     }
 
     protected fun FragmentCogvalQuestionSliderBinding.bindQuestion(answerData: MutableLiveData<Int?>, questionText: Int, lowText: Int, highText: Int) {
-        buttons.setupButtons(answerData)
-
-        question.setText(questionText)
-        minimumDesc.setText(lowText)
-        maximumDesc.setText(highText)
-
-        observe(answerData) {
-            val value = it ?: 4
-            answer.progress = value - 1
-            answerVal.text = value.toString()
-        }
-
-        answer.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
-            var touched = false
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser)
-                    answerData.value = progress + 1
-            }
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                touched = true
-            }
-        })
+        buttons.setupButtons(enableNextWhenFilled = answerData)
+        slider.bind(answerData, questionText, lowText, highText)
     }
 
-    protected fun NextPreviousBinding.setupButtons(enableNextWhenFilled: LiveData<*>? = null){
-        previous.setOnClickListener { previousPage() }
-
-        next.run {
-            enableNextWhenFilled?.let { enableWhenHasValue(it) }
-            setOnClickListener { nextPage() }
-        }
-    }
 }

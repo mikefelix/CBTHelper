@@ -1,15 +1,15 @@
 package com.mozzarelly.cbthelper.editentry
 
-import androidx.activity.viewModels
 import androidx.lifecycle.viewModelScope
-import com.mozzarelly.cbthelper.*
+import com.mozzarelly.cbthelper.LateInt
+import com.mozzarelly.cbthelper.InterviewActivity
+import com.mozzarelly.cbthelper.R
+import com.mozzarelly.cbthelper.cbtViewModel
 import kotlinx.coroutines.launch
 
-class AddEntryActivity : PagingActivity<EditEntryViewModel>() {
+class AddEntryActivity : InterviewActivity<EditEntryViewModel>() {
 
-    override val layout = R.layout.activity_add_entry
-
-    override val viewModel: EditEntryViewModel by viewModels { viewModelProvider }
+    override val viewModel: EditEntryViewModel by cbtViewModel()
 
     override val fragmentTypes = listOf(
         AddEntry1Fragment::class,

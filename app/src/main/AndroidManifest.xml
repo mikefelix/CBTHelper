@@ -30,7 +30,7 @@
             />
 
         <activity
-            android:name=".analyze.AnalyzeEntryActivity"
+            android:name=".analyze.AnalyzeActivity"
             android:label="@string/title_activity_analyze_entry"
             android:theme="@style/AppTheme.NoActionBar"
             />
@@ -38,6 +38,18 @@
         <activity
             android:name=".cogvalid.CogValidActivity"
             android:label="@string/title_cogvalid_activity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity
+            android:name=".replacement.ReplacementThoughtsActivity"
+            android:label="@string/title_ratrep_activity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
+        <activity
+            android:name=".behavior.BehaviorActivity"
+            android:label="@string/title_ratrep_activity"
             android:theme="@style/AppTheme.NoActionBar"
             />
 

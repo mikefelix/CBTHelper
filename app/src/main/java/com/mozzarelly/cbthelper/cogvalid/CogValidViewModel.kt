@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.mozzarelly.cbthelper.*
 import kotlinx.coroutines.launch
 
-class CogValidViewModel : PagingViewModel(), CogValidModel {
+class CogValidViewModel : InterviewViewModel(), CogValidModel {
 
     companion object {
         var counter = 1
@@ -35,10 +35,12 @@ class CogValidViewModel : PagingViewModel(), CogValidModel {
 
         viewModelScope.launch {
             (entryDao.get(id) ?: error("Can't find entry $id")).let {
-                thoughts = it.thoughts
-                emotions = emotionText(it.emotion1, it.emotion2, it.emotion3)
+                thoughts.value = it.thoughts
+                emotions.value = emotionText(it.emotion1Pair, it.emotion2Pair, it.emotion3Pair)
             }
+        }
 
+        viewModelScope.launch {
             val cogValid = cogValidDao.get(id) ?: CogValid.new(id).also { cogValidDao.create(it) }
             copyFrom(cogValid)
 
@@ -87,17 +89,12 @@ class CogValidViewModel : PagingViewModel(), CogValidModel {
     val thinkingErrors = MutableLiveData<List<String>>()
 
     // From entry
-    var thoughts: String? = null
-    var emotions: String? = null
+    var thoughts = MutableLiveData<String?>()
+    var emotions = MutableLiveData<String?>()
 
-    private val completeValue = answer12Value.map { it != null }
-
-    override val title: LiveData<String?> = MutableLiveData("Cognition Validity Test")/*Pair(completeValue, page).map { complete, page ->
-        if (complete)
-            "Completed entry"
-        else
-            "Add entry - $page/$numPages"
-    }*/
+    override val title: LiveData<String?> = page.map {
+        "Cognition Validity - ${it.first}/$numPages"
+    }
 
     override var answer1: Int?
         get() = answer1Value.value

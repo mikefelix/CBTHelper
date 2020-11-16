@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CancellationException
 import java.util.Calendar.DAY_OF_YEAR
+import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
 fun FragmentManager.runTx(tx: FragmentTransaction.() -> Unit){
@@ -271,7 +272,7 @@ fun intentToSendReminderNotification(context: Context, title: String?, message: 
     PendingIntent.FLAG_UPDATE_CURRENT
 )
 
-fun emotionText(vararg emotions: String?): String? {
+fun emotionTextSimple(vararg emotions: String?): String? {
     val filtered = emotions.filterNotNull()
     return when (filtered.size){
         0 -> null
@@ -279,6 +280,19 @@ fun emotionText(vararg emotions: String?): String? {
         2 -> "${filtered[0]} and ${filtered[1]}"
         3 -> "${filtered[0]}, ${filtered[1]} and ${filtered[2]}"
         else -> "${filtered[0]}, ${filtered[1]}, ${filtered[2]}..."
+    }
+}
+
+fun emotionText(vararg emotions: Pair<String?, Int?>): String? {
+    fun Pair<String?, Int?>.text() = if (second == null) first else "$first ($second/10)"
+    
+    val filtered = emotions.filter { it.first != null }
+    return when (filtered.size){
+        0 -> null
+        1 -> filtered[0].text()
+        2 -> "${filtered[0].text()} and ${filtered[1].text()}"
+        3 -> "${filtered[0].text()}, ${filtered[1].text()} and ${filtered[2].text()}"
+        else -> "${filtered[0].text()}, ${filtered[1].text()}, ${filtered[2].text()}..."
     }
 }
 
@@ -338,3 +352,5 @@ fun View.longSnackbar(text: String) {
 fun View.shortSnackbar(text: String) {
     Snackbar.make(this, text, Snackbar.LENGTH_SHORT).show()
 }
+
+fun KClass<*>.requestCode() = (hashCode() and 0x0000ffff).also { println("requestCode for $simpleName is $it") }

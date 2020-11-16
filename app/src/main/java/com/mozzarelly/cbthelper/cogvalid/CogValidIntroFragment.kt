@@ -11,7 +11,7 @@ class CogValidIntroFragment : CogValidFragment() {
         FragmentCogvalIntroBinding.inflate(inflater, container, false).apply {
             buttons.setupButtons()
             buttons.previous.visibility = View.INVISIBLE
-            thoughts.text = viewModel.thoughts
+            thoughts.display(viewModel.thoughts)
         }.root
 
 }

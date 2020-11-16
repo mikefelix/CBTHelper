@@ -1,13 +1,12 @@
 package com.mozzarelly.cbthelper
 
 import android.app.Activity
-import android.app.RemoteInput
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.mozzarelly.cbthelper.analyze.AnalyzeEntryIntroFragment
+import kotlin.reflect.KClass
 
 abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
 
@@ -35,18 +34,35 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
         }
     }
 
+    open val onReturnFrom = mapOf<KClass<*>, (Int) -> Unit>(
+
+    )
+
+    private val onReturn by lazy { onReturnFrom.mapKeys { it.key.requestCode() } }
+
+    final override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        onReturn[requestCode]?.invoke(resultCode)
+    }
+
     inline fun <reified V : ViewModel> ViewModelProvider.NewInstanceFactory.getAndInit(): V = create(V::class.java)
 
-    protected open fun V.setup(){ }
+    abstract fun V.setup()
 
-    inline fun <reified A: CBTActivity<*>> start(requestCode: Int) = startActivityForResult(Intent(this@CBTActivity, A::class.java), requestCode)
+    inline fun <reified A: CBTActivity<*>> start() = startActivityForResult(Intent(this@CBTActivity, A::class.java), A::class.requestCode())
 
-    inline fun <reified A: CBTActivity<*>> start(requestCode: Int, vararg extras: Pair<String, String>) {
+    inline fun <reified A: CBTActivity<*>> start(id: Int) {
+        startActivityForResult(Intent(this@CBTActivity, A::class.java).apply {
+            putExtra("id", id.toString())
+        }, A::class.requestCode())
+    }
+
+    inline fun <reified A: CBTActivity<*>> start(vararg extras: Pair<String, String>) {
         startActivityForResult(Intent(this@CBTActivity, A::class.java).apply {
             extras.forEach {
                 putExtra(it.first, it.second)
             }
-        }, requestCode)
+        }, A::class.requestCode())
     }
 
     inline fun <reified T: Any> Activity.extra(key: String, default: T? = null) = lazy {
@@ -68,8 +84,14 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
 
     inline fun <reified T: CBTFragment> showFragment() = supportFragmentManager.runTx {
         T::class.java.newInstance().let {
-            add(R.id.contentFragment, it)
-            show(it)
+            replace(R.id.contentFragment, it)
+        }
+    }
+
+    fun show(fragment: CBTFragment){
+        supportFragmentManager.runTx {
+            replace(R.id.contentFragment, fragment)
+            title = fragment.title
         }
     }
 }

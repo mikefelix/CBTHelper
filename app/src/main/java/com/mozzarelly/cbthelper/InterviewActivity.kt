@@ -10,13 +10,16 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
-abstract class PagingActivity<V: PagingViewModel> : CBTActivity<V>() {
+abstract class InterviewActivity<V: InterviewViewModel> : CBTActivity<V>() {
+
+    override val layout = R.layout.activity_interview
 
     protected lateinit var fragments: List<Fragment>
 
     protected abstract val fragmentTypes: List<KClass<out PageFragment<V>>>
 
     override fun onSupportNavigateUp(): Boolean {
+        viewModel.save()
         finish()
         return true
     }
@@ -24,8 +27,10 @@ abstract class PagingActivity<V: PagingViewModel> : CBTActivity<V>() {
     override fun onBackPressed() {
         if (viewModel.currPage > 1)
             viewModel.previousPage()
-        else
+        else {
+            viewModel.save()
             super.onBackPressed()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,5 +81,8 @@ abstract class PagingActivity<V: PagingViewModel> : CBTActivity<V>() {
         fragments = fragmentTypes.map { it.java.constructors[0].newInstance() as Fragment }
     }
 
+    override fun onStop() {
+        super.onStop()
+    }
 }
 

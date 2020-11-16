@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asFlow
 
 data class LateInt(val int: Int)
 
-abstract class PagingViewModel : CBTViewModel(){
+abstract class InterviewViewModel : CBTViewModel(){
 
     val page = MutableLiveData<Pair<Int, Int?>>(Pair(0, null))
 

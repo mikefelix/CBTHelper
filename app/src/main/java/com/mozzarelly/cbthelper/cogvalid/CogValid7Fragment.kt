@@ -10,7 +10,7 @@ import com.mozzarelly.cbthelper.databinding.FragmentCogvalQuestion2RadiosBinding
 class CogValid7Fragment : CogValidFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         FragmentCogvalQuestion2RadiosBinding.inflate(inflater, container, false).apply {
-            thoughts.text = viewModel.thoughts
+            thoughts.display(viewModel.thoughts)
             bindQuestion(viewModel.answer7Value,
                 R.string.validityQuestion7,
                 R.string.validityAnswer7A,

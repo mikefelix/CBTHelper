@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorBackground"
+    >
+
+        <TextView style="@style/TextViewDatum"
+            android:id="@+id/emotionsChosen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:drawableTint="@color/colorBackground"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="32dp"
+            tools:ignore="HardcodedText"
+            tools:text="Fear\nAnger"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/groupLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose a category:"
+            android:layout_marginTop="16dp"
+            android:labelFor="@id/emotionGroups"
+            tools:ignore="HardcodedText"
+            />
+
+        <Spinner
+            style="@style/Widget.AppCompat.Spinner.DropDown"
+            android:id="@+id/emotionGroups"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/emotionLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Choose an emotion:"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            tools:ignore="HardcodedText"
+            android:labelFor="@id/emotions"
+            />
+
+        <Spinner
+            style="@style/Widget.AppCompat.Spinner.DropDown"
+            android:id="@+id/emotions"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/writeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Or write it in:"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            tools:ignore="HardcodedText"
+            android:labelFor="@id/writeIn"
+            />
+
+        <EditText
+            android:id="@+id/writeIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+            android:maxLines="1"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:inputType="textCapWords|textAutoCorrect"
+            android:textIsSelectable="true"
+            android:longClickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:importantForAutofill="no"
+            android:imeOptions="actionDone"
+            tools:text="Anger"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/intensityLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Intensity:"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            tools:ignore="HardcodedText"
+            android:labelFor="@id/intensity"
+            />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/intensity"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="18sp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="16dp"
+            android:max="9"
+            android:progress="4"
+            tools:ignore="HardcodedText"
+            />
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:minWidth="120dp"
+            android:text="Add"
+            android:enabled="false"
+            android:layout_marginTop="32dp"
+            android:layout_gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/message"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/viewButton"
+            tools:ignore="HardcodedText" />
+</LinearLayout>

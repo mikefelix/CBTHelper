@@ -2,95 +2,194 @@
 
 package com.mozzarelly.cbthelper
 
+import android.annotation.SuppressLint
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.CheckBox
-import android.widget.RadioButton
-import android.widget.TextView
-import androidx.fragment.app.Fragment
+import android.widget.SeekBar
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.mozzarelly.cbthelper.editentry.AddEntryActivity
-import com.mozzarelly.cbthelper.editentry.EditEntryViewModel
+import com.mozzarelly.cbthelper.databinding.EmotionSelectionBinding
+import com.mozzarelly.cbthelper.databinding.NextPreviousBinding
+import com.mozzarelly.cbthelper.databinding.QuestionSliderBinding
+import com.mozzarelly.cbthelper.editentry.EmotionSelectionViewModel
 
-abstract class PageFragment<V: PagingViewModel>() : CBTFragment() {
+abstract class PageFragment<V: InterviewViewModel> : CBTFragment() {
+
     abstract val viewModel: V
 
-    val updateOps = mutableListOf<() -> Unit>()
+    override val title: String
+        get() = viewModel.title.value ?: "CBT Helper"
 
     fun previousPage(){
-        for (op in updateOps){
-            op()
-        }
-
         viewModel.previousPage()
     }
 
     fun nextPage(){
-        for (op in updateOps){
-            op()
-        }
-
         viewModel.nextPage()
     }
 
     protected fun <T: Any?> Button.enableWhenHasValue(value: LiveData<T>) {
-        viewLifecycleOwner.observe(value){
+        value.observe(viewLifecycleOwner, Observer {
             isEnabled = it != null && it.toString().isNotBlank()
+        })
+    }
+
+    protected fun NextPreviousBinding.setupButtons(enableNextWhenFilled: LiveData<*>? = null){
+        previous.setOnClickListener { previousPage() }
+
+        next.run {
+            enableNextWhenFilled?.let { enableWhenHasValue(it) }
+            setOnClickListener { nextPage() }
         }
     }
 
-    inline fun <reified V: View, reified T: Any?> V.bindTo(liveData: MutableLiveData<T>, text: Int? = null, value: Any? = null){
-        when (this) {
-            is RadioButton -> { //updateOps += { liveData.value = isChecked as T }
-                text?.let { this.text = getString(it) }
-                this.setTag(value)
-                this.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked && value != liveData.value)
-                        liveData.value = (value as? T) ?: error("Need value for radio")
-                }
-            }
-            is CheckBox -> {//updateOps += { liveData.value = isChecked as T }
-                text?.let { this.text = getString(it) }
-                this.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked != liveData.value)
-                        liveData.value = isChecked as T
-                }
-            }
-            is TextView -> {//updateOps += { liveData.value = text.toString() as T }
-                text?.let { this.text = getString(it) }
-                this.addTextChangedListener(object: TextWatcher {
-                    override fun afterTextChanged(s: Editable?) {}
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        val new = this@bindTo.text.toString()
-                        if (new != liveData.value)
-                            liveData.value = new as T
-                    }
-                })
-            }
-            else -> error("Can't handle ${this::class.java.name} && ${T::class.java.name}")
+    protected fun QuestionSliderBinding.bind(answerData: MutableLiveData<Int?>, questionText: Int, lowText: Int, highText: Int) {
+        question.setText(questionText)
+        minimumDesc.setText(lowText)
+        maximumDesc.setText(highText)
+
+        observe(answerData) {
+            val value = it ?: 4
+            answer.progress = value - 1
+            answerVal.text = value.toString()
         }
 
-        liveData.observe(viewLifecycleOwner, Observer { new ->
-            when (this){
-                is RadioButton -> (new as? Int).let {
-                    if (this.getTag() == it)
-                        this.isChecked = true
-                }
-                is CheckBox -> new.toBoolean().let {
-                    if (this.isChecked != it)
-                        this.isChecked = it
-                }
-                is TextView -> new?.toString()?.let {
-                    if (it != this.text.toString())
-                        this.text = it
-                }
-                else -> error("Can't support ${this::class.qualifiedName}")
+        answer.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            var touched = false
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                if (fromUser)
+                    answerData.value = progress + 1
+            }
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                touched = true
             }
         })
     }
+
+    @SuppressLint("SetTextI18n")
+    protected fun EmotionSelectionBinding.bind(viewModel: EmotionSelectionViewModel){
+        fun addEmotion(): Boolean {
+            val emotionVal = writeIn.text?.toString().takeIf { !it.isNullOrBlank() } ?: return false
+            val intensityVal = intensity.progress + 1
+
+            viewModel.editingEmotion?.run {
+                first.value = emotionVal
+                second.value = intensityVal
+            }
+
+            emotionGroups.setSelection(0)
+            emotions.setSelection(0)
+            writeIn.setText("")
+            hideKeyboard()
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                intensity.setProgress(4, true)
+            else
+                intensity.progress = 4
+
+            return true
+        }
+
+        observe(viewModel.canAddEmotions) {
+            (if (it) View.VISIBLE else View.INVISIBLE).let {
+                groupLabel.visibility = it
+                emotionLabel.visibility = it
+                emotionGroups.visibility = it
+                emotions.visibility = it
+                writeLabel.visibility = it
+                writeIn.visibility = it
+            }
+        }
+
+        writeIn.run {
+            setOnEditorActionListener { v, actionId, _ ->
+                when (actionId) {
+                    EditorInfo.IME_ACTION_DONE, EditorInfo.IME_ACTION_SEND -> addEmotion()
+                    else -> false
+                }
+            }
+
+            addTextChangedListener(object: TextWatcher {
+                override fun afterTextChanged(s: Editable?) {}
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    addButton.isEnabled = !s.isNullOrBlank()
+                }
+            })
+        }
+
+        emotionGroups.run {
+            adapter = ArrayAdapter(act, android.R.layout.simple_spinner_item, Emotions.emotionGroups)
+
+            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    emotions.adapter = ArrayAdapter(act, android.R.layout.simple_spinner_item, emptyList<String>())
+                    emotions.setSelection(0)
+                }
+
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    emotions.adapter = ArrayAdapter(act, android.R.layout.simple_spinner_item, Emotions.emotions[position])
+                    emotions.setSelection(0)
+                }
+            }
+        }
+
+        emotions.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                writeIn.setText(emotions.selectedItem?.takeIf { position > 0 }?.toString() ?: "")
+            }
+        }
+
+        addButton.setOnClickListener {
+            addEmotion()
+/*
+            val emotion = writeIn.text.takeIf { !it.isNullOrBlank() }?.toString() ?: return@setOnClickListener
+
+            viewModel.editingEmotion?.run {
+                first.value = emotion
+                second.value = intensity.progress + 1
+            }
+
+            writeIn.setText("")
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                intensity.setProgress(0, true)
+            else
+                intensity.progress = 0
+*/
+        }
+
+        emotionsChosen.display(viewModel.emotionsChosen)
+
+        emotionsChosen.setOnClickListener {
+            requireContext().doAfterConfirm(R.string.deleteConfirm) {
+                viewModel.deleteLastEmotion()
+            }
+        }
+
+        fun setIntensityLabel(value: Int?){
+            intensityLabel.text = "Intensity: ${value ?: ""}"
+        }
+
+        intensity.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                setIntensityLabel(progress + 1)
+            }
+        })
+
+//        setIntensityLabel(viewModel.editingEmotion?.second?.value)
+    }
+
 }

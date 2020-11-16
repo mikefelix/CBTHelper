@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -28,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Thoughts"
-            android:textSize="24sp"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,15 +39,12 @@
             tools:ignore="HardcodedText"
             />
 
-        <TextView
+        <TextView style="@style/TextViewHeading"
             android:id="@+id/textView1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:text="@string/thoughtsQuestion"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
             app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,20 +52,17 @@
             tools:ignore="HardcodedText"
             />
 
-        <EditText
+        <EditText style="@style/EditTextStyle"
             android:id="@+id/thoughts"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="256dp"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             app:layout_constraintTop_toBottomOf="@id/textView1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:inputType="textMultiLine|textCapSentences|textAutoCorrect"
-            android:gravity="start|top"
             android:textIsSelectable="true"
             android:longClickable="true"
             android:focusable="true"

@@ -2,6 +2,8 @@ package com.mozzarelly.cbthelper
 
 import androidx.lifecycle.*
 
+fun <T> LiveData<T>.valueNotNull() = value!!
+
 // Helper function to enable better Kotlin support for nullability checking in the presence of platform nulls.
 inline fun <reified T> LiveData<T>.data(): T = value.let {
     if (null is T){
@@ -12,9 +14,12 @@ inline fun <reified T> LiveData<T>.data(): T = value.let {
     }
 }
 
-fun <T> LifecycleOwner.observe(data: LiveData<T>, lambda: (T) -> Unit) {
+inline fun <reified T> LifecycleOwner.observe(data: LiveData<T>, crossinline lambda: (T) -> Unit) {
     data.observe(this, Observer {
-        lambda(it)
+        if (it == null)
+            println("This shit is null. ${T::class.simpleName}")
+        else
+            lambda(it)
     })
 }
 
@@ -120,7 +125,7 @@ inline fun <T: Any?, R: Any?> LiveData<T?>.mapValueAs(crossinline convert: T.() 
  *
  * @param convert A function to convert T to R (with T as the receiver).
  */
-inline fun <T: Any?, R> LiveData<T?>.mapValue(crossinline convert: (T) -> R?): LiveData<R> = MediatorLiveData<R>().apply {
+/*inline */fun <T: Any?, R> LiveData<T?>.mapValue(/*crossinline */convert: (T) -> R?): LiveData<R> = MediatorLiveData<R>().apply {
     addSource<T>(this@mapValue) { t ->
         value = if (t == null) null else convert(t)
     }
@@ -131,13 +136,20 @@ inline fun <T: Any?, R> LiveData<T?>.mapValue(crossinline convert: (T) -> R?): L
  *
  * @param convert A function to convert (A, B) to R.
  */
-inline fun <reified A, reified B, R> Pair<LiveData<A>, LiveData<B>>.map(crossinline convert: (A, B) -> R): LiveData<R> = MediatorLiveData<R>().apply {
-    addSource<A>(first) {
-        value = convert(first.data(), second.data())
+ fun < A, B, R> Pair<LiveData<A>, LiveData<B>>.map( convert: (A?, B?) -> R): LiveData<R> = MediatorLiveData<R>().apply {
+    val update: Function0<Unit> = {
+        val a = first.value
+        val b = second.value
+
+        when {
+//            a == null -> println("This $ {A::class.simpleName} shouldn't be but is null.")
+//            b == null -> println("This $ {B::class.simpleName} shouldn't be but is null.")
+            else -> value = convert(a, b)
+        }
     }
-    addSource<B>(second) {
-        value = convert(first.data(), second.data())
-    }
+
+    addSource(first) { update() }
+    addSource(second) {update() }
 }
 
 inline fun <reified A, reified B, R> Pair<LiveData<A>, LiveData<B>>.flatMap(crossinline convert: (A, B) -> LiveData<R>): LiveData<R> = object: MediatorLiveData<R>(){
@@ -168,19 +180,19 @@ inline fun <reified A, reified B, R> Pair<LiveData<A>, LiveData<B>>.flatMap(cros
     }
 }
 
-inline fun <reified A, reified B, reified C, R> Triple<LiveData<A>, LiveData<B>, LiveData<C>>.map(crossinline convert: (A, B, C) -> R): LiveData<R> = MediatorLiveData<R>().apply {
+inline fun <reified A, reified B, reified C, R> Triple<LiveData<A>, LiveData<B>, LiveData<C>>.map(crossinline convert: (A?, B?, C?) -> R): LiveData<R> = MediatorLiveData<R>().apply {
     addSource(first) {
-        value = convert(first.data(), second.data(), third.data())
+        value = convert(first.value, second.value, third.value)
     }
     addSource(second) {
-        value = convert(first.data(), second.data(), third.data())
+        value = convert(first.value, second.value, third.value)
     }
     addSource(third) {
-        value = convert(first.data(), second.data(), third.data())
+        value = convert(first.value, second.value, third.value)
     }
 }
 
-inline fun observeAll(vararg liveDatas: LiveData<*>, crossinline handler: () -> Unit) {
+/*inline */fun observeAll(vararg liveDatas: LiveData<*>, /*crossinline */handler: () -> Unit) {
     for (liveData in liveDatas){
         liveData.observeForever {
             handler()
@@ -188,7 +200,7 @@ inline fun observeAll(vararg liveDatas: LiveData<*>, crossinline handler: () -> 
     }
 }
 
-inline fun LifecycleOwner.observeAll(vararg liveDatas: LiveData<*>, crossinline handler: () -> Unit) {
+/*inline */fun LifecycleOwner.observeAll(vararg liveDatas: LiveData<*>, /*crossinline */handler: () -> Unit) {
     for (liveData in liveDatas){
         liveData.observe(this, Observer {
             handler()

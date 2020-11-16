@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import com.mozzarelly.cbthelper.*
+import com.mozzarelly.cbthelper.databinding.EmotionSelectionBinding
 import com.mozzarelly.cbthelper.databinding.FragmentAdd2ExperienceBinding
 
 class AddEntry2Fragment : AddEntryFragment() {
@@ -20,7 +18,7 @@ class AddEntry2Fragment : AddEntryFragment() {
             }
 
             buttons.next.run {
-                enableWhenHasValue(viewModel.emotionsChosenValue)
+                enableWhenHasValue(viewModel.emotionSelection.emotionsChosen)
 
                 setOnClickListener {
                     nextPage()
@@ -29,80 +27,15 @@ class AddEntry2Fragment : AddEntryFragment() {
 
             //https://developer.android.com/training/keyboard-input/style#AutoComplete
 
-            writeIn.setOnEditorActionListener { v, actionId, _ ->
-                when (actionId) {
-                    EditorInfo.IME_ACTION_DONE, EditorInfo.IME_ACTION_SEND -> {
-                        val e = v?.text?.toString().takeIf { !it.isNullOrBlank() }
-                        if (e != null) {
-                            viewModel.editingEmotion?.value = e
-                            emotionGroups.setSelection(0)
-                            emotions.setSelection(0)
-                            writeIn.setText("")
-                            hideKeyboard()
-                            true
-                        } else {
-                            false
-                        }
-                    }
-                    else -> false
-                }
-            }
-
-            emotionGroups.adapter = ArrayAdapter(act, android.R.layout.simple_spinner_item,
-                Emotions.emotionGroups
-            )
-
-            emotionGroups.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    viewModel.selectedEmotionGroupIndex.value = position
-                    emotions.adapter = ArrayAdapter(act, android.R.layout.simple_spinner_item, Emotions.emotions[position])
-                }
-            }
-
-            emotions.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    val groupIndex = emotionGroups.selectedItemPosition
-                    val emotion = position.takeIf { it > 0 }?.let { Emotions.emotions[groupIndex][it] }
-                    viewModel.editingEmotion?.value = emotion
-
-                    if (position > 0) {
-                        emotionGroups.setSelection(0)
-                        emotions.setSelection(0)
-                    }
-                }
-            }
-
-            observe(viewModel.selectedEmotionGroupIndex) {
-                if (it != emotionGroups.selectedItemPosition)
-                    emotionGroups.setSelection(it)
-
-                viewModel.selectedEmotionIndex.value = 0
-            }
-
-            observe(viewModel.selectedEmotionIndex) {
-                if (it != emotions.selectedItemPosition)
-                    emotions.setSelection(it)
-            }
-
-            emotionsChosen.display(viewModel.emotionsChosenValue)
-
-            emotionsChosen.setOnClickListener {
-                requireContext().doAfterConfirm(R.string.deleteConfirm) {
-                    viewModel.deleteLastEmotion()
-                }
-            }
-
-            observe(viewModel.canAddEmotions) {
-                emotionSelection.visibility = if (it) View.VISIBLE else View.INVISIBLE
-            }
+            emotionSelection.bind(viewModel.emotionSelection)
 
             observe(viewModel.situationTypeValue) {
                 textView1.text = "What emotions did you feel during this ${if (it) "situation" else "conversation"}?"
             }
 
         }.root
+
+    fun EmotionSelectionBinding.bindQuestion(){
+
+    }
 }

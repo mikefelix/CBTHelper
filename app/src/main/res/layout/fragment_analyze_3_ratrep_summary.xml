@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackground"
+    android:id="@+id/scroll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+  >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Replacement Thoughts"
+            android:gravity="center"
+            android:textSize="26sp"
+            android:paddingBottom="8dp"
+            android:background="@drawable/bottom_border"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/thoughtHeading"
+            app:layout_constraintVertical_chainStyle="spread_inside"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/thoughtHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/situationType"
+            android:text="You thought:"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/thought"
+            tools:ignore="HardcodedText" />
+
+        <TextView style="@style/TextViewDatum"
+            android:id="@+id/thought"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/emotionsHeading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/thoughtHeading"
+            tools:ignore="HardcodedText"
+            tools:text="What they thought" />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/emotionsHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/situationType"
+            android:text="Which made you feel:"
+            app:layout_constraintBottom_toTopOf="@id/thought"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/thought"
+            tools:ignore="HardcodedText" />
+
+        <TextView style="@style/TextViewDatum"
+            android:id="@+id/emotions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/insteadHeading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emotionsHeading"
+            tools:ignore="HardcodedText"
+            tools:text="How they felt" />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/insteadHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/situationType"
+            android:text="If you had instead thought:"
+            app:layout_constraintBottom_toTopOf="@id/instead"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emotions"
+            tools:ignore="HardcodedText" />
+
+        <TextView style="@style/TextViewDatum"
+            android:id="@+id/instead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/wouldHaveHeading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/insteadHeading"
+            tools:ignore="HardcodedText"
+            tools:text="Better thinking" />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/wouldHaveHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Then you would likely have felt:"
+            app:layout_constraintBottom_toTopOf="@id/wouldHaveFelt"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/instead"
+            tools:ignore="HardcodedText" />
+
+        <TextView style="@style/TextViewDatum"
+            android:id="@+id/wouldHaveFelt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/question"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wouldHaveHeading"
+            tools:ignore="HardcodedText"
+            tools:text="Better feels" />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/comparison"
+            android:text="How do these compare? Is it emotionally healthier?"
+            app:layout_constraintBottom_toTopOf="@id/comparison"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/wouldHaveFelt"
+            tools:ignore="HardcodedText" />
+
+        <EditText style="@style/EditTextStyle"
+            android:id="@+id/comparison"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAutofill="no"
+            android:inputType="textLongMessage"
+            android:minHeight="160dp"
+            app:layout_constraintBottom_toTopOf="@id/expressedHeading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/question"
+            app:layout_constraintVertical_weight="50"
+            tools:ignore="HardcodedText"
+            tools:text="text" />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/expressedHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="You expressed what you felt by:"
+            app:layout_constraintBottom_toTopOf="@id/expressed"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/comparison"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:id="@+id/expressed"
+            style="@style/TextViewDatum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/reactedHeading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/expressedHeading"
+            tools:ignore="HardcodedText"
+            tools:text="What they did" />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/reactedHeading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="And people reacted by:"
+            app:layout_constraintBottom_toTopOf="@id/reacted"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/expressed"
+            tools:ignore="HardcodedText" />
+
+        <TextView style="@style/TextViewDatum"
+            android:id="@+id/reacted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/healthy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reactedHeading"
+            tools:ignore="HardcodedText"
+            tools:text="How they reacted" />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/healthy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Was this behavior emotionally healthy?"
+            app:layout_constraintBottom_toTopOf="@id/testInvitation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/reacted"
+            tools:ignore="HardcodedText" />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/testInvitation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Let's test whether your behavior was rational or irrational:"
+            app:layout_constraintBottom_toTopOf="@id/testButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/healthy"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/testButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/begin_behavior_validity_test"
+            app:layout_constraintBottom_toTopOf="@id/skipInvitation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/testInvitation" />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/skipInvitation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:labelFor="@id/situationType"
+            android:text="No, skip the test because I already know that my behavior was:"
+            app:layout_constraintBottom_toTopOf="@id/skipRationalButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/testButton"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/skipRationalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:padding="16dp"
+            android:text="@string/rational"
+            app:layout_constraintEnd_toStartOf="@id/skipIrrationalButton"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/skipInvitation" />
+
+        <Button
+            android:id="@+id/skipIrrationalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/irrational"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/skipRationalButton"
+            app:layout_constraintTop_toTopOf="@id/skipRationalButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

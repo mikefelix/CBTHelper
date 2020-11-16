@@ -8,36 +8,40 @@ import androidx.fragment.app.activityViewModels
 import com.mozzarelly.cbthelper.CBTFragment
 import com.mozzarelly.cbthelper.R
 import com.mozzarelly.cbthelper.cogvalid.CogValidActivity
-import com.mozzarelly.cbthelper.databinding.FragmentAnalyzeIntroBinding
+import com.mozzarelly.cbthelper.databinding.FragmentAnalyze1EntrySummaryBinding
 import com.mozzarelly.cbthelper.observe
 
-class AnalyzeEntryIntroFragment : CBTFragment() {
+class AnalyzeEntrySummaryFragment : CBTFragment() {
 
-    val viewModel: AnalyzeEntryViewModel by activityViewModels()// { act.viewModelProvider }
+    val viewModel: AnalyzeViewModel by activityViewModels()// { act.viewModelProvider }
+
+    override val title = "Summary"
+//        get() = if (viewModel.entry.value?.situationType == false) "Conversation Summary" else "Situation Summary"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        FragmentAnalyzeIntroBinding.inflate(inflater, container, false).apply {
-            situation.display(viewModel.situation)
-            emotions.display(viewModel.emotionsChosen)
+        FragmentAnalyze1EntrySummaryBinding.inflate(inflater, container, false).apply {
+            pageTitle.display(viewModel.typeString)
+            situation.displayDatum(viewModel.situation)
+            emotions.displayDatum(viewModel.emotionsChosen)
 
             observe(viewModel.cogValid){
                 when {
                     it == null -> {
                         testButton.setText(R.string.begin_cognition_validity_test)
                         testButton.setOnClickListener {
-                            start<CogValidActivity>(RequestCodeStartCogValidTest,"id" to viewModel.id.toString())
+                            start<CogValidActivity>(viewModel.id)
                         }
                     }
                     it.complete -> {
                         testButton.setText(R.string.view_cognition_validity_test)
                         testButton.setOnClickListener {
-                            act.showFragment<CogValidSummaryFragment>()
+                            act.showFragment<AnalyzeCogValidSummaryFragment>()
                         }
                     }
                     else -> {
                         testButton.setText(R.string.continue_cognition_validity_test)
                         testButton.setOnClickListener {
-                            start<CogValidActivity>(RequestCodeStartCogValidTest,"id" to viewModel.id.toString())
+                            start<CogValidActivity>(viewModel.id)
                         }
                     }
                 }

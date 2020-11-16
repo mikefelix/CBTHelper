@@ -5,82 +5,65 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.activity.viewModels
+import androidx.annotation.MainThread
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.whenStarted
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelLazy
+import androidx.lifecycle.ViewModelProvider
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
 import com.mozzarelly.cbthelper.viewentries.EntriesViewModel
 import com.mozzarelly.cbthelper.viewentries.ViewEntriesActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
-
-const val RequestCodeStartEntry = 1
-const val RequestCodeContinueEntry = 2
-const val RequestCodeViewEntries = 3
+import kotlin.reflect.KClass
 
 class MainActivity : CBTActivity<EntriesViewModel>() {
 
     override val layout = R.layout.activity_main
-    override val viewModel: EntriesViewModel by viewModels { viewModelProvider }
+    override val viewModel: EntriesViewModel by cbtViewModel()
 
-    private val dao: EntryDao by lazy { CBTDatabase.getEntryDao(applicationContext) }
+    override fun EntriesViewModel.setup() {
+        load()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.load()
-/*
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
-                    .commitNow()
-        }
-*/
-        addButton.setOnClickListener {
-            lifecycleScope.launch {
-                whenStarted {
-                    try {
-                        viewModel.incompleteEntry.collect { entry ->
-                            if (entry != null) {
-                                presentChoice(R.string.discardConfirmMsg,
-                                    choice1 = R.string.continueButton,
-                                    choice2 = R.string.newEntryButton,
-                                    choice1Action = {
-                                        start<AddEntryActivity>(RequestCodeContinueEntry)
-                                    },
-                                    choice2Action = {
-                                        start<AddEntryActivity>(RequestCodeStartEntry, "forceNew" to "true")
-                                    }
-                                )
-                            }
-                            else {
-                                start<AddEntryActivity>(RequestCodeStartEntry)
-                            }
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayShowHomeEnabled(false)
+
+        observe(viewModel.incompleteEntry){
+            if (it == null) {
+                addButton.setOnClickListener {
+                    start<AddEntryActivity>()
+                }
+            }
+            else {
+                addButton.setOnClickListener {
+                    presentChoice(R.string.discardConfirmMsg,
+                        choice1 = R.string.continueButton,
+                        choice2 = R.string.newEntryButton,
+                        choice1Action = {
+                            start<AddEntryActivity>()
+                        },
+                        choice2Action = {
+                            start<AddEntryActivity>("forceNew" to "true")
                         }
-                    }
-                    catch (e: Exception) {
-                        e.rethrowIfCancellation()
-                        e.printStackTrace()
-                    }
+                    )
                 }
             }
         }
 
         viewButton.setOnClickListener {
-            start<ViewEntriesActivity>(RequestCodeViewEntries)
+            start<ViewEntriesActivity>()
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode){
-            RequestCodeStartEntry, RequestCodeContinueEntry ->
-                findViewById<View>(R.id.main).shortSnackbar(if (resultCode >= 0) "Entry saved." else "Entry could not be saved.")
+    override val onReturnFrom = mapOf<KClass<*>, (Int) -> Unit>(
+        AddEntryActivity::class to { it: Int ->
+            findViewById<View>(R.id.main).shortSnackbar(if (it >= 0) "Entry saved." else "Entry could not be saved.")
         }
-    }
+    )
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -103,3 +86,17 @@ fun FragmentManager?.show(fragment: DialogFragment){
     this ?: return
     fragment.show(this, "fragTag")
 }
+
+@MainThread
+inline fun <reified VM : CBTViewModel> CBTActivity<VM>.cbtViewModel(): Lazy<VM> =
+    ViewModelLazy(VM::class, { viewModelStore }, { object: ViewModelProvider.NewInstanceFactory() {
+        @Suppress("UNCHECKED_CAST")
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return modelClass.newInstance().also {
+                (it as VM).run {
+                    applicationContext = this@cbtViewModel.applicationContext
+                    setup()
+                }
+            }
+        }
+    } })

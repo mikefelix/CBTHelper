@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <TextView style="@style/TextViewHeading"
+        android:id="@+id/intro1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/behaviorIntro1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/emotions"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="12"
+        tools:ignore="HardcodedText"
+    />
+
+
+    <TextView style="@style/TextViewDatum"
+        android:id="@+id/emotions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Rage"
+        app:layout_constraintTop_toBottomOf="@id/intro1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/intro2"
+        app:layout_constraintVertical_weight="18"
+        tools:ignore="HardcodedText"
+        />
+
+    <TextView style="@style/TextViewHeading"
+        android:id="@+id/intro2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/behaviorIntro2"
+        app:layout_constraintTop_toBottomOf="@id/emotions"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/expression"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="12"
+        tools:ignore="HardcodedText"
+    />
+
+    <TextView style="@style/TextViewDatum"
+        android:id="@+id/expression"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="I raged"
+        app:layout_constraintTop_toBottomOf="@id/intro2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/instructions"
+        app:layout_constraintVertical_weight="18"
+        tools:ignore="HardcodedText"
+        />
+
+    <TextView style="@style/TextViewHeading"
+        android:id="@+id/instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/behaviorPrompt"
+        app:layout_constraintTop_toBottomOf="@id/expression"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="12"
+        tools:ignore="HardcodedText"
+        />
+
+    <include
+        android:id="@+id/buttons"
+        layout="@layout/next_previous"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

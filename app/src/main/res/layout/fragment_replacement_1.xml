@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttons"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView style="@style/TextViewHeading"
+                android:id="@+id/situationHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/situationType"
+                android:text="The situation:"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/situation"
+                tools:ignore="HardcodedText" />
+
+            <TextView style="@style/TextViewDatum"
+                android:id="@+id/situation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/situationHeading"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/emotionsHeading"
+                tools:ignore="HardcodedText"
+                tools:text="I was in the bar..." />
+
+            <TextView style="@style/TextViewHeading"
+                android:id="@+id/emotionsHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:labelFor="@id/situationType"
+                android:text="Your thoughts:"
+                app:layout_constraintTop_toBottomOf="@id/situation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/thoughts"
+                tools:ignore="HardcodedText" />
+
+            <TextView style="@style/TextViewDatum"
+                android:id="@+id/thoughts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/emotionsHeading"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/errorsHeading"
+                tools:ignore="HardcodedText"
+                tools:text="I suck..." />
+
+            <TextView style="@style/TextViewHeading"
+                android:id="@+id/errorsHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:labelFor="@id/situationType"
+                android:text="Thinking errors:"
+                app:layout_constraintTop_toBottomOf="@id/thoughts"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/errors"
+                tools:ignore="HardcodedText" />
+
+            <TextView style="@style/TextViewDatum"
+                android:id="@+id/errors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@id/errorsHeading"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/insteadHeading"
+                tools:ignore="HardcodedText"
+                tools:text="Overanalyzing" />
+
+            <TextView style="@style/TextViewHeading"
+                android:id="@+id/insteadHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:labelFor="@id/answer"
+                android:text="Let's pretend that you could go back in time and redo this situation or conversation. What thoughts could you have had instead that would have been more rational?"
+                app:layout_constraintTop_toBottomOf="@id/errors"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/answer"
+                tools:ignore="HardcodedText" />
+
+            <EditText style="@style/EditTextStyle"
+                android:id="@+id/answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:importantForAutofill="no"
+                android:inputType="textLongMessage"
+                android:minHeight="360dp"
+                app:layout_constraintTop_toBottomOf="@id/insteadHeading"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_weight="50"
+                tools:ignore="HardcodedText"
+                tools:text="text" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/buttons"
+        layout="@layout/next_previous"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        app:layout_constraintTop_toBottomOf="@id/scroll"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

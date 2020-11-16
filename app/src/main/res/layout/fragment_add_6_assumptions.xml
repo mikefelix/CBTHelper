@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -28,7 +29,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Core Beliefs and Assumptions"
-                android:textSize="24sp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -39,14 +39,11 @@
                 tools:ignore="HardcodedText"
                 />
 
-            <TextView
+            <TextView style="@style/TextViewHeading"
                 android:id="@+id/textView1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginTop="16dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:text="Now take a minute and ask yourself, &quot;What assumptions do I have about myself or others that affected the way I thought and felt about this situation?&quot;"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -56,15 +53,12 @@
                 tools:ignore="HardcodedText"
                 />
 
-            <EditText
+            <EditText style="@style/EditTextStyle"
                 android:id="@+id/assumptions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="256dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="start|top"
                 app:layout_constraintTop_toBottomOf="@id/textView1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
