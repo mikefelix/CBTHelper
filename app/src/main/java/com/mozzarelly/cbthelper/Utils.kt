@@ -173,6 +173,11 @@ inline fun <reified T> SharedPreferences.getOrElse(key: String, orElse: () -> T)
     }
 }
 
+fun SharedPreferences.getBoolean(key: String): Boolean = when {
+    !contains(key) -> false
+    else -> getBoolean(key, false)
+}
+
 inline fun <reified T> SharedPreferences.getOrInit(key: String, orElse: () -> T): T {
     return if (contains(key)) {
         when (T::class) {
