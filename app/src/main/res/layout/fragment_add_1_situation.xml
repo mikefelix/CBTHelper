@@ -61,7 +61,7 @@
                 app:layout_constraintTop_toBottomOf="@id/textView1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/textView3"
+                app:layout_constraintBottom_toTopOf="@id/textView2"
                 >
 
                 <RadioButton style="@style/RadioDatum"
@@ -69,6 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="A situation"
+                    android:gravity="center_vertical"
                     tools:ignore="HardcodedText"
                     />
 
@@ -76,10 +77,43 @@
                     android:id="@+id/radioConversation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:text="A conversation"
                     tools:ignore="HardcodedText"
                     />
             </RadioGroup>
+
+            <TextView style="@style/TextViewHeading"
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="More details"
+                app:layout_constraintTop_toBottomOf="@id/situationType"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/whoWhere"
+                tools:ignore="HardcodedText"
+                android:labelFor="@id/whoWhere"
+                />
+
+            <EditText style="@style/EditTextStyle"
+                android:id="@+id/whoWhere"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:lines="1"
+                android:maxLines="1"
+                app:layout_constraintTop_toBottomOf="@id/textView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/textView3"
+                android:inputType="textCapSentences|textAutoCorrect"
+                android:textIsSelectable="true"
+                android:longClickable="true"
+                android:focusable="true"
+                android:importantForAutofill="no"
+                android:imeOptions="actionDone"
+                />
 
             <TextView style="@style/TextViewHeading"
                 android:id="@+id/textView3"
@@ -87,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="What happened? Briefly note what you heard and saw."
-                app:layout_constraintTop_toBottomOf="@id/situationType"
+                app:layout_constraintTop_toBottomOf="@id/whoWhere"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/situationDesc"
@@ -110,38 +144,6 @@
                 android:focusable="true"
                 android:gravity="start|top"
                 android:importantForAutofill="no"
-                />
-
-            <TextView style="@style/TextViewHeading"
-                android:id="@+id/textView2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="More details"
-                app:layout_constraintTop_toBottomOf="@id/situationDesc"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/whoWhere"
-                tools:ignore="HardcodedText"
-                android:labelFor="@id/whoWhere"
-                />
-
-            <EditText style="@style/EditTextStyle"
-                android:id="@+id/whoWhere"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:lines="1"
-                android:maxLines="1"
-                app:layout_constraintTop_toBottomOf="@id/textView2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:inputType="textCapSentences|textAutoCorrect"
-                android:textIsSelectable="true"
-                android:longClickable="true"
-                android:focusable="true"
-                android:importantForAutofill="no"
-                android:imeOptions="actionDone"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

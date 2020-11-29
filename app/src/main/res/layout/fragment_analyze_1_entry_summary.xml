@@ -117,7 +117,7 @@
             android:id="@+id/skipInvitation"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Or skip the test because I already know that my thoughts were:"
+            android:text="Or you can skip the test because you already know that your thoughts were:"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@id/emotions"
             app:layout_constraintEnd_toEndOf="parent"

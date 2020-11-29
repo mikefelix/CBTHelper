@@ -44,7 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Now take a minute and ask yourself, &quot;What assumptions do I have about myself or others that affected the way I thought and felt about this situation?&quot;"
+                android:text="@string/assumptionsQuestion"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

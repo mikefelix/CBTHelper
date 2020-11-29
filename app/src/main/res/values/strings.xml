@@ -41,7 +41,9 @@
     <string name="newEntryButton">Start new</string>
 
     <string name="thoughtsQuestion">What were you thinking that led you to feel that way?</string>
-    <string name="thoughtsHint">Add your thoughts here. Please write only thoughts you had during this situation (or conversation), not what you think about it now.</string>
+    <string name="thoughtsHint">Add your thoughts here. Please write only thoughts you had at that time, not what you think about it now.</string>
+
+    <string name="assumptionsQuestion">Now take a minute and ask yourself, \"What assumptions do I have about myself or others that influenced the way I thought and felt about this situation?\"</string>
 
     <string name="expressionQuestion">What did you do and say that showed the emotions you felt?</string>
     <string name="expressionHint">For example, “I cried”, or “I yelled at…”</string>
