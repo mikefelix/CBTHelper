@@ -16,9 +16,9 @@ inline fun <reified T> LiveData<T>.data(): T = value.let {
 
 inline fun <reified T> LifecycleOwner.observe(data: LiveData<T>, crossinline lambda: (T) -> Unit) {
     data.observe(this, Observer {
-        if (it == null)
-            println("This shit is null. ${T::class.simpleName}")
-        else
+//        if (it == null)
+//            println("A ${T::class.simpleName} is null!")
+//        else
             lambda(it)
     })
 }

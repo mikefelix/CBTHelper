@@ -1,10 +1,12 @@
 package com.mozzarelly.cbthelper
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.annotation.MainThread
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -26,11 +28,18 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
         load()
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
         supportActionBar?.setDisplayShowHomeEnabled(false)
+
+        findViewById<TextView>(R.id.version).text = "Version " + BuildConfig.VERSION_NAME
+
+//        addButton.setOnClickListener {
+//            start<AddEntryActivity>()
+//        }
 
         observe(viewModel.incompleteEntry){
             if (it == null) {
