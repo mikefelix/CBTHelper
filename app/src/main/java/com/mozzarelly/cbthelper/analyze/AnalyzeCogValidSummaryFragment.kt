@@ -26,11 +26,39 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
             }
 
             observe(viewModel.emotionsChosen) {
-                text3.text = getString(R.string.validitySummary3, it.toLowerCase(Locale.US))
+                text3.text = getString(R.string.validitySummary3, it?.toLowerCase(Locale.US))
             }
 
-            beginRationalButton.setOnClickListener {
-                start<ReplacementThoughtsActivity>(viewModel.id)
+            observe(viewModel.ratRep){
+                when {
+                    it == null -> {
+                        continueRationalButton.visibility = View.GONE
+                        beginRationalButton.run {
+                            setText(R.string.begin_replacement_thoughts)
+                            setOnClickListener {
+                                start<ReplacementThoughtsActivity>(viewModel.id)
+                            }
+                        }
+                    }
+                    it.complete -> {
+                        continueRationalButton.visibility = View.GONE
+                        beginRationalButton.run {
+                            setText(R.string.view_replacement_thoughts)
+                            setOnClickListener {
+                                act.showFragment<AnalyzeRatRepSummaryFragment>()
+                            }
+                        }
+                    }
+                    else -> {
+                        continueRationalButton.visibility = View.VISIBLE
+                        beginRationalButton.run {
+                            setText(R.string.continue_replacement_thoughts)
+                            setOnClickListener {
+                                start<ReplacementThoughtsActivity>(viewModel.id)
+                            }
+                        }
+                    }
+                }
             }
 
             skipRationalButton.setOnClickListener {

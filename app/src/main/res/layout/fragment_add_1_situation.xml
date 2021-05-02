@@ -138,7 +138,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/textView2"
                 android:minHeight="180dp"
-                android:inputType="textMultiLine|textCapSentences"
+                android:inputType="textLongMessage|textCapSentences"
                 android:textIsSelectable="true"
                 android:longClickable="true"
                 android:focusable="true"

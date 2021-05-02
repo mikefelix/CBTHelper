@@ -1,5 +1,6 @@
 package com.mozzarelly.cbthelper.viewentries
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mozzarelly.cbthelper.CBTDatabase
@@ -12,11 +13,11 @@ class EntriesViewModel : CBTViewModel() {
 
     private val dao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
 
-    val allEntries = MutableLiveData<List<Entry>>() //: LiveData<List<Entry>> by lazy { dao.getAllCompleteAsync() }
+    val allEntries: /* = *MutableLiveData<List<Entry>>()*/ LiveData<List<Entry>> by lazy { dao.getAllCompleteAsync() }
     val incompleteEntry = MutableLiveData<Entry?>() //: LiveData<Entry?> by lazy { dao.getIncompleteAsync() } //= MutableLiveData()
 
     fun load() {
-        viewModelScope.launch {
+       /* viewModelScope.launch {
             try {
                 allEntries.value = dao.getAllComplete()
             }
@@ -24,7 +25,7 @@ class EntriesViewModel : CBTViewModel() {
                 e.rethrowIfCancellation()
                 e.printStackTrace()
             }
-        }
+        }*/
 
         viewModelScope.launch {
             try {

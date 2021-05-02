@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    <TextView style="@style/TextViewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="An analogy"
+        android:gravity="center"
+        android:textSize="26sp"
+        tools:ignore="HardcodedText"
+    />
+
+    <TextView style="@style/TextViewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/behaviorAnalogy1"
+        app:layout_constraintTop_toBottomOf="@id/expression"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="12"
+        tools:ignore="HardcodedText"
+        />
+
+    <TextView style="@style/TextViewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/behaviorAnalogy2"
+        app:layout_constraintTop_toBottomOf="@id/expression"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="12"
+        tools:ignore="HardcodedText"
+        />
+
+    <TextView style="@style/TextViewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/behaviorAnalogy3"
+        app:layout_constraintTop_toBottomOf="@id/expression"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="12"
+        tools:ignore="HardcodedText"
+        />
+
+    <TextView style="@style/TextViewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/behaviorAnalogy4"
+        app:layout_constraintTop_toBottomOf="@id/expression"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="12"
+        tools:ignore="HardcodedText"
+        />
+
+    <TextView style="@style/TextViewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/behaviorAnalogy5"
+        app:layout_constraintTop_toBottomOf="@id/expression"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="12"
+        tools:ignore="HardcodedText"
+        />
+
+    <TextView style="@style/TextViewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/behaviorAnalogy6"
+        app:layout_constraintTop_toBottomOf="@id/expression"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="12"
+        tools:ignore="HardcodedText"
+        />
+
+    <TextView style="@style/TextViewHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/behaviorAnalogy7"
+        app:layout_constraintTop_toBottomOf="@id/expression"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintVertical_weight="12"
+        tools:ignore="HardcodedText"
+        />
+
+    <include
+        android:id="@+id/buttons"
+        layout="@layout/next_previous"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+</LinearLayout>
+</ScrollView>

@@ -42,7 +42,14 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
 
     final override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        onReturn[requestCode]?.invoke(resultCode)
+        val function = onReturn[requestCode]
+        if (function == null) {
+            println("No return handler for requestCode $requestCode")
+        }
+        else {
+            println("Invoke return handler for requestCode $requestCode")
+            function.invoke(resultCode)
+        }
     }
 
     inline fun <reified V : ViewModel> ViewModelProvider.NewInstanceFactory.getAndInit(): V = create(V::class.java)

@@ -5,25 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.mozzarelly.cbthelper.*
 import com.mozzarelly.cbthelper.analyze.AnalyzeActivity
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
-import kotlinx.android.synthetic.main.activity_view_entries.*
 import org.threeten.bp.format.DateTimeFormatter
 
-
-const val RequestCodeViewEntry = 154
-const val RequestCodeAddEntry = 397
 
 class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
 
     override val layout = R.layout.activity_view_entries
     override val viewModel: EntriesViewModel by cbtViewModel()
+
+    private lateinit var entriesAdapter: EntryAdapter
+    private lateinit var recycler: RecyclerView
 
     override fun EntriesViewModel.setup() {
         load()
@@ -32,13 +31,13 @@ class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        title = "Completed entries"
+        title = "Your entries"
 
-        fab.setOnClickListener {
+        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             start<AddEntryActivity>("forceNew" to "true")
         }
 
-        val adapter = EntryAdapter().apply {
+        entriesAdapter = EntryAdapter().apply {
             setOnItemClickListener(object : OnItemClickListener {
                 override fun onItemClick(entry: Entry?) {
                     entry?.id ?: return
@@ -47,22 +46,24 @@ class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
             })
         }
 
-        entries.run {
+        findViewById<RecyclerView>(R.id.entries).run {
+            recycler = this
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            this.adapter = adapter
+            this.adapter = entriesAdapter
 
             attachHelper(ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
                 override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean = false
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    delete(adapter.getEntryAt(viewHolder.adapterPosition))
+                    delete(entriesAdapter.getEntryAt(viewHolder.adapterPosition))
                 }
             }))
         }
 
         observe(viewModel.allEntries) {
-            adapter.submitList(it)
+            entriesAdapter.submitList(it)
+            recycler.smoothScrollToPosition(0)
         }
     }
 
@@ -107,7 +108,7 @@ class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
         inner class EntryListItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val title: TextView = itemView.findViewById(R.id.firstLine)
             private val subtitle: TextView = itemView.findViewById(R.id.secondLine)
-            private val button: Button = itemView.findViewById(R.id.menuButton)
+            private val button: View = itemView.findViewById(R.id.menuButton)
 
             @SuppressLint("SetTextI18n")
             fun bind(entry: Entry){

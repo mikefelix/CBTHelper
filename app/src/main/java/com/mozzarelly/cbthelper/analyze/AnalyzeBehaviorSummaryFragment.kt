@@ -16,7 +16,7 @@ class AnalyzeBehaviorSummaryFragment : CBTFragment() {
 
     override val title = "Summary"
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         FragmentAnalyze4BehaviorSummaryBinding.inflate(inflater, container, false).apply {
 
         }.root

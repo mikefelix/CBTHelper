@@ -3,6 +3,7 @@
     <string name="title_activity_add_entry">Add an Entry</string>
     <string name="title_activity_analyze_entry">Analyze an Entry</string>
     <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
     <string name="action_reminder">Reminder time</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="welcome_message">Welcome to CBT Helper!</string>
@@ -124,7 +125,7 @@
     <string name="replacement2Question">How much do you believe these replacement thoughts? How true do they feel to you?</string>
     <string name="replacement3Question1">Take a moment and imagine yourself back in that same situation. This time however, imagine yourself thinking…</string>
     <string name="replacement3Question2">If these had been your thoughts instead, what would you have felt?</string>
-    <string name="replacement4Question1">Now imagine yourself back in that same %1$s, but feeling %1$s instead. If this were the case, what would you have done or said to show or express this feeling?</string>
+    <string name="replacement4Question1">Now imagine yourself back in that same %1$s, but feeling %2$s instead. If this were the case, what would you have done or said to show or express this feeling?</string>
     <string name="replacement5Question">How would this affect the people around you? In other words, how would they respond to what you would say and do?</string>
 
     <string name="moveOn">OK. Let’s move on and test whether the way that you expressed what you felt was rational or irrational.</string>
@@ -136,6 +137,8 @@
     <string name="continue_cognition_validity_test">Continue Cognition Validity Test</string>
     <string name="view_cognition_validity_test">Cognition Validity Test Results</string>
     <string name="begin_behavior_validity_test">Begin Behavior Validity Test</string>
+    <string name="continue_behavior_validity_test">Continue Behavior Validity Test</string>
+    <string name="view_behavior_validity_test">View Behavior Validity Test</string>
     <string name="rational">Rational</string>
     <string name="irrational">Irrational</string>
     <string name="yes">Yes</string>
@@ -145,6 +148,13 @@
     <string name="title_cogvalid_activity">Cognition Validity Test</string>
     <string name="title_ratrep_activity">Replacement Thoughts Test</string>
 
+    <string name="behaviorAnalogy1">Let’s consider an analogy: imagine you have a tent at a local farmer’s market and you are trying to sell your homemeade apple juice. A sign on your table shows the price, nutrition information, and other important details which help people at your tent decide whether or not to buy from you.</string>
+    <string name="behaviorAnalogy2">In this part of the analogy:</string>
+    <string name="behaviorAnalogy3">• The apple juice = your emotions (what you feel inside)</string>
+    <string name="behaviorAnalogy4">• The advertising sign = your behavior (how you show what you feel inside)</string>
+    <string name="behaviorAnalogy5">• The farmer’s market = the relationships and interactions you have with other people</string>
+    <string name="behaviorAnalogy6">We behave in both rational and irrational ways. Our rational behavior makes it easier for us to be loved, cared for, and connected to others (like a sign that helps us sell apple juice). Our irrational behavior makes it harder for us to be connected to others emotionally.</string>
+    <string name="behaviorAnalogy7">It’s helpful to quality-check our behavior (the way we display our emotion) so that we don’t struggle in relationships. Let’s look at the way you acted in this particular instance and check for any "bad advertising".</string>
     <string name="behaviorIntro1">You noted that you originally felt:</string>
     <string name="behaviorIntro2">When asked how you expressed this emotion you wrote:</string>
     <string name="behaviorPrompt">Please answer the following questions about your words and actions. No one will see your answers except you, so be as honest as you can.</string>
@@ -165,5 +175,12 @@
     <string name="behavior3Answer2">More harm</string>
     <string name="behavior3Answer3">Neither</string>
     <string name="behavior4Question">Based on the three questions above, how rational or irrational were your words and actions on the following scale?</string>
+
+    <string name="about">App design and wording by:\nDaniel S. Felix, PhD, LMFT\ndaniel.felix@usd.edu\n\nAndroid programming and design by:\nMichael Felix\nmichael.felix@gmail.com\n\nCBT Helper is intended for use in collaboration with a licensed therapist.</string>
+
+    <string name="begin_replacement_thoughts">Explore replacement thoughts</string>
+    <string name="continue_replacement_thoughts">Continue replacement thoughts test</string>
+    <string name="view_replacement_thoughts">View replacement thoughts</string>
+    <string name="skip_to_behavior">Skip to behavior</string>
 
 </resources>

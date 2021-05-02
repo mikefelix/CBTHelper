@@ -17,7 +17,7 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
     val thinkingErrors = MutableLiveData<String?>()
     val situation = MutableLiveData<String?>()
     val insteadValue = MutableLiveData<String?>()
-    val situationType = MutableLiveData<Boolean>()
+    val situationType = MutableLiveData<String>()
     val believeValue = MutableLiveData<Int?>()
     val wouldHaveDoneValue = MutableLiveData<String?>()
     val wouldHaveAffectedValue = MutableLiveData<String?>()
@@ -78,7 +78,7 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
         }
 
     override val complete: Boolean
-        get() = false//TODO
+        get() = wouldHaveAffected != null
 
     override val title: LiveData<String?> = page.map {
         "Replacement Thoughts - ${it.first}/$numPages"
@@ -107,7 +107,7 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
             (entryDao.get(id) ?: error("Can't find entry $id")).let {
                 thoughts.value = it.thoughts
                 situation.value = it.situation
-                situationType.value = it.situationType
+                situationType.value = if (it.situationType) "situation" else "conversation"
                 actualEmotionText.value = emotionText(it.emotion1Pair, it.emotion2Pair, it.emotion3Pair)
             }
         }

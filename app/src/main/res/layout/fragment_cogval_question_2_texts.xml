@@ -83,7 +83,7 @@
         app:layout_constraintVertical_weight="50"
         tools:ignore="HardcodedText"
         android:importantForAutofill="no"
-        android:inputType="textLongMessage"
+        android:inputType="textLongMessage|textCapSentences"
         />
 
     <TextView style="@style/TextViewHeading"
@@ -115,7 +115,7 @@
         app:layout_constraintVertical_weight="50"
         tools:ignore="HardcodedText"
         android:importantForAutofill="no"
-        android:inputType="textLongMessage"
+        android:inputType="textLongMessage|textCapSentences"
         />
 
     </LinearLayout>

@@ -1,13 +1,16 @@
 package com.mozzarelly.cbthelper
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.MainThread
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
@@ -16,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
 import com.mozzarelly.cbthelper.viewentries.EntriesViewModel
 import com.mozzarelly.cbthelper.viewentries.ViewEntriesActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.reflect.KClass
 
 class MainActivity : CBTActivity<EntriesViewModel>() {
@@ -41,6 +43,8 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
 //            start<AddEntryActivity>()
 //        }
 
+        val addButton = findViewById<Button>(R.id.addButton)
+
         observe(viewModel.incompleteEntry){
             if (it == null) {
                 addButton.setOnClickListener {
@@ -63,13 +67,19 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
             }
         }
 
-        viewButton.setOnClickListener {
-            start<ViewEntriesActivity>()
+        findViewById<Button>(R.id.viewButton).run {
+            observe(viewModel.allEntries){
+                this.visibility = if (visible) View.VISIBLE else View.GONE
+            }
+
+            setOnClickListener {
+                start<ViewEntriesActivity>()
+            }
         }
     }
 
     override val onReturnFrom = mapOf<KClass<*>, (Int) -> Unit>(
-        AddEntryActivity::class to { it: Int ->
+        AddEntryActivity::class to {
             findViewById<View>(R.id.main).shortSnackbar(if (it >= 0) "Entry saved." else "Entry could not be saved.")
         }
     )
@@ -82,6 +92,7 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
             R.id.action_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.action_about -> showAbout()
             R.id.action_reminder -> supportFragmentManager.show(TimePickerFragment(this))
 
             else -> error("Unknown menu item")
@@ -89,6 +100,15 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
 
         return true
     }
+}
+
+fun Context.showAbout(): Boolean {
+    AlertDialog.Builder(this).apply {
+        setTitle("CBT Helper")
+        setMessage(R.string.about)
+    }.show()
+
+    return true
 }
 
 fun FragmentManager?.show(fragment: DialogFragment){

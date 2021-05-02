@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.mozzarelly.cbthelper.CBTFragment
+import com.mozzarelly.cbthelper.R
 import com.mozzarelly.cbthelper.behavior.BehaviorActivity
 import com.mozzarelly.cbthelper.databinding.FragmentAnalyze3RatrepSummaryBinding
+import com.mozzarelly.cbthelper.observe
 
 class AnalyzeRatRepSummaryFragment : CBTFragment() {
 
@@ -17,8 +19,36 @@ class AnalyzeRatRepSummaryFragment : CBTFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         FragmentAnalyze3RatrepSummaryBinding.inflate(inflater, container, false).apply {
-            testButton.setOnClickListener {
-                start<BehaviorActivity>(viewModel.id)
+            observe(viewModel.behavior){
+                when {
+                    it == null -> {
+                        continueButton.visibility = View.GONE
+                        testButton.run {
+                            setText(R.string.begin_behavior_validity_test)
+                            setOnClickListener {
+                                start<BehaviorActivity>(viewModel.id)
+                            }
+                        }
+                    }
+                    it.complete -> {
+                        continueButton.visibility = View.GONE
+                        testButton.run {
+                            setText(R.string.view_behavior_validity_test)
+                            setOnClickListener {
+                                act.showFragment<AnalyzeBehaviorSummaryFragment>()
+                            }
+                        }
+                    }
+                    else -> {
+                        continueButton.visibility = View.VISIBLE
+                        testButton.run {
+                            setText(R.string.continue_behavior_validity_test)
+                            setOnClickListener {
+                                start<BehaviorActivity>(viewModel.id)
+                            }
+                        }
+                    }
+                }
             }
 
             thought.displayDatum(viewModel.thoughts)

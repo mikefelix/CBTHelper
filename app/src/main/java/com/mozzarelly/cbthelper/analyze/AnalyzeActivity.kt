@@ -19,28 +19,36 @@ class AnalyzeActivity : CBTActivity<AnalyzeViewModel>() {
         set(value){
             if (field != value) {
                 val frag = when (value) {
-                    Stage.BehaviorComplete -> AnalyzeBehaviorSummaryFragment()
-                    Stage.RatRepComplete -> AnalyzeRatRepSummaryFragment()
-                    Stage.CogValComplete -> AnalyzeCogValidSummaryFragment()
-                    Stage.EntryComplete -> AnalyzeEntrySummaryFragment()
-                    Stage.Begun -> AnalyzeEntrySummaryFragment()
+                    Stage.BehaviorComplete -> "Behavior" to AnalyzeBehaviorSummaryFragment()
+                    Stage.BehaviorPartial -> "Behavior" to AnalyzeBehaviorSummaryFragment()
+                    Stage.RatRepComplete -> "Replacement Thoughts" to AnalyzeRatRepSummaryFragment()
+                    Stage.RatRepPartial -> "Replacement Thoughts" to AnalyzeRatRepSummaryFragment()
+                    Stage.CogValComplete -> "Cognition Validity" to AnalyzeCogValidSummaryFragment()
+                    Stage.CogValPartial -> "Cognition Validity" to AnalyzeCogValidSummaryFragment()
+                    Stage.EntryComplete -> "Analyze Entry" to AnalyzeEntrySummaryFragment()
+                    Stage.EntryPartial -> "Analyze Entry" to AnalyzeEntrySummaryFragment()
+                    Stage.Begun -> "Edit Entry" to AnalyzeEntrySummaryFragment()
                 }
 
-                show(frag)
+                show(frag.second)
+                title = frag.first
 
                 field = value
             }
         }
 
-    override val onReturnFrom: Map<KClass<*>, (Int) -> Unit> = mapOf<KClass<*>, (Int) -> Unit>(
-        BehaviorActivity::class to { it: Int ->
+    override val onReturnFrom: Map<KClass<*>, (Int) -> Unit> = mapOf(
+        BehaviorActivity::class to {
             snackbar(if (it >= 0) "Behavior analysis saved." else "Behavior analysis could not be saved.")
+            viewModel.stage.value?.let { stage = it }
         },
-        ReplacementThoughtsActivity::class to { it: Int ->
+        ReplacementThoughtsActivity::class to {
             snackbar(if (it >= 0) "Replacement thoughts results saved." else "Replacement thoughts results could not be saved.")
+            viewModel.stage.value?.let { stage = it }
         },
-        CogValidActivity::class to { it: Int ->
+        CogValidActivity::class to {
             snackbar(if (it >= 0) "Cognition validity results saved." else "Cognition validity results could not be saved.")
+            viewModel.stage.value?.let { stage = it }
         }
     )
 
@@ -51,15 +59,15 @@ class AnalyzeActivity : CBTActivity<AnalyzeViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        title = "Summary"
+        title = "Analyze"
 
         observe(viewModel.stage){
-            it?.let { stage = it }
+            stage = it
         }
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        viewModel.save()
         finish()
         return true
     }

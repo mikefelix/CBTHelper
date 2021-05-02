@@ -11,6 +11,7 @@ class ReplacementThoughts3Fragment : ReplacementThoughtsFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         FragmentReplacement3Binding.inflate(inflater, container, false).apply {
             buttons.setupButtons(viewModel.emotionSelection.emotion1)
-            emotions.bind(viewModel.emotionSelection)
+            emotionSel.bind(viewModel.emotionSelection)
+            instead.display(viewModel.insteadValue)
         }.root
 }

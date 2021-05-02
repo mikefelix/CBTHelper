@@ -113,7 +113,7 @@ inline fun <T, R> LiveData<T>.mapAs(crossinline convert: T.() -> R): LiveData<R>
  *
  * @param convert A function to convert T to R (with T as the receiver).
  */
-inline fun <T: Any?, R: Any?> LiveData<T?>.mapValueAs(crossinline convert: T.() -> R?): LiveData<R> = MediatorLiveData<R>().apply {
+inline fun <T: Any?, R: Any?> LiveData<T?>.mapValueAs(crossinline convert: T.() -> R?): LiveData<R?> = MediatorLiveData<R?>().apply {
     addSource<T>(this@mapValueAs) { t ->
         value = if (t == null) null else convert(t)
     }
@@ -125,7 +125,7 @@ inline fun <T: Any?, R: Any?> LiveData<T?>.mapValueAs(crossinline convert: T.() 
  *
  * @param convert A function to convert T to R (with T as the receiver).
  */
-/*inline */fun <T: Any?, R> LiveData<T?>.mapValue(/*crossinline */convert: (T) -> R?): LiveData<R> = MediatorLiveData<R>().apply {
+/*inline */fun <T: Any?, R> LiveData<T?>.mapValue(/*crossinline */convert: (T) -> R?): LiveData<R?> = MediatorLiveData<R?>().apply {
     addSource<T>(this@mapValue) { t ->
         value = if (t == null) null else convert(t)
     }

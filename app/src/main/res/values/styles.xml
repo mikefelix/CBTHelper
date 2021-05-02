@@ -30,6 +30,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="SpinnerStyle" parent="@android:style/Widget.Spinner.DropDown">
+        <item name="android:background">@drawable/edit_text_border</item>
+        <item name="android:padding">8dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:height">48dp</item>
+    </style>
+
     <style name="EditTextStyle" parent="@android:style/Widget.EditText">
 <!--        <item name="android:background">@android:drawable/editbox_background</item>-->
         <item name="android:background">@drawable/edit_text_border</item>

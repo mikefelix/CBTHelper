@@ -8,6 +8,7 @@ import com.mozzarelly.cbthelper.cbtViewModel
 class BehaviorActivity : InterviewActivity<BehaviorViewModel>() {
 
     override val fragmentTypes = listOf(
+        BehaviorAnalogyFragment::class,
         BehaviorIntroFragment::class,
         Behavior1AFragment::class,
         Behavior1BFragment::class,

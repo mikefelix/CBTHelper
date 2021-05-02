@@ -3,6 +3,7 @@
 package com.mozzarelly.cbthelper.cogvalid
 
 import android.content.Intent
+import android.os.Bundle
 import com.mozzarelly.cbthelper.*
 
 class CogValidActivity : InterviewActivity<CogValidViewModel>() {
@@ -33,5 +34,6 @@ class CogValidActivity : InterviewActivity<CogValidViewModel>() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
     }
+
 }
 

@@ -16,7 +16,7 @@
             android:gravity="center"
             android:textSize="24sp"
             android:drawableTint="@color/colorBackground"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             tools:ignore="HardcodedText"
             tools:text="Fear\nAnger"
             />
@@ -32,7 +32,7 @@
             />
 
         <Spinner
-            style="@style/Widget.AppCompat.Spinner.DropDown"
+            style="@style/SpinnerStyle"
             android:id="@+id/emotionGroups"
             android:textSize="24sp"
             android:gravity="center"
@@ -40,7 +40,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="16dp"
             />
 
@@ -55,7 +55,7 @@
             />
 
         <Spinner
-            style="@style/Widget.AppCompat.Spinner.DropDown"
+            style="@style/SpinnerStyle"
             android:id="@+id/emotions"
             android:textSize="24sp"
             android:gravity="center"
@@ -63,7 +63,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="16dp"
             />
 

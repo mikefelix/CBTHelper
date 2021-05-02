@@ -21,7 +21,7 @@ interface EntryDao {
     suspend fun get(id: Int): Entry?
 
     @Query("SELECT * FROM entry WHERE id = :id")
-    fun getAsync(id: Int): LiveData<Entry>
+    fun getAsync(id: Int): LiveData<Entry?>
 
     @Insert(entity = Entry::class)
     suspend fun insert(entry: Entry): Long
@@ -63,6 +63,9 @@ interface CogValidDao {
     @Query("SELECT * FROM cogvalid WHERE id = :id")
     suspend fun get(id: Int): CogValid?
 
+    @Query("SELECT * FROM cogvalid WHERE id = :id")
+    fun getAsync(id: Int): LiveData<CogValid?>
+
     @Insert(entity = CogValid::class)
     suspend fun create(model: CogValid): Long
 
@@ -76,6 +79,9 @@ interface RatRepDao {
 
     @Query("SELECT * FROM ratrep WHERE id = :id")
     suspend fun get(id: Int): RatRep?
+
+    @Query("SELECT * FROM ratrep WHERE id = :id")
+    fun getAsync(id: Int): LiveData<RatRep?>
 
     @Insert(entity = RatRep::class)
     suspend fun create(model: RatRep): Long
@@ -128,7 +134,7 @@ abstract class CBTDatabase : RoomDatabase() {
         // Create and pre-populate the database. See this article for more details:
         // https://medium.com/google-developers/7-pro-tips-for-room-fbadea4bfbd1#4785
         private fun buildDatabase(context: Context): CBTDatabase {
-            return Room.databaseBuilder(context, CBTDatabase::class.java, "reader-db")
+            return Room.databaseBuilder(context, CBTDatabase::class.java, "cbtFl-db")
                 .addCallback(object : RoomDatabase.Callback() {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
@@ -339,7 +345,9 @@ abstract class CBTDatabase : RoomDatabase() {
                                 ), RatRep(
                                     believe = 1,
                                     instead = "Do this instead",
-                                    emotion1 = "Happiness"
+                                    emotion1 = "Happiness",
+                                    emotion1Intensity = 1,
+                                    wouldHaveDone = "smarter things",
                                 )
                             )
 

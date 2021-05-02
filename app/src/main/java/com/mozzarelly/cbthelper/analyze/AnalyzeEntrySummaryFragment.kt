@@ -18,7 +18,7 @@ class AnalyzeEntrySummaryFragment : CBTFragment() {
     override val title = "Summary"
 //        get() = if (viewModel.entry.value?.situationType == false) "Conversation Summary" else "Situation Summary"
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragmentAnalyze1EntrySummaryBinding.inflate(inflater, container, false).apply {
             pageTitle.display(viewModel.typeString)
             situation.displayDatum(viewModel.situation)
@@ -27,21 +27,30 @@ class AnalyzeEntrySummaryFragment : CBTFragment() {
             observe(viewModel.cogValid){
                 when {
                     it == null -> {
-                        testButton.setText(R.string.begin_cognition_validity_test)
-                        testButton.setOnClickListener {
-                            start<CogValidActivity>(viewModel.id)
+                        continueButton.visibility = View.GONE
+                        testButton.run {
+                            setText(R.string.begin_cognition_validity_test)
+                            setOnClickListener {
+                                start<CogValidActivity>(viewModel.id)
+                            }
                         }
                     }
                     it.complete -> {
-                        testButton.setText(R.string.view_cognition_validity_test)
-                        testButton.setOnClickListener {
-                            act.showFragment<AnalyzeCogValidSummaryFragment>()
+                        continueButton.visibility = View.GONE
+                        testButton.run {
+                            setText(R.string.view_cognition_validity_test)
+                            setOnClickListener {
+                                act.showFragment<AnalyzeCogValidSummaryFragment>()
+                            }
                         }
                     }
                     else -> {
-                        testButton.setText(R.string.continue_cognition_validity_test)
-                        testButton.setOnClickListener {
-                            start<CogValidActivity>(viewModel.id)
+                        continueButton.visibility = View.VISIBLE
+                        testButton.run {
+                            setText(R.string.continue_cognition_validity_test)
+                            setOnClickListener {
+                                start<CogValidActivity>(viewModel.id)
+                            }
                         }
                     }
                 }

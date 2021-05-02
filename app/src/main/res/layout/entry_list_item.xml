@@ -58,14 +58,16 @@
         app:layout_constraintEnd_toStartOf="@id/menuButton"
         />
 
-    <Button
+    <TextView
         style="@style/TransparentButtonStyle"
         android:id="@+id/menuButton"
         android:layout_width="50dp"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:text="&#8942;"
         android:textAppearance="?android:textAppearanceLarge"
-        android:backgroundTint="@color/colorBackground"
+        android:background="@color/colorBackground"
+        android:gravity="center"
+        app:backgroundTint="@color/colorBackground"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/firstLine"
