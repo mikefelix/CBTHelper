@@ -42,17 +42,10 @@
             android:id="@+id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/validitySummary1"
+            tools:text="@string/validitySummary1Irrational"
             />
 
-        <TextView style="@style/TextViewHeading"
-            android:id="@+id/text2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/validitySummary2"
-            />
-
-        <TextView style="@style/TextViewDatum"
+        <TextView style="@style/TextViewDatumCalculated"
             android:id="@+id/errors"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,24 +53,24 @@
             />
 
         <TextView style="@style/TextViewHeading"
-            android:id="@+id/text3"
+            android:id="@+id/judgment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/validitySummary3"
+            tools:text="@string/validitySummary3Irrational"
             />
 
         <TextView style="@style/TextViewHeading"
             android:id="@+id/text4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/validitySummary4"
+            tools:text="@string/validitySummary4Irrational"
             />
 
         <TextView style="@style/TextViewHeading"
             android:id="@+id/text5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/validitySummary5"
+            tools:text="@string/validitySummary5Irrational"
             />
 
         <LinearLayout
@@ -93,6 +86,18 @@
                 android:minWidth="128dp"
                 android:layout_height="wrap_content"
                 android:text="@string/begin_replacement_thoughts"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
+                />
+
+            <Button
+                android:id="@+id/beginBehaviorButton"
+                android:layout_width="wrap_content"
+                android:minWidth="128dp"
+                android:layout_height="wrap_content"
+                android:text="@string/begin_behavior_validity_test"
+                tools:visibility="gone"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginEnd="8dp"

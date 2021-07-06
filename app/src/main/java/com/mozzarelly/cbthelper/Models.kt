@@ -157,6 +157,9 @@ data class CogValid(
     @ColumnInfo(name = "answer12") override var answer12: Int? = null
 ) : CogValidModel {
 
+    val isValid: Boolean
+        get() = thinkingErrors().isEmpty()
+
     companion object {
         fun from(other: CogValidModel) = CogValid(
             other.id,

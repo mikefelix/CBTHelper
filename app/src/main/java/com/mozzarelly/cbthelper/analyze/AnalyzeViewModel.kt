@@ -40,6 +40,7 @@ class AnalyzeViewModel : CBTViewModel() {
         cogValid = cogValidDao.getAsync(value)
 
         ratRep = ratRepDao.getAsync(value)
+        ratRepState = ratRep.map { it?.complete }
         ratRep.observeForever {
             comparison.value = it?.comparison
         }
@@ -58,6 +59,7 @@ class AnalyzeViewModel : CBTViewModel() {
             it?.thinkingErrors() ?: emptyList()
         }
 
+        wasValid = cogValid.map { it?.isValid == true }
         thoughts = entry.mapValue { it.thoughts }
         instead = ratRep.mapValue { it.instead }
         actualEmotions = entry.mapValue { emotionText(it.emotion1Pair, it.emotion2Pair, it.emotion3Pair) }
@@ -93,6 +95,7 @@ class AnalyzeViewModel : CBTViewModel() {
     lateinit var entry: LiveData<Entry?>
     lateinit var cogValid: LiveData<CogValid?>
     lateinit var ratRep: LiveData<RatRep?>
+    lateinit var ratRepState: LiveData<Boolean?>
     lateinit var behavior: LiveData<Behavior?>
     lateinit var stage: LiveData<Stage>
 
@@ -103,6 +106,7 @@ class AnalyzeViewModel : CBTViewModel() {
     lateinit var emotionsChosen: LiveData<String?>
 
     lateinit var thinkingErrors: LiveData<List<String>>
+    lateinit var wasValid: LiveData<Boolean>
 
     lateinit var thoughts: LiveData<String?>
     lateinit var instead: LiveData<String?>

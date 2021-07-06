@@ -216,3 +216,15 @@ inline fun <reified A, reified B> observe(a: LiveData<A>, b: LiveData<B>, crossi
         handler(a.value, b.value)
     }
 }
+
+inline fun <reified A, reified B, reified C> observe(a: LiveData<A>, b: LiveData<B>, c: LiveData<C>, crossinline handler: (A?, B?, C?) -> Unit) {
+    a.observeForever {
+        handler(a.value, b.value, c.value)
+    }
+    b.observeForever {
+        handler(a.value, b.value, c.value)
+    }
+    c.observeForever {
+        handler(a.value, b.value, c.value)
+    }
+}

@@ -106,10 +106,15 @@
     <string name="validityAnswer12A">Completely\nirrational</string>
     <string name="validityAnswer12B">Completely\nrational</string>
 
-    <string name="validitySummary1">It appears that your thoughts about this situation were likely flawed. You were likely not thinking as rationally as you could have. For example, it looks like you made the following thinking errors:</string>
+    <string name="validitySummary1Irrational">It appears that your thoughts about this %1$s were likely flawed. You were likely not thinking as rationally as you could have. For example, it looks like you made the following thinking errors:</string>
+    <string name="validitySummary1Rational">It appears that your thoughts about this %1$s were likely rational and valid. We could find no thinking errors.</string>
     <string name="validitySummary2">Thinking errors identified:</string>
-    <string name="validitySummary3">These types of thinking errors indicate that there is room to improve your emotional health. The %1$s could have been healthier.</string>
-    <string name="validitySummary4">Do You Want to Improve?</string>
+    <string name="validitySummary3Irrational">These types of thinking errors indicate that there is room to improve your emotional health. The %1$s could have been healthier.</string>
+    <string name="validitySummary3Rational">You may have made thinking errors which were not identifiable by this test, but let’s suppose you didn’t. Let’s assume that your thoughts were fully rational and therefore led to a healthy emotional experience. This means the %1$s you felt in this situation was likely healthy.</string>
+    <string name="validitySummary4Irrational">Do You Want to Improve?</string>
+    <string name="validitySummary4Rational">Contratulations! But what if the way you felt was not actually good? How is it healthy to feel negative emotions? If this is a question you have then click there to read an explanation of how even negative emotions can be healthy.</string>
+    <string name="validitySummary5Irrational">Let’s explore how you could have been healthier. Let’s first try replace the irrational thoughts that you had with a more rational way of thinking.</string>
+    <string name="validitySummary5Rational">Okay, let’s move on. Let’s examine the way you expressed what you felt.</string>
     <string name="validitySummary5">Let’s explore how you could have been healthier. Let’s first try replace the irrational thoughts that you had with a more rational way of thinking.</string>
 
     <string name="judgement">It appears that your thoughts about this situation were likely flawed. You were likely not thinking as rationally as you could have been. For example, it looks like you made the following thinking errors:</string>
@@ -182,5 +187,6 @@
     <string name="continue_replacement_thoughts">Continue replacement thoughts test</string>
     <string name="view_replacement_thoughts">View replacement thoughts</string>
     <string name="skip_to_behavior">Skip to behavior</string>
+    <string name="none">None</string>
 
 </resources>
