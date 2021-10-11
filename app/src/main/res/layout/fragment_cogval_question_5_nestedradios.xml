@@ -83,6 +83,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+
                     tools:text="Option 1"
                     tools:ignore="HardcodedText"
                     />
@@ -91,15 +93,18 @@
                     android:id="@+id/innerGroup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:visibility="gone"
                     tools:visibility="visible"
-                    android:layout_marginEnd="8dp">
+                    >
 
                     <RadioButton style="@style/RadioDatum"
                         android:id="@+id/radioAnswer1a"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
                         tools:text="Option 1a"
                         tools:ignore="HardcodedText"
                         />
@@ -109,6 +114,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
                         tools:text="Option 1b"
                         tools:ignore="HardcodedText"
                         />
@@ -118,6 +124,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
                         tools:text="Option 1c"
                         tools:ignore="HardcodedText"
                         />
@@ -127,6 +134,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
                         tools:text="Option 1d"
                         tools:ignore="HardcodedText"
                         />
@@ -136,6 +144,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
                         tools:text="Option 1e"
                         tools:ignore="HardcodedText"
                         />
@@ -147,6 +156,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
                     tools:text="Option 2"
                     tools:ignore="HardcodedText"
                     />

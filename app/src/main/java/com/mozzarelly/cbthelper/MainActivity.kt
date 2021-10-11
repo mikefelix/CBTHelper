@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelLazy
 import androidx.lifecycle.ViewModelProvider
+import com.mozzarelly.cbthelper.analyze.AnalyzeActivity
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
 import com.mozzarelly.cbthelper.viewentries.EntriesViewModel
 import com.mozzarelly.cbthelper.viewentries.ViewEntriesActivity
@@ -79,8 +80,8 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
     }
 
     override val onReturnFrom = mapOf<KClass<*>, (Int) -> Unit>(
-        AddEntryActivity::class to {
-            findViewById<View>(R.id.main).shortSnackbar(if (it >= 0) "Entry saved." else "Entry could not be saved.")
+        AddEntryActivity::class to { result ->
+            showSavedEntryDialog(result)
         }
     )
 
@@ -94,6 +95,14 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
             R.id.action_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.action_about -> showAbout()
             R.id.action_reminder -> supportFragmentManager.show(TimePickerFragment(this))
+            R.id.action_delete -> AlertDialog.Builder(this)
+                .setTitle("Delete all data")
+                .setMessage("Delete all your data? This cannot be undone!")
+                .setPositiveButton(android.R.string.ok) { _, _ ->
+                    viewModel.cleanDatabase()
+                }
+                .setNegativeButton(android.R.string.cancel) { _, _ -> }
+                .show()
 
             else -> error("Unknown menu item")
         }

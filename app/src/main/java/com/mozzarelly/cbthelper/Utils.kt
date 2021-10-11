@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.snackbar.Snackbar
+import com.mozzarelly.cbthelper.analyze.AnalyzeActivity
 import kotlinx.coroutines.CancellationException
 import java.util.Calendar.DAY_OF_YEAR
 import kotlin.reflect.KClass
@@ -359,3 +360,22 @@ fun View.shortSnackbar(text: String) {
 }
 
 fun KClass<*>.requestCode() = (hashCode() and 0x0000ffff).also { println("requestCode for $simpleName is $it") }
+
+fun <V : CBTViewModel> CBTActivity<V>.showSavedEntryDialog(id: Int){
+    AlertDialog.Builder(this).apply {
+        if (id >= 0) {
+            setTitle("Entry saved")
+            setMessage("Your entry has been recorded. Would you like to analyze it now or later?")
+            setNegativeButton("Analyze later"){ dialog, _ -> dialog.dismiss() }
+            setPositiveButton("Analyze now") { _, _ -> start<AnalyzeActivity>(id) }
+        }
+        else {
+            setTitle(if (id >= 0) "Entry saved" else "Entry not saved!")
+            setMessage(if (id >= 0) "Your entry has been recorded. Would you like to analyze it now or later?" else "Something went wrong. Your entry could not be saved.")
+            setNegativeButton("OK"){ dialog, _ -> dialog.dismiss() }
+        }
+
+        show()
+    }
+
+}

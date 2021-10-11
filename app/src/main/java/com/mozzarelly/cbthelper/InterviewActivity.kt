@@ -81,8 +81,5 @@ abstract class InterviewActivity<V: InterviewViewModel> : CBTActivity<V>() {
         fragments = fragmentTypes.map { it.java.constructors[0].newInstance() as Fragment }
     }
 
-    override fun onStop() {
-        super.onStop()
-    }
 }
 

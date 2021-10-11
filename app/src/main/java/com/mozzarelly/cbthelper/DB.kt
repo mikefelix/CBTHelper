@@ -72,6 +72,9 @@ interface CogValidDao {
     @Update
     suspend fun update(from: CogValid)
 
+    @Query("DELETE FROM cogvalid")
+    suspend fun deleteAll()
+
 }
 
 @Dao
@@ -89,6 +92,9 @@ interface RatRepDao {
     @Update
     suspend fun update(from: RatRep)
 
+    @Query("DELETE FROM ratrep")
+    suspend fun deleteAll()
+
 }
 
 @Dao
@@ -105,6 +111,9 @@ interface BehaviorDao {
 
     @Update
     suspend fun update(from: Behavior)
+
+    @Query("DELETE FROM behavior")
+    suspend fun deleteAll()
 
 }
 
@@ -170,268 +179,13 @@ abstract class CBTDatabase : RoomDatabase() {
         }
 
         class PopulateDatabaseWorker(
-            context: Context,
+            val context: Context,
             workerParams: WorkerParameters
         ) : CoroutineWorker(context, workerParams) {
             override suspend fun doWork(): Result = coroutineScope {
                 try {
                     if (BuildConfig.DEBUG) {
-                        var month = 1
-
-                        with(getDatabase(applicationContext)) {
-                            addEntities(
-                                Entry(
-                                    situationDetail = "DEBUG:E! C! R! B!",
-                                    situation = "We talked about video games and how bad I am at Rocket League.",
-                                    complete = true,
-                                    situationType = true,
-                                    emotion1 = "Rage",
-                                    emotion1Intensity = 7,
-                                    emotion2 = "Envy",
-                                    emotion2Intensity = 3,
-                                    thoughts = "I need to improve so much at this game.",
-                                    assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
-                                    relationships = "I think he lost respect for me because my gamer skillz are low.",
-                                    expression = "I whined and posted some bad memes.",
-                                    date = LocalDateTime.of(2020, month.also { month += 1 }, 4, 10, 23)
-                                ), CogValid(
-                                    answer1 = 1,
-                                    answer2 = 2,
-                                    answer3 = 1,
-                                    answer4a = "stuff",
-                                    answer4b = "things",
-                                    answer5 = 2,
-                                    answer6 = 2,
-                                    answer7 = 1,
-                                    answer8 = 1,
-                                    answer9 = 1,
-                                    answer10 = 1,
-                                    answer11 = "nonsense",
-                                    answer12 = 2
-                                ), RatRep(
-                                    believe = 1,
-                                    instead = "Do this instead",
-                                    emotion1 = "Happiness",
-                                    wouldHaveDone = "Talk better",
-                                    wouldHaveAffected = "They would be happier.",
-                                    comparison = "The last one is better."
-                                ), Behavior(
-                                    honest = 1,
-                                    person = "Beauregard",
-                                    disappointed = 1,
-                                    disapprove = 1,
-                                    embarrassed = 0,
-                                    relationships = 1,
-                                    occupations = 0,
-                                    health = 1,
-                                    other = 0,
-                                    rational = 1
-                                )
-                            )
-                            addEntities(
-                                Entry(
-                                    situationDetail = "DEBUG:E! C! R! B...",
-                                    situation = "We talked about video games and how bad I am at Rocket League.",
-                                    complete = true,
-                                    situationType = true,
-                                    emotion1 = "Rage",
-                                    emotion1Intensity = 7,
-                                    emotion2 = "Envy",
-                                    emotion2Intensity = 3,
-                                    thoughts = "I need to improve so much at this game.",
-                                    assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
-                                    relationships = "I think he lost respect for me because my gamer skillz are low.",
-                                    expression = "I whined and posted some bad memes.",
-                                    date = LocalDateTime.of(2020, month.also { month += 1 }, 4, 10, 23)
-                                ), CogValid(
-                                    answer1 = 1,
-                                    answer2 = 2,
-                                    answer3 = 1,
-                                    answer4a = "stuff",
-                                    answer4b = "things",
-                                    answer5 = 2,
-                                    answer6 = 2,
-                                    answer7 = 1,
-                                    answer8 = 1,
-                                    answer9 = 1,
-                                    answer10 = 1,
-                                    answer11 = "nonsense",
-                                    answer12 = 2
-                                ), RatRep(
-                                    believe = 1,
-                                    instead = "Do this instead",
-                                    emotion1 = "Happiness",
-                                    wouldHaveDone = "Talk better",
-                                    wouldHaveAffected = "They would be happier.",
-                                    comparison = "The last one is better."
-                                ), Behavior(
-                                    honest = 1,
-                                    person = "Beauregard",
-                                    disappointed = 1,
-                                    disapprove = 1,
-                                    embarrassed = 0,
-                                    relationships = 1
-                                )
-                            )
-
-                            addEntities(
-                                Entry(
-                                    situationDetail = "DEBUG:E! C! R!",
-                                    situation = "We talked about video games and how bad I am at Rocket League.",
-                                    complete = true,
-                                    situationType = true,
-                                    emotion1 = "Rage",
-                                    emotion1Intensity = 7,
-                                    emotion2 = "Envy",
-                                    emotion2Intensity = 3,
-                                    thoughts = "I need to improve so much at this game.",
-                                    assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
-                                    relationships = "I think he lost respect for me because my gamer skillz are low.",
-                                    expression = "I whined and posted some bad memes.",
-                                    date = LocalDateTime.of(2020, month.also { month += 1 }, 4, 10, 23)
-                                ), CogValid(
-                                    answer1 = 1,
-                                    answer2 = 2,
-                                    answer3 = 1,
-                                    answer4a = "stuff",
-                                    answer4b = "things",
-                                    answer5 = 2,
-                                    answer6 = 2,
-                                    answer7 = 1,
-                                    answer8 = 1,
-                                    answer9 = 1,
-                                    answer10 = 1,
-                                    answer11 = "nonsense",
-                                    answer12 = 2
-                                ), RatRep(
-                                    believe = 1,
-                                    instead = "Do this instead",
-                                    emotion1 = "Happiness",
-                                    wouldHaveDone = "Talk better",
-                                    wouldHaveAffected = "They would be happier.",
-                                    comparison = "The last one is better."
-                                )
-                            )
-
-                            addEntities(
-                                Entry(
-                                    situationDetail = "DEBUG:E! C! R…",
-                                    situation = "We talked about video games and how bad I am at Rocket League.",
-                                    complete = true,
-                                    situationType = true,
-                                    emotion1 = "Rage",
-                                    emotion1Intensity = 7,
-                                    emotion2 = "Envy",
-                                    emotion2Intensity = 3,
-                                    thoughts = "I need to improve so much at this game.",
-                                    assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
-                                    relationships = "I think he lost respect for me because my gamer skillz are low.",
-                                    expression = "I whined and posted some bad memes.",
-                                    date = LocalDateTime.of(2020, month.also { month += 1 }, 4, 10, 23)
-                                ), CogValid(
-                                    answer1 = 1,
-                                    answer2 = 2,
-                                    answer3 = 1,
-                                    answer4a = "stuff",
-                                    answer4b = "things",
-                                    answer5 = 2,
-                                    answer6 = 2,
-                                    answer7 = 1,
-                                    answer8 = 1,
-                                    answer9 = 1,
-                                    answer10 = 1,
-                                    answer11 = "nonsense",
-                                    answer12 = 2
-                                ), RatRep(
-                                    believe = 1,
-                                    instead = "Do this instead",
-                                    emotion1 = "Happiness",
-                                    emotion1Intensity = 1,
-                                    wouldHaveDone = "smarter things",
-                                )
-                            )
-
-                            addEntities(
-                                Entry(
-                                    situationDetail = "DEBUG:E! C!",
-                                    situation = "We talked about video games and how bad I am at Rocket League.",
-                                    complete = true,
-                                    situationType = true,
-                                    emotion1 = "Rage",
-                                    emotion1Intensity = 7,
-                                    emotion2 = "Envy",
-                                    emotion2Intensity = 3,
-                                    thoughts = "I need to improve so much at this game.",
-                                    assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
-                                    relationships = "I think he lost respect for me because my gamer skillz are low.",
-                                    expression = "I whined and posted some bad memes.",
-                                    date = LocalDateTime.of(2020, month.also { month += 1 }, 4, 10, 23)
-                                ), CogValid(
-                                    answer1 = 1,
-                                    answer2 = 2,
-                                    answer3 = 1,
-                                    answer4a = "stuff",
-                                    answer4b = "things",
-                                    answer5 = 2,
-                                    answer6 = 2,
-                                    answer7 = 1,
-                                    answer8 = 1,
-                                    answer9 = 1,
-                                    answer10 = 1,
-                                    answer11 = "nonsense",
-                                    answer12 = 2
-                                )
-                            )
-
-                            addEntities(
-                                Entry(
-                                    situationDetail = "DEBUG:E! C…",
-                                    situation = "We talked about video games and how bad I am at Hades.",
-                                    complete = true,
-                                    situationType = true,
-                                    emotion1 = "Rage",
-                                    emotion1Intensity = 7,
-                                    emotion2 = "Envy",
-                                    emotion2Intensity = 3,
-                                    thoughts = "I need to improve so much at this game.",
-                                    assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
-                                    relationships = "I think he lost respect for me because my gamer skillz are low.",
-                                    expression = "I whined and posted some bad memes.",
-                                    date = LocalDateTime.of(2020, month.also { month += 1 }, 14, 1, 3)
-                                ), CogValid(
-                                    answer1 = 1,
-                                    answer2 = 2
-                                )
-                            )
-
-                            addEntities(
-                                Entry(
-                                    situationDetail = "DEBUG:E!",
-                                    situation = "We talked about video games and how bad I am at Factorio.",
-                                    complete = true,
-                                    situationType = true,
-                                    emotion1 = "Rage",
-                                    emotion1Intensity = 7,
-                                    emotion2 = "Envy",
-                                    emotion2Intensity = 3,
-                                    thoughts = "I need to improve so much at this game.",
-                                    assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
-                                    relationships = "I think he lost respect for me because my gamer skillz are low.",
-                                    expression = "I whined and posted some bad memes.",
-                                    date = LocalDateTime.of(2020, month.also { month += 1 }, 14, 8, 13)
-                                )
-                            )
-
-                            addEntities(
-                                Entry(
-                                    situationDetail = "DEBUG:E…",
-                                    complete = false,
-                                    situationType = true,
-                                    situation = "I heard a song on the radio.",
-                                    date = LocalDateTime.of(2019, month.also { month += 1 }, 14, 8, 13)
-                                )
-                            )
-                        }
+                        CBTDatabase.getDatabase(context).populateSampleData()
                     }
 
                     Result.success()
@@ -443,6 +197,277 @@ abstract class CBTDatabase : RoomDatabase() {
             }
         }
     }
+
+    private suspend fun populateSampleData() {
+        var month = 1
+
+        addEntities(
+            Entry(
+                situationDetail = "DEBUG:E! C! R! B!",
+                situation = "We talked about video games and how bad I am at Rocket League.",
+                complete = true,
+                situationType = true,
+                emotion1 = "Rage",
+                emotion1Intensity = 7,
+                emotion2 = "Envy",
+                emotion2Intensity = 3,
+                thoughts = "I need to improve so much at this game.",
+                assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
+                relationships = "I think he lost respect for me because my gamer skillz are low.",
+                expression = "I whined and posted some bad memes.",
+                date = LocalDateTime.of(2020, month.also { month += 1 }, 4, 10, 23)
+            ), CogValid(
+                answer1 = 1,
+                answer2 = 2,
+                answer3 = 1,
+                answer4a = "stuff",
+                answer4b = "things",
+                answer5 = 2,
+                answer6 = 2,
+                answer7 = 1,
+                answer8 = 1,
+                answer9 = 1,
+                answer10 = 1,
+                answer11 = "nonsense",
+                answer12 = 2
+            ), RatRep(
+                believe = 1,
+                instead = "Do this instead",
+                emotion1 = "Happiness",
+                wouldHaveDone = "Talk better",
+                wouldHaveAffected = "They would be happier.",
+                comparison = "The last one is better."
+            ), Behavior(
+                honest = 1,
+                person = "Beauregard",
+                disappointed = 1,
+                disapprove = 1,
+                embarrassed = 0,
+                relationships = 1,
+                occupations = 0,
+                health = 1,
+                other = 0,
+                rational = 1
+            )
+        )
+        addEntities(
+            Entry(
+                situationDetail = "DEBUG:E! C! R! B...",
+                situation = "We talked about video games and how bad I am at Rocket League.",
+                complete = true,
+                situationType = true,
+                emotion1 = "Rage",
+                emotion1Intensity = 7,
+                emotion2 = "Envy",
+                emotion2Intensity = 3,
+                thoughts = "I need to improve so much at this game.",
+                assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
+                relationships = "I think he lost respect for me because my gamer skillz are low.",
+                expression = "I whined and posted some bad memes.",
+                date = LocalDateTime.of(2020, month.also { month += 1 }, 4, 10, 23)
+            ), CogValid(
+                answer1 = 1,
+                answer2 = 2,
+                answer3 = 1,
+                answer4a = "stuff",
+                answer4b = "things",
+                answer5 = 2,
+                answer6 = 2,
+                answer7 = 1,
+                answer8 = 1,
+                answer9 = 1,
+                answer10 = 1,
+                answer11 = "nonsense",
+                answer12 = 2
+            ), RatRep(
+                believe = 1,
+                instead = "Do this instead",
+                emotion1 = "Happiness",
+                wouldHaveDone = "Talk better",
+                wouldHaveAffected = "They would be happier.",
+                comparison = "The last one is better."
+            ), Behavior(
+                honest = 1,
+                person = "Beauregard",
+                disappointed = 1,
+                disapprove = 1,
+                embarrassed = 0,
+                relationships = 1
+            )
+        )
+
+        addEntities(
+            Entry(
+                situationDetail = "DEBUG:E! C! R!",
+                situation = "We talked about video games and how bad I am at Rocket League.",
+                complete = true,
+                situationType = true,
+                emotion1 = "Rage",
+                emotion1Intensity = 7,
+                emotion2 = "Envy",
+                emotion2Intensity = 3,
+                thoughts = "I need to improve so much at this game.",
+                assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
+                relationships = "I think he lost respect for me because my gamer skillz are low.",
+                expression = "I whined and posted some bad memes.",
+                date = LocalDateTime.of(2020, month.also { month += 1 }, 4, 10, 23)
+            ), CogValid(
+                answer1 = 1,
+                answer2 = 2,
+                answer3 = 1,
+                answer4a = "stuff",
+                answer4b = "things",
+                answer5 = 2,
+                answer6 = 2,
+                answer7 = 1,
+                answer8 = 1,
+                answer9 = 1,
+                answer10 = 1,
+                answer11 = "nonsense",
+                answer12 = 2
+            ), RatRep(
+                believe = 1,
+                instead = "Do this instead",
+                emotion1 = "Happiness",
+                wouldHaveDone = "Talk better",
+                wouldHaveAffected = "They would be happier.",
+                comparison = "The last one is better."
+            )
+        )
+
+        addEntities(
+            Entry(
+                situationDetail = "DEBUG:E! C! R…",
+                situation = "We talked about video games and how bad I am at Rocket League.",
+                complete = true,
+                situationType = true,
+                emotion1 = "Rage",
+                emotion1Intensity = 7,
+                emotion2 = "Envy",
+                emotion2Intensity = 3,
+                thoughts = "I need to improve so much at this game.",
+                assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
+                relationships = "I think he lost respect for me because my gamer skillz are low.",
+                expression = "I whined and posted some bad memes.",
+                date = LocalDateTime.of(2020, month.also { month += 1 }, 4, 10, 23)
+            ), CogValid(
+                answer1 = 1,
+                answer2 = 2,
+                answer3 = 1,
+                answer4a = "stuff",
+                answer4b = "things",
+                answer5 = 2,
+                answer6 = 2,
+                answer7 = 1,
+                answer8 = 1,
+                answer9 = 1,
+                answer10 = 1,
+                answer11 = "nonsense",
+                answer12 = 2
+            ), RatRep(
+                believe = 1,
+                instead = "Do this instead",
+                emotion1 = "Happiness",
+                emotion1Intensity = 1,
+                wouldHaveDone = "smarter things",
+            )
+        )
+
+        addEntities(
+            Entry(
+                situationDetail = "DEBUG:E! C!",
+                situation = "We talked about video games and how bad I am at Rocket League.",
+                complete = true,
+                situationType = true,
+                emotion1 = "Rage",
+                emotion1Intensity = 7,
+                emotion2 = "Envy",
+                emotion2Intensity = 3,
+                thoughts = "I need to improve so much at this game.",
+                assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
+                relationships = "I think he lost respect for me because my gamer skillz are low.",
+                expression = "I whined and posted some bad memes.",
+                date = LocalDateTime.of(2020, month.also { month += 1 }, 4, 10, 23)
+            ), CogValid(
+                answer1 = 1,
+                answer2 = 2,
+                answer3 = 1,
+                answer4a = "stuff",
+                answer4b = "things",
+                answer5 = 2,
+                answer6 = 2,
+                answer7 = 1,
+                answer8 = 1,
+                answer9 = 1,
+                answer10 = 1,
+                answer11 = "nonsense",
+                answer12 = 2
+            )
+        )
+
+        addEntities(
+            Entry(
+                situationDetail = "DEBUG:E! C…",
+                situation = "We talked about video games and how bad I am at Hades.",
+                complete = true,
+                situationType = true,
+                emotion1 = "Rage",
+                emotion1Intensity = 7,
+                emotion2 = "Envy",
+                emotion2Intensity = 3,
+                thoughts = "I need to improve so much at this game.",
+                assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
+                relationships = "I think he lost respect for me because my gamer skillz are low.",
+                expression = "I whined and posted some bad memes.",
+                date = LocalDateTime.of(2020, month.also { month += 1 }, 14, 1, 3)
+            ), CogValid(
+                answer1 = 1,
+                answer2 = 2
+            )
+        )
+
+        addEntities(
+            Entry(
+                situationDetail = "DEBUG:E!",
+                situation = "We talked about video games and how bad I am at Factorio.",
+                complete = true,
+                situationType = true,
+                emotion1 = "Rage",
+                emotion1Intensity = 7,
+                emotion2 = "Envy",
+                emotion2Intensity = 3,
+                thoughts = "I need to improve so much at this game.",
+                assumptions = "I assume I can't improve beyond a certain point no matter how much I practice.",
+                relationships = "I think he lost respect for me because my gamer skillz are low.",
+                expression = "I whined and posted some bad memes.",
+                date = LocalDateTime.of(2020, month.also { month += 1 }, 14, 8, 13)
+            )
+        )
+
+        addEntities(
+            Entry(
+                situationDetail = "DEBUG:E…",
+                complete = false,
+                situationType = true,
+                situation = "I heard a song on the radio.",
+                date = LocalDateTime.of(2019, month.also { month += 1 }, 14, 8, 13)
+            )
+        )
+
+    }
+
+    suspend fun Context.clean(addSampleData: Boolean = false){
+        behaviorDao().deleteAll()
+        ratRepDao().deleteAll()
+        cogValidDao().deleteAll()
+        entryDao().deleteAll()
+
+        if (addSampleData){
+            val request = OneTimeWorkRequestBuilder<PopulateDatabaseWorker>().build()
+            WorkManager.getInstance(this).enqueue(request)
+        }
+    }
+
 }
 
 class Converters {

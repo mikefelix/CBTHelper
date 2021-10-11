@@ -83,6 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:layout_gravity="start"
+                    android:gravity="center_vertical"
                     tools:text="Option 1"
                     tools:ignore="HardcodedText"
                     />
@@ -100,6 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
                         tools:text="Option 1a"
                         tools:ignore="HardcodedText"
                         />
@@ -109,6 +111,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
                         tools:text="Option 1b"
                         tools:ignore="HardcodedText"
                         />
@@ -118,6 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
                         tools:text="Option 1c"
                         tools:ignore="HardcodedText"
                         />
@@ -127,6 +131,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:gravity="center_vertical"
                         tools:text="Option 1d"
                         tools:ignore="HardcodedText"
                         />

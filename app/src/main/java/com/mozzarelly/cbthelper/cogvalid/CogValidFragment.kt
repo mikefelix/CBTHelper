@@ -73,6 +73,14 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
 
         radioAnswer1.setOnCheckedChangeListener { _, isChecked ->
             innerGroup.visible = isChecked
+            if (isChecked){
+                liveData.value = null
+                radioAnswer1a.isChecked = false
+                radioAnswer1b.isChecked = false
+                radioAnswer1c.isChecked = false
+                radioAnswer1d.isChecked = false
+                radioAnswer1e.isChecked = false
+            }
         }
 
         radioAnswer1a.bindTo(liveData, innerAnswers[0], 1)
@@ -94,6 +102,13 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
 
         radioAnswer1.setOnCheckedChangeListener { _, isChecked ->
             innerGroup.visible = isChecked
+            if (isChecked){
+                liveData.value = null
+                radioAnswer1a.isChecked = false
+                radioAnswer1b.isChecked = false
+                radioAnswer1c.isChecked = false
+                radioAnswer1d.isChecked = false
+            }
         }
 
         radioAnswer1a.bindTo(liveData, innerAnswers[0], 1)

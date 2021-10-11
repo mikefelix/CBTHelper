@@ -14,6 +14,7 @@ import com.mozzarelly.cbthelper.*
 import com.mozzarelly.cbthelper.analyze.AnalyzeActivity
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
 import org.threeten.bp.format.DateTimeFormatter
+import kotlin.reflect.KClass
 
 
 class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
@@ -66,6 +67,12 @@ class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
             recycler.smoothScrollToPosition(0)
         }
     }
+
+    override val onReturnFrom = mapOf<KClass<*>, (Int) -> Unit>(
+        AddEntryActivity::class to { result ->
+            showSavedEntryDialog(result)
+        }
+    )
 
     fun delete(entry: Entry){
         viewModel.delete(entry)

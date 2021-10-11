@@ -17,6 +17,7 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
 
     fun loadNewEntry() {
         viewModelScope.launch {
+            saved.value = false
             dao.deleteIncomplete()
             copyFrom(createAndLoadNew())
             changePage(1)
@@ -26,6 +27,7 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
     fun loadEntryInProgress(){
         viewModelScope.launch {
             val entry = dao.getIncomplete() ?: createAndLoadNew()
+            saved.value = false
             copyFrom(entry)
             changePage(when {
                 situation.isNullOrBlank() -> 1
@@ -41,6 +43,7 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
 
     fun loadEntry(id: Int) {
         viewModelScope.launch {
+            saved.value = false
             copyFrom(dao.get(id) ?: error("Entry $id not found."))
             changePage(1)
         }
@@ -66,6 +69,8 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
     val bottledValue = MutableLiveData(false)
     val relationshipsValue = MutableLiveData<String?>()
     val assumptionsValue = MutableLiveData<String?>()
+
+    val saved = MutableLiveData<Boolean>(false)
 
     override var id: Int
         get() = idValue.valueNotNull()
@@ -128,7 +133,15 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
 
     override fun save() {
         viewModelScope.launch {
-            dao.update(Entry.from(this@EditEntryViewModel))
+            try {
+                dao.update(Entry.from(this@EditEntryViewModel))
+                saved.value = true
+            }
+            catch (e: Exception) {
+                e.rethrowIfCancellation()
+                saved.value = false
+                throw e
+            }
         }
     }
 
