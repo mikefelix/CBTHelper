@@ -40,7 +40,12 @@ class AnalyzeRatRepSummaryFragment : CBTFragment() {
                         }
                     }
                     else -> {
-                        continueButton.visibility = View.VISIBLE
+                        continueButton.run {
+                            visibility = View.VISIBLE
+                            setOnClickListener {
+                                start<BehaviorActivity>(viewModel.id)
+                            }
+                        }
                         testButton.run {
                             setText(R.string.continue_behavior_validity_test)
                             setOnClickListener {
@@ -51,18 +56,12 @@ class AnalyzeRatRepSummaryFragment : CBTFragment() {
                 }
             }
 
-            thought.displayDatum(viewModel.thoughts)
-            instead.displayDatum(viewModel.instead)
-            emotions.displayDatum(viewModel.actualEmotions)
-            wouldHaveFelt.displayDatum(viewModel.possibleEmotions)
-            expressed.displayDatum(viewModel.expressed)
-            reacted.displayDatum(viewModel.relationships)
-
-            comparison.bindTo(viewModel.comparison)
-            comparison.setOnFocusChangeListener { _, hasFocus ->
-                if (!hasFocus){
-                    viewModel.save()
-                }
-            }
+            thought.display(viewModel.thoughts)
+            instead.display(viewModel.instead)
+            emotions.display(viewModel.actualEmotions)
+            wouldHaveFelt.display(viewModel.possibleEmotions)
+            expressed.display(viewModel.expressed)
+            reacted.display(viewModel.relationships)
+            comparison.display(viewModel.comparison)
         }.root
 }

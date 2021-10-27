@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlin.reflect.KClass
 
+const val RESULT_EXIT_TO_MAIN = 733
+
 abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
 
     protected abstract val layout: Int
@@ -27,7 +29,8 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return modelClass.newInstance().also {
                 (it as V).run {
-                    applicationContext = this@CBTActivity.applicationContext
+//                    applicationContext = this@CBTActivity.applicationContext
+                    applicationContext = application.applicationContext
                     setup()
                 }
             }
@@ -42,6 +45,13 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
 
     final override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RESULT_EXIT_TO_MAIN){
+            if (this::class != MainActivity::class)
+                finish(RESULT_EXIT_TO_MAIN)
+
+            return
+        }
+
         val function = onReturn[requestCode]
         if (function == null) {
             println("No return handler for requestCode $requestCode")
@@ -57,6 +67,12 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
     abstract fun V.setup()
 
     inline fun <reified A: CBTActivity<*>> start() = startActivityForResult(Intent(this@CBTActivity, A::class.java), A::class.requestCode())
+
+    fun <A: CBTActivity<*>> start(clazz: KClass<A>) = startActivityForResult(Intent(this@CBTActivity, clazz.java), clazz.requestCode())
+
+    fun <A: CBTActivity<*>> start(clazz: KClass<A>, id: Int) = startActivityForResult(Intent(this@CBTActivity, clazz.java).apply {
+        putExtra("id", id.toString())
+    }, clazz.requestCode())
 
     inline fun <reified A: CBTActivity<*>> start(id: Int) {
         startActivityForResult(Intent(this@CBTActivity, A::class.java).apply {

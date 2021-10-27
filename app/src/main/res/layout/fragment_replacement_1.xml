@@ -66,11 +66,12 @@
                 android:text="Thinking errors:"
                 tools:ignore="HardcodedText" />
 
-            <TextView style="@style/TextViewDatum"
+            <TextView style="@style/TextViewHeading"
                 android:id="@+id/errors"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginStart="32dp"
                 tools:ignore="HardcodedText"
                 tools:text="Overanalyzing" />
 
@@ -80,7 +81,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:labelFor="@id/answer"
-                app:drawableEndCompat="@android:drawable/ic_dialog_info"
                 android:text="Let's pretend that you could go back in time and redo this situation or conversation. What thoughts could you have had instead that would have been more rational?"
                 tools:ignore="HardcodedText" />
 
@@ -90,10 +90,23 @@
                 android:layout_height="wrap_content"
                 android:importantForAutofill="no"
                 android:inputType="textLongMessage"
-                android:minHeight="360dp"
+                android:minHeight="200dp"
                 android:layout_marginTop="16dp"
                 tools:ignore="HardcodedText"
                 tools:text="text" />
+
+            <Button android:theme="@style/ButtonStyle"
+                android:id="@+id/helpButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_gravity="center"
+                android:text="@string/iNeedHelp"
+                app:layout_constraintBottom_toTopOf="@id/thoughtHeading"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title" />
 
         </LinearLayout>
     </ScrollView>

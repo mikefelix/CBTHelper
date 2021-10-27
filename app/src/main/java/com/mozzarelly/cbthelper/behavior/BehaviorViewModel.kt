@@ -11,13 +11,11 @@ import kotlinx.coroutines.launch
 class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
 
     private val behaviorDao by lazy { CBTDatabase.getDatabase(applicationContext).behaviorDao() }
-    private val entryDao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
 
     override val title: LiveData<String?> = page.map {
         "Behavior - ${it.first}/$numPages"
     }
 
-    override var id: Int = 0
     override var honest: Int?
         get() = honestValue.value
         set(value){
@@ -69,7 +67,7 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
             rationalValue.value = value
         }
 
-    fun load(id: Int) {
+    override fun load(id: Int) {
         this.id = id
 
         viewModelScope.launch {
@@ -78,16 +76,7 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
 
         viewModelScope.launch {
             (behaviorDao.get(id) ?: Behavior.new(id).also { behaviorDao.create(it) }).let {
-                honest = it.honest
-                person = it.person
-                disappointed = it.disappointed
-                disapprove = it.disapprove
-                embarrassed = it.embarrassed
-                relationships = it.relationships
-                occupations = it.occupations
-                health = it.health
-                other = it.other
-                rational = it.rational
+                copyFrom(it)
             }
 
             changePage(when {
@@ -104,8 +93,6 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
 
     override val complete
         get() = rational != null
-
-    val entry = MutableLiveData<Entry?>()
 
     val emotions = entry.mapValueAs { emotionString }
     val expression = entry.mapValueAs { expression }

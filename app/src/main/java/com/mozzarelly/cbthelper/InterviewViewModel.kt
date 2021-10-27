@@ -4,9 +4,11 @@ package com.mozzarelly.cbthelper
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.launch
 
 data class LateInt(val int: Int)
 
@@ -18,9 +20,18 @@ abstract class InterviewViewModel : CBTViewModel(){
         get() = numberOfPages.int
 
     lateinit var numberOfPages: LateInt
+    lateinit var lateId: LateInt
+
+    val entry = MutableLiveData<Entry?>()
+
+    var id: Int
+        get() = lateId.int
+        set(value){ lateId = LateInt(value) }
 
     abstract val complete: Boolean
     abstract val title: LiveData<String?>
+
+    val entryDao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
 
     private val changingPageChannel = BroadcastChannel<Pair<Int, Int?>>(Channel.BUFFERED)
     val changingPage = changingPageChannel.asFlow()
@@ -29,6 +40,7 @@ abstract class InterviewViewModel : CBTViewModel(){
         get() = page.value?.first ?: 0
 
     abstract fun save()
+    abstract fun load(id: Int)
 
     fun previousPage(){
         changePage(currPage - 1)
@@ -52,4 +64,11 @@ abstract class InterviewViewModel : CBTViewModel(){
                 changingPageChannel.offer(it)
         }
     }
+
+    fun markEntry(marked: Boolean) {
+        viewModelScope.launch {
+            entryDao.update(entry.value!!.copy(marked = true))
+        }
+    }
+
 }

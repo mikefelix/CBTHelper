@@ -38,44 +38,34 @@ class AnalyzeViewModel : CBTViewModel() {
 
         entry =  entryDao.getAsync(value)
         cogValid = cogValidDao.getAsync(value)
-
         ratRep = ratRepDao.getAsync(value)
-        ratRepState = ratRep.map { it?.complete }
-        ratRep.observeForever {
-            comparison.value = it?.comparison
-        }
-
         behavior = behaviorDao.getAsync(value)
 
-        situation = entry.mapValue {
-            it.situation
-        }
-
+        ratRepState = ratRep.map { it?.complete }
+        situation = entry.mapValue { it.situation }
         typeString = entry.mapValueAs { if (situationType) "Situation" else "Conversation" }
-        emotionsChosen = entry.mapValueAs {
-            emotionString
-        }
-        thinkingErrors = cogValid.map {
-            it?.thinkingErrors() ?: emptyList()
-        }
-
+        emotionsChosen = entry.mapValueAs { emotionString }
+        thinkingErrors = cogValid.map { it?.thinkingErrors() ?: emptyList() }
         wasValid = cogValid.map { it?.isValid == true }
         thoughts = entry.mapValue { it.thoughts }
         instead = ratRep.mapValue { it.instead }
-        actualEmotions = entry.mapValue { emotionText(it.emotion1Pair, it.emotion2Pair, it.emotion3Pair) }
+        actualEmotions = entry.mapValue { emotionText(it.emotion1, it.emotion2, it.emotion3) }
         expressed = entry.mapValue { it.expression }
         relationships = entry.mapValue { it.relationships }
-        possibleEmotions = ratRep.mapValue {
-            emotionText(it.emotion1Pair, it.emotion2Pair, it.emotion3Pair)
-        }
+        possibleEmotions = ratRep.mapValue { emotionText(it.emotion1, it.emotion2, it.emotion3) }
+        comparison = ratRep.mapValue { it.comparison }
 
         stage = MediatorLiveData<Stage>().apply {
             val observer = Observer<Any?> {
                 val new = when {
                     behavior.value?.complete == true -> Stage.BehaviorComplete
+                    behavior.value?.started == true -> Stage.BehaviorPartial
                     ratRep.value?.complete == true -> Stage.RatRepComplete
+                    ratRep.value?.started == true -> Stage.RatRepPartial
                     cogValid.value?.complete == true -> Stage.CogValComplete
+                    cogValid.value?.started == true -> Stage.CogValPartial
                     entry.value?.complete == true -> Stage.EntryComplete
+                    entry.value?.started == true -> Stage.EntryPartial
                     else -> Stage.Begun
                 }
 
@@ -98,26 +88,20 @@ class AnalyzeViewModel : CBTViewModel() {
     lateinit var ratRepState: LiveData<Boolean?>
     lateinit var behavior: LiveData<Behavior?>
     lateinit var stage: LiveData<Stage>
-
     lateinit var situation: LiveData<String?>
-
     lateinit var typeString: LiveData<String?>
-
     lateinit var emotionsChosen: LiveData<String?>
-
     lateinit var thinkingErrors: LiveData<List<String>>
     lateinit var wasValid: LiveData<Boolean>
-
     lateinit var thoughts: LiveData<String?>
     lateinit var instead: LiveData<String?>
     lateinit var actualEmotions: LiveData<String?>
     lateinit var expressed: LiveData<String?>
+    lateinit var comparison: LiveData<String?>
     lateinit var relationships: LiveData<String?>
     lateinit var possibleEmotions: LiveData<String?>
 
-    val comparison = MutableLiveData<String?>()
-
-    fun save(){
+/*    fun save(){
         comparison.value?.takeIf { it != ratRep.value?.comparison }?.let {
             viewModelScope.launch {
                 val r = ratRep.value ?: RatRep.new(entry.value!!.id).also { ratRepDao.create(it) }
@@ -125,5 +109,5 @@ class AnalyzeViewModel : CBTViewModel() {
                 ratRepDao.update(r)
             }
         }
-    }
+    }*/
 }

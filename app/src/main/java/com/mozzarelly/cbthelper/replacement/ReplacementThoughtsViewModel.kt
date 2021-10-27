@@ -4,15 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.mozzarelly.cbthelper.*
-import com.mozzarelly.cbthelper.editentry.EmotionSelectionViewModel
 import kotlinx.coroutines.launch
 
 class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
     private val cogValidDao by lazy { CBTDatabase.getDatabase(applicationContext).cogValidDao() }
-    private val entryDao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
     private val ratRepDao by lazy { CBTDatabase.getDatabase(applicationContext).ratRepDao() }
-
-    val emotionSelection = EmotionSelectionViewModel()
 
     val thinkingErrors = MutableLiveData<String?>()
     val situation = MutableLiveData<String?>()
@@ -21,31 +17,60 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
     val believeValue = MutableLiveData<Int?>()
     val wouldHaveDoneValue = MutableLiveData<String?>()
     val wouldHaveAffectedValue = MutableLiveData<String?>()
+    val emotion1Value = MutableLiveData<Emotion?>()
+    val emotion2Value = MutableLiveData<Emotion?>()
+    val emotion3Value = MutableLiveData<Emotion?>()
+
+    val insteadFelt = Triple(emotion1Value, emotion2Value, emotion3Value).map { e1, e2, e3 ->
+        emotionTextSimple(e1?.emotion, e2?.emotion, e3?.emotion)
+    }
+
+    override var emotion1Name: String?
+        get() = emotion1Value.value?.emotion
+        set(value) {
+            emotion1Value.value = value?.let {
+                Emotion(it, emotion1Intensity ?: 5)
+            }
+        }
+    override var emotion2Name: String?
+        get() = emotion2Value.value?.emotion
+        set(value) {
+            emotion2Value.value = value?.let {
+                Emotion(it, emotion2Intensity ?: 5)
+            }
+        }
+    override var emotion3Name: String?
+        get() = emotion3Value.value?.emotion
+        set(value) {
+            emotion3Value.value = value?.let {
+                Emotion(it, emotion3Intensity ?: 5)
+            }
+        }
+    override var emotion1Intensity: Int?
+        get() = emotion1Value.value?.intensity
+        set(value) {
+            emotion1Value.value = value?.let {
+                Emotion(emotion1Name ?: "unknown", emotion1Intensity ?: 5)
+            }
+        }
+    override var emotion2Intensity: Int?
+        get() = emotion2Value.value?.intensity
+        set(value) {
+            emotion2Value.value = value?.let {
+                Emotion(emotion2Name ?: "unknown", emotion2Intensity ?: 5)
+            }
+        }
+    override var emotion3Intensity: Int?
+        get() = emotion3Value.value?.intensity
+        set(value) {
+            emotion3Value.value = value?.let {
+                Emotion(emotion3Name ?: "unknown", emotion3Intensity ?: 5)
+            }
+        }
 
     val thoughts = MutableLiveData<String?>()
     val actualEmotionText = MutableLiveData<String?>()
     val comparisonValue = MutableLiveData<String?>()
-
-    override var id: Int = 0
-
-    override var emotion1: String?
-        get() = emotionSelection.emotion1.value
-        set(value) { emotionSelection.emotion1.value = value }
-    override var emotion2: String?
-        get() = emotionSelection.emotion2.value
-        set(value) { emotionSelection.emotion2.value = value }
-    override var emotion3: String?
-        get() = emotionSelection.emotion3.value
-        set(value) { emotionSelection.emotion3.value = value }
-    override var emotion1Intensity: Int?
-        get() = emotionSelection.emotion1Intensity.value
-        set(value) { emotionSelection.emotion1Intensity.value = value }
-    override var emotion2Intensity: Int?
-        get() = emotionSelection.emotion2Intensity.value
-        set(value) { emotionSelection.emotion2Intensity.value = value }
-    override var emotion3Intensity: Int?
-        get() = emotionSelection.emotion3Intensity.value
-        set(value) { emotionSelection.emotion3Intensity.value = value }
 
     override var instead: String?
         get() = insteadValue.value
@@ -90,13 +115,15 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
         }
     }
 
-    fun load(id: Int) {
+    override fun load(id: Int) {
+        this.id = id
+
         viewModelScope.launch {
             copyFrom(ratRepDao.get(id) ?: RatRep.new(id).also { ratRepDao.create(it) })
 
             changePage(when {
                 wouldHaveDone != null -> 5
-                emotionSelection.emotion1.value != null -> 4
+                emotion1Name != null -> 4
                 believe != null -> 3
                 instead != null -> 2
                 else -> 1
@@ -108,14 +135,14 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
                 thoughts.value = it.thoughts
                 situation.value = it.situation
                 situationType.value = if (it.situationType) "situation" else "conversation"
-                actualEmotionText.value = emotionText(it.emotion1Pair, it.emotion2Pair, it.emotion3Pair)
+                actualEmotionText.value = emotionText(it.emotion1, it.emotion2, it.emotion3)
             }
         }
 
         viewModelScope.launch {
             (cogValidDao.get(id) ?: error("Can't find cogval $id")).let {
-                val advice = it.answer11
-                thinkingErrors.value = it.thinkingErrors().joinToString(separator = "\n") + "\n" + advice
+//                val advice = it.answer10
+                thinkingErrors.value = it.thinkingErrors().joinToString(separator = "\n")// + "\n" + advice
             }
         }
     }

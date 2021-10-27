@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/pageTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/beliefsAnalysisHeading"
+            android:paddingBottom="8dp"
+            android:gravity="center"
+            android:textSize="26sp"
+            android:background="@drawable/bottom_border"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/beliefsAnalysisText1"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/example1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/beliefsAnalysisExample1"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="32dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/text_bullets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/beliefsAnalysisText2"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/beliefsAnalysisText3"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewDatum"
+            android:id="@+id/beliefs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/text4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/beliefsAnalysisText4"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <CheckBox style="@style/CheckboxDatum"
+            android:id="@+id/markBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Check here to mark this entry for discussion with your therapist."
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/text5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/beliefsAnalysisText5"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="32dp"
+            android:gravity="center"
+            >
+
+            <Button android:theme="@style/ButtonStyle"
+                android:id="@+id/continueBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Continue"
+                android:padding="16dp"
+                android:layout_marginEnd="32dp"
+                tools:ignore="ButtonStyle" />
+
+            <Button android:theme="@style/ButtonStyle"
+                android:id="@+id/exitBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="Exit"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -43,7 +43,7 @@
             />
 
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/addButton"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
@@ -56,19 +56,7 @@
             app:layout_constraintBottom_toTopOf="@id/viewButton"
             />
 
-        <!--  <Button
-              android:id="@+id/analyzeButton"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:text="Analyze an entry"
-              android:layout_marginBottom="16dp"
-              app:layout_constraintBottom_toTopOf="@id/savedButton"
-              app:layout_constraintEnd_toEndOf="parent"
-              app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toBottomOf="@id/addButton" />
-          />-->
-
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/viewButton"
             android:layout_width="wrap_content"
             android:layout_height="48dp"

@@ -58,64 +58,71 @@
 
     <string name="validityIntro1">Please answer the following questions about these thoughts. No one will see your answers except you, so be as honest as you can.</string>
     <string name="validityIntro2">You wrote that your thoughts were:</string>
-    <string name="validityQuestion1">Were these thoughts based on facts, or did they stem from your mood and how you were feeling at the time?</string>
-    <string name="validityAnswer1A">My thoughts came mostly from the facts of the situation.</string>
-    <string name="validityAnswer1B">My thoughts came mostly from my emotions/mood at the time.</string>
-    <string name="validityQuestion2">When you had these thoughts, were you looking for information or confirmation? In other words, were you considering all of the facts of the situation, or just those that confirmed what you already believed or wanted to believe?</string>
-    <string name="validityAnswer2A">I was looking for confirmation of what I already believed.</string>
-    <string name="validityAnswer2B">I was looking for confirmation of what I wanted to believe.</string>
-    <string name="validityAnswer2C">I was looking for information and considering honestly all the facts of the situation.</string>
-    <string name="validityQuestion3">Were your thoughts wrong? For example, did you misunderstand the situation or accidentally perceive the meaning of it incorrectly?</string>
-    <string name="validityAnswer3A">Yes</string>
-    <string name="validityAnswer3B">Probably</string>
-    <string name="validityAnswer3C">No</string>
-    <string name="validityQuestion4A">What evidence is there that your thoughts were accurate / true?</string>
-    <string name="validityQuestion4B">What evidence is there that your thoughts were inaccurate / untrue?</string>
-    <string name="validityQuestion5">Did your thoughts realistically match the evidence?</string>
-    <string name="validityAnswer5A">No, because:</string>
-    <string name="validityAnswer5A1">I exaggerated in my mind how bad things actually were. I blew it out of proportion.</string>
-    <string name="validityAnswer5A2">I exaggerated in my mind how good things actually were. I made a bigger deal out it than it really deserved.</string>
-    <string name="validityAnswer5A3">I minimized, downplayed, or ignored things as they actually were. I made a smaller deal out it than it really deserved.</string>
-    <string name="validityAnswer5A4">I assumed I knew what was going to happen without recognizing that I could be wrong (fortune-telling).</string>
-    <string name="validityAnswer5A5">I assumed that because it could happen it likely would happen.</string>
-    <string name="validityAnswer5B">Yes, my thoughts accurately matched the evidence and facts I had at the time.</string>
-    <string name="validityQuestion6">Did you have these thoughts out of habit? Out of personal bias? Or were they unique to this situation?</string>
-    <string name="validityAnswer6A">My thoughts were based on previous situations and conversations rather than on this particular situation.</string>
-    <string name="validityAnswer6B">My thoughts were based on general views and opinions I have rather than this particular situation.</string>
-    <string name="validityAnswer6C">My thoughts were based on the specific facts of this particular situation.</string>
-    <string name="validityQuestion7">Did your thoughts come from assumptions you made about someone else’s intentions, thoughts, or beliefs?</string>
-    <string name="validityAnswer7A">Yes, I reacted to what I assumed he/she was thinking or feeling. I was mind reading.</string>
-    <string name="validityAnswer7B">No, I reacted to what he/she actually said, did, or meant.</string>
-    <string name="validityQuestion8">Did your thoughts come from a too-rigid perspective?</string>
-    <string name="validityAnswer8A">Yes, because:</string>
-    <string name="validityAnswer8A1">I had "black-or-white" type of thinking. I allowed for no shades of gray or nuance.</string>
-    <string name="validityAnswer8A2">I inaccurately used words like “always”, “every”, “never”, "constantly", or other similar absolutes.</string>
-    <string name="validityAnswer8A3">I was unfairly blaming myself (personalizing it) when it wasn’t actually all my fault.</string>
-    <string name="validityAnswer8A4">I was unfairly blaming someone else when it wasn’t actually all their fault.</string>
-    <string name="validityAnswer8B">No, my thoughts took into consideration the complexities and nuance of the situation in a balanced and fair way.</string>
-    <string name="validityQuestion9">Did you have unrealistic expectations about what should be, or what shouldn’t be?</string>
-    <string name="validityAnswer9A">Yes, I had unrealistic expectations…</string>
-    <string name="validityAnswer9A1">of myself.</string>
-    <string name="validityAnswer9A2">of others.</string>
-    <string name="validityAnswer9A3">for things to happen or not happen.</string>
-    <string name="validityAnswer9A4">because I believed that I needed something which I actually just really wanted.</string>
-    <string name="validityAnswer9A5">because I believed I deserved something which I actually didn’t deserve.</string>
-    <string name="validityAnswer9B">No, my expectations were realistic.</string>
-    <string name="validityQuestion10">Think of the person who is the most emotionally healthy person you know. Would that person say that your thinking was:</string>
+    <string name="validityQuestion1">Were these thoughts mistaken? In other words, did you misunderstand or misperceive what really happened or what he/she actually meant?</string>
+    <string name="validityAnswer1A">I misunderstood what actually happened.</string>
+    <string name="validityAnswer1B">I misunderstood what he/she said.</string>
+    <string name="validityAnswer1C">I accurately understood what happened / what was said.</string>
+    <string name="validityQuestion2">Were these thoughts based on facts, or did they stem from the mood you were in and how you were feeling at the time?</string>
+    <string name="validityAnswer2A">My thoughts came from the facts of the situation.</string>
+    <string name="validityAnswer2B">My thoughts came from my emotions/mood at the time.</string>
+    <string name="validityQuestion3">Think back for a moment:\n\nWhat evidence is there that these thoughts were true?\n\nWhat evidence is there that these thoughts were not true?\n\nThen ask yourself if you made any of the following thinking errors (check all that apply).</string>
+    <string name="validityAnswer3A">I exaggerated in my mind how bad things actually were. I blew it out of proportion.</string>
+    <string name="validityAnswer3B">I exaggerated in my mind how good things actually were. I made a bigger deal out it than it really deserved.</string>
+    <string name="validityAnswer3C">I minimized, downplayed, or ignored things as they actually were. I made a smaller deal out it than it really deserved.</string>
+    <string name="validityAnswer3D">I acted as if I knew for certain what was going to happen (i.e. fortune-telling).</string>
+    <string name="validityAnswer3E">My assumptions were overly broad and not specific to the facts of this situation.</string>
+    <string name="validityAnswer3F">I assumed that because it could happen, it would happen.</string>
+    <string name="validityAnswer3G">None of these apply.</string>
+    <string name="validityQuestion4">Did you make assumptions about someone’s intentions, thoughts, or beliefs?</string>
+    <string name="validityAnswer4A">Yes, I reacted to what I assumed he/she was thinking or feeling. I was mind reading.</string>
+    <string name="validityAnswer4B">No, I reacted to what he/she actually said, did, or meant.</string>
+    <string name="validityQuestion5">Were these thoughts biased?</string>
+    <string name="validityAnswer5A">Yes, I only paid attention to those facts that confirmed what I already believed (or what I wanted to believe).</string>
+    <string name="validityAnswer5B">Yes, my general opinions and views swayed or skewed how I understood the facts of this specific situation.</string>
+    <string name="validityAnswer5C">No, these thoughts were not biased but were instead based on facts, all the facts.</string>
+    <string name="validityQuestion6">Did your thoughts come from a too-rigid perspective?</string>
+    <string name="validityAnswer6A">Yes, I had "black-or-white" type of thinking. I allowed for no shades of gray or nuance.</string>
+    <string name="validityAnswer6B">Yes, I inaccurately used words like “always”, “every”, “never”, "constantly", or other similar absolutes.</string>
+    <string name="validityAnswer6C">Yes, I was unfairly blaming someone else when it wasn’t actually all their fault.</string>
+    <string name="validityAnswer6D">Yes, I was unfairly blaming myself (personalizing it) when it wasn’t actually all my fault.</string>
+    <string name="validityAnswer6E">No, my thoughts were nuanced and balanced, not too rigid.</string>
+    <string name="validityQuestion7">Did you have unrealistic expectations about what should be, or what shouldn’t be?</string>
+    <string name="validityAnswer7A">Yes, I unfairly compared myself to others and had unrealistic expectations of myself.</string>
+    <string name="validityAnswer7B">Yes, I had unrealistic expectations of other people.</string>
+    <string name="validityAnswer7C">Yes, I had unrealistic expectations of things to happen or not happen.</string>
+    <string name="validityAnswer7D">Yes, I believed that I needed something which actually I just really, really wanted.</string>
+    <string name="validityAnswer7E">Yes, I believed I deserved something which I really just needed or wanted but didn’t deserve.</string>
+    <string name="validityAnswer7F">No, my expectations were fair and realistic.</string>
+    <string name="validityQuestion8">Think of the person who is the most emotionally healthy person you know. What is his/her name?</string>
+    <string name="validityQuestion9">If %1$s had been in the situation you were in and had the same thoughts you had, would that have surprised you? Would it have been out of character for him/her?</string>
+    <string name="validityAnswer9A">Yes, he/she would have had very different thoughts than I did.</string>
+    <string name="validityAnswer9B">No, he/she probably would have had similar thoughts to mine.</string>
+    <string name="validityQuestion10">Would %1$s say that your thinking was:</string>
     <string name="validityAnswer10A">Rational</string>
     <string name="validityAnswer10B">Irrational</string>
-    <string name="validityQuestion11">If he/she had been in the same situation or conversation you were, and had the same thoughts you had, what would you tell him/her about these thoughts?</string>
-    <string name="validityQuestion12">Overall, how rational or irrational would you say your thinking was?</string>
-    <string name="validityAnswer12A">Completely\nirrational</string>
-    <string name="validityAnswer12B">Completely\nrational</string>
 
-    <string name="validitySummary1Irrational">It appears that your thoughts about this %1$s were likely flawed. You were likely not thinking as rationally as you could have. For example, it looks like you made the following thinking errors:</string>
-    <string name="validitySummary1Rational">It appears that your thoughts about this %1$s were likely rational and valid. We could find no thinking errors.</string>
+    <string name="oldvalidityQuestion2">When you had these thoughts, were you looking for information or confirmation? In other words, were you considering all of the facts of the situation, or just those that confirmed what you already believed or wanted to believe?</string>
+    <string name="oldvalidityAnswer2A">I was looking for confirmation of what I already believed.</string>
+    <string name="oldvalidityAnswer2B">I was looking for confirmation of what I wanted to believe.</string>
+    <string name="oldvalidityAnswer2C">I was looking for information and considering honestly all the facts of the situation.</string>
+    <string name="oldvalidityQuestion3">Were your thoughts wrong? For example, did you misunderstand the situation or accidentally perceive the meaning of it incorrectly?</string>
+    <string name="oldvalidityAnswer3A">Yes</string>
+    <string name="oldvalidityAnswer3B">Probably</string>
+    <string name="oldvalidityAnswer3C">No</string>
+    <string name="oldvalidityQuestion4A">What evidence is there that your thoughts were accurate / true?</string>
+    <string name="oldvalidityQuestion4B">What evidence is there that your thoughts were inaccurate / untrue?</string>
+    <string name="oldvalidityQuestion11">If he/she had been in the same situation or conversation you were, and had the same thoughts you had, what would you tell him/her about these thoughts?</string>
+    <string name="oldvalidityQuestion12">Overall, how rational or irrational would you say your thinking was?</string>
+    <string name="oldvalidityAnswer12A">Completely\nirrational</string>
+    <string name="oldvalidityAnswer12B">Completely\nrational</string>
+
+    <string name="validitySummary1Irrational">It appears that your thoughts about this %1$s were probably irrational. Good job identifying the “bad apples” that got through.</string>
+    <string name="validitySummary1Rational">It appears that your thoughts about this %1$s may have been rational. The test identified no thinking errors.</string>
     <string name="validitySummary2">Thinking errors identified:</string>
-    <string name="validitySummary3Irrational">These types of thinking errors indicate that there is room to improve your emotional health. The %1$s could have been healthier.</string>
+    <string name="validitySummary3Irrational">Having thinking errors means there is room to improve your emotional health. Let’s explore how this can happen. First, let’s try replacing your irrational thoughts with a more rational way of thinking.</string>
     <string name="validitySummary3Rational">You may have made thinking errors which were not identifiable by this test, but let’s suppose you didn’t. Let’s assume that your thoughts were fully rational and therefore led to a healthy emotional experience. This means the %1$s you felt in this situation was likely healthy.</string>
     <string name="validitySummary4Irrational">Do You Want to Improve?</string>
-    <string name="validitySummary4Rational">Congratulations! But what if the way you felt was not actually good? How is it healthy to feel negative emotions? If this is a question you have then click there to read an explanation of how even negative emotions can be healthy.</string>
+    <string name="validitySummary4Rational">Congratulations! But wait! What if the emotion you felt was not positive? How can it be healthy to feel negative emotions?≥≥≥≥≥..........................................................</string>
     <string name="validitySummary5Irrational">Let’s explore how you could have been healthier. Let’s first try replace the irrational thoughts that you had with a more rational way of thinking.</string>
     <string name="validitySummary5Rational">Okay, let’s move on. Let’s examine the way you expressed what you felt.</string>
     <string name="validitySummary5">Let’s explore how you could have been healthier. Let’s first try replace the irrational thoughts that you had with a more rational way of thinking.</string>
@@ -132,14 +139,25 @@
 
     <string name="replacement2Question">How much do you believe these replacement thoughts? How true do they feel to you?</string>
     <string name="replacement3Question1">Take a moment and imagine yourself back in that same situation. This time however, imagine yourself thinking…</string>
-    <string name="replacement3Question2">If these had been your thoughts instead, what would you have felt?</string>
+    <string name="replacement3Question2">If you believed this instead, what would you have felt?</string>
     <string name="replacement4Question1">Now imagine yourself back in that same %1$s, but feeling %2$s instead. If this were the case, what would you have done or said to show or express this feeling?</string>
     <string name="replacement5Question">How would this affect the people around you? In other words, how would they respond to what you would say and do?</string>
+    
+    <string name="imaginedFuture1">You now know what you could have thought instead, and how it would have led to more emotionally healthy outcomes. Good job.\n\nBefore we move on let’s apply this new knowledge to your future. We’ve looked at what happened in the past, so now let’s have you practice in your mind a time in the future when this kind of healthier thinking will be beneficial for you. Follow these steps:</string>
+    <string name="imaginedFuture2">1. Find a place where you can safely close your eyes (for example, don’t do this while you’re driving).</string>
+    <string name="imaginedFuture3">2. With your eyes closed, see yourself in the future in a similar %1$s like the one we’ve been analyzing.</string>
+    <string name="imaginedFuture4">3. See yourself reacting the same way you did originally, but this time imagine yourself noticing your thinking errors before the scene ends. You recognize the bad apples and reject them.</string>
+    <string name="imaginedFuture5">4. Imagine yourself during that %1$s believing something like:</string>
+    <string name="imaginedFuture6">6. Notice how these healthier thoughts change the way you feel. You might feel a different emotion, or maybe the same one just less intensely.</string>
+    <string name="imaginedFuture7">7. Before you open your eyes, take a deep breath and mentally pat yourself on the back for handling the situation differently this time (at least in your imagination). </string>
+    <string name="imaginedFuture8">Visualizing like this in your mind is how to make imagination become reality. For example, professional athletes often practice by first envisioning themselves nailing their routine or hitting a homerun before they actually practice in reality. You can do the same. Feel free to "practice" rejecting bad apples as often as you would like.</string>
 
     <string name="moveOn">OK. Let’s move on and test whether the way that you expressed what you felt was rational or irrational.</string>
     <string name="finish">Finish</string>
     <string name="completely_false">Completely false</string>
     <string name="completely_true">Completely true</string>
+    <string name="iNeedHelp">I need help!</string>
+    <string name="iDontKnowINeedHelp">I don’t know. I need help!</string>
 
     <string name="begin_cognition_validity_test">Begin Cognition Validity Test</string>
     <string name="continue_cognition_validity_test">Continue Cognition Validity Test</string>
@@ -156,13 +174,15 @@
     <string name="title_cogvalid_activity">Cognition Validity Test</string>
     <string name="title_ratrep_activity">Replacement Thoughts Test</string>
 
-    <string name="behaviorAnalogy1">Let’s consider an analogy: imagine you have a tent at a local farmer’s market and you are trying to sell your homemeade apple juice. A sign on your table shows the price, nutrition information, and other important details which help people at your tent decide whether or not to buy from you.</string>
+    <string name="behaviorAnalogy1">To go farther with our analogy of the apples, let’s imagine that you are at a local farmer’s market and you are trying to sell your homemade apple juice. An advertising sign on your table shows the price, nutrition information, and other important details that help passers by decide whether they want to do business with you or not.</string>
     <string name="behaviorAnalogy2">In this part of the analogy:</string>
-    <string name="behaviorAnalogy3">• The apple juice = your emotions (what you feel inside)</string>
-    <string name="behaviorAnalogy4">• The advertising sign = your behavior (how you show what you feel inside)</string>
-    <string name="behaviorAnalogy5">• The farmer’s market = the relationships and interactions you have with other people</string>
-    <string name="behaviorAnalogy6">We behave in both rational and irrational ways. Our rational behavior makes it easier for us to be loved, cared for, and connected to others (like a sign that helps us sell apple juice). Our irrational behavior makes it harder for us to be connected to others emotionally.</string>
-    <string name="behaviorAnalogy7">It’s helpful to quality-check our behavior (the way we display our emotion) so that we don’t struggle in relationships. Let’s look at the way you acted in this particular instance and check for any "bad advertising".</string>
+    <string name="behaviorAnalogyBullet1">The farmer’s market = All the people you interact with.</string>
+    <string name="behaviorAnalogyBullet2">Selling apple juice = Your emotional transactions with them such as loving, ignoring, supporting, criticizing, caring, etc. </string>
+    <string name="behaviorAnalogyBullet3">The juice = What you feel inside (i.e. your emotions)</string>
+    <string name="behaviorAnalogyBullet4">The advertising sign = Your behavior (i.e. the way you show what you feel inside), which helps people decide if they want to engage with you or not.</string>
+    <string name="behaviorAnalogy3">When our behavior is emotionally healthy we call it rational. Rational behavior makes it easier for us to be loved by, cared for, and connected to others; however, irrational behavior (like a false advertising sign at the farmer’s market) makes people not want to connect to us emotionally. </string>
+    <string name="behaviorAnalogy4">It can be helpful to “quality check” your behavior (the way you displayed your emotion) to help improve your relationships. </string>
+    <string name="behaviorAnalogy5">Let’s review your behavior and look for “false advertising”.</string>
     <string name="behaviorIntro1">You noted that you originally felt:</string>
     <string name="behaviorIntro2">When asked how you expressed this emotion you wrote:</string>
     <string name="behaviorPrompt">Please answer the following questions about your words and actions. No one will see your answers except you, so be as honest as you can.</string>
@@ -182,14 +202,43 @@
     <string name="behavior3Answer1">More benefit</string>
     <string name="behavior3Answer2">More harm</string>
     <string name="behavior3Answer3">Neither</string>
-    <string name="behavior4Question">Based on the three questions above, how rational or irrational were your words and actions on the following scale?</string>
+    <string name="behavior4Question">Based on the three answers above, how rational or irrational were your words and actions on the following scale?</string>
+
+    <string name="emhelp1Text1">It looks like you’re having trouble finding replacement thoughts that feel true. Try this: let’s first identify what you wish you would have felt instead. You wrote:</string>
+    <string name="emhelp1Text2">In this situation, what do you wish you would have felt?</string>
+    <string name="emhelp1Text3">Remember! A healthy emotion is not necessarily a positive emotion. Make sure the emotion you wish you would have felt accurately matches the situation. </string>
+    <string name="emhelp2Question">In order to feel %1$s in this %2$s, what would you need to think and believe?</string>
 
     <string name="about">App design and wording by:\nDaniel S. Felix, PhD, LMFT\ndaniel.felix@usd.edu\n\nAndroid programming and design by:\nMichael Felix\nmichael.felix@gmail.com\n\nCBT Helper is intended for use in collaboration with a licensed therapist.</string>
 
-    <string name="begin_replacement_thoughts">Explore replacement thoughts</string>
+    <string name="begin_replacement_thoughts">OK, begin</string>
     <string name="continue_replacement_thoughts">Continue replacement thoughts test</string>
     <string name="view_replacement_thoughts">View replacement thoughts</string>
-    <string name="skip_to_behavior">Skip to behavior</string>
+    <string name="skip_to_behavior">Skip to behavior analysis</string>
     <string name="none">None</string>
 
+    <string name="apples_metaphor">A Metaphor</string>
+    <string name="apples_metaphor_1">Imagine that you work in an apple juice factory. Your job is to inspect the apples as they move from the truck across a conveyor belt into the juicing machine. You examine them and remove any rotten ones to prevent them from making it into the machine and souring the juice.</string>
+    <string name="apples_metaphor_2">This is an analogy of how we can learn to “quality check” our thoughts:</string>
+    <string name="apples_metaphor_bullets_1">The truck = situations that bring thoughts to your mind</string>
+    <string name="apples_metaphor_bullets_2">Apples = the thoughts that cross your mind</string>
+    <string name="apples_metaphor_bullets_3">The juice machine = the part of your brain that processes thoughts into emotions and actions</string>
+    <string name="apples_metaphor_3">We all occasionally have thoughts cross our minds which are irrational or untrue (bad apples). If we don’t quality-check and replace these irrational thoughts then we allow them to sour our emotional health.</string>
+    <string name="check_for_apples">Let’s review your thoughts and check for any “bad apples”.</string>
+
+    <string name="negative_emotion_button_text">Read more about this</string>
+    <string name="negative_emotion_heading">When is Negative Emotion Healthy?</string>
+    <string name="negative_emotion_explanation">We often think of feelings as either positive or negative. Certain emotions like happy, calm, confident, and thankful we see as positive. Other emotions like fear, sadness, and anger we see as negative because it feels good to be happy, and it feels not so good to be sad, mad, or afraid.\n\nPositive emotions are healthy, and negative emotions are unhealthy, right? No. Unfortunately it’s not that simple. Weird as it may seem, positive emotions can sometimes be unhealthy, and negative emotions can sometimes be healthy. Consider the following as an example:\n\nIs it healthy to feel fear and anxiety?\n\nYes, when tornado sirens are going off during a large thunderstorm. The fear and anxiety we feel is healthy in this situation because these feelings motivate us to be alert and aware of danger, and to get to the basement where we can minimize the potential harm of a tornado.\n\nWould the same emotion be healthy if it were a clear blue afternoon with not a cloud in the sky and they were just testing the tornado sirens? Obviously not. And reacting to this emotion by hiding in the basement wouldn’t be rational behavior either.\n\nAnother example: When a loved one dies unexpectedly, is it healthy to feel happy? No. Emotionally healthy individuals feel sad, hurt, angry, and other negative emotions in this not-so-positive context.\n\nWhether an emotion is healthy or unhealthy depends on how well it matches the context it’s felt in.\n\nEven negative emotions are healthy when the thoughts that produce them appropriately match the situation."</string>
+
+    <string name="beliefsAnalysisHeading">Beliefs analysis</string>
+    <string name="beliefsAnalysisText1">It’s possible that one reason you’re struggling to come up with replacement thoughts which actually feel true is this: Our thoughts are anchored in deep-seated core beliefs. These assumptions we have about ourselves are not specific to situations such as the one you are analyzing here in this entry; rather, they are broader and deeper. They influence all the situations and conversations we find ourselves in.\n\nIt’s possible that core assumptions like these may be preventing you from discovering and actually believing a healthier, more rational way of thinking.\n\nHere’s an example of how this happens:</string>
+    <string name="beliefsAnalysisExample1">A woman and her husband are discussing their finances and budget. She feels rejected and disrespected during the conversation and storms off, leaving him confused about why she left so abruptly.\n\nShe recognizes later, with the help of this app, that her thinking was irrational. She now realizes she was making the thinking error ’Mindreading’ by assuming that she knew what he was thinking. Without evidence, she believed that he was upset with her for not making enough money.\n\nNow that she recognizes this thinking error she wants to fix it. Instead of unfairly reading his mind, she instead wants to come up with healthier thinking for future financial conversations with him, but she’s having a hard time finding replacement thoughts that she can actually believe. For example,</string>
+    <string name="beliefsAnalysisBullet1">She first tries to think, "He’s proud of me. He doesn’t see me as a failure at all," but that just doesn’t feel true to her because she saw the look in his eye when he saw how much debt they still have.</string>
+    <string name="beliefsAnalysisBullet2">So she tries to believe, "There’s nothing wrong with how much money I make." Unfortunately this also feels untrue because sometimes they simply don’t have enough money to pay all their bills.</string>
+    <string name="beliefsAnalysisText2">If we ask him he’ll tell the truth: He does not think she’s a failure, even though money is tight. He is actually proud and grateful for her hard work ethic. And he tells her this. So why is she having such a hard time believing it?\n\nDeep down she has core assumptions about herself. She’s not fully aware that these assumptions are even there, but if she could put them into words they would be something like, "I am a failure at most things. I am destined to fail."\n\nSounds harsh, doesn’t it? She hears echoes of her step-father’s voice in her head when she reflects on it, and she wonders if that’s where these deep core beliefs might come from, but that’s another story.\n\nThe point here is, without realizing it she is filtering out evidence of the truth that she has, in fact, not been a failure. She instead she finds herself looking for evidence to confirm the belief which she has assumed is true for many years, that failure is her fate. Given these core assumptions, it’s understandable why she is struggling to actually believe her replacement thoughts. They just don’t fit together:</string>
+    <string name="beliefsAnalysisText3">It’s possible that the reason you are also struggling is because the replacement thoughts you want to believe just don’t fit certain assumptions you may have—certain core beliefs that you assume are true about yourself or your world.\n\nThe core beliefs and assumptions which you identified as part of this entry were:</string>
+    <string name="beliefsAnalysisText4">You may need to challenge and change some of these core assumptions, but it is beyond the scope of this app to help you do so. It would likely benefit you to discuss this later with your therapist.</string>
+    <string name="beliefsAnalysisText5">Would you like to continue on to analyze behavior, or go back to the main menu?</string>
+
+    <string name="quoteCharacters">“”’</string>
 </resources>

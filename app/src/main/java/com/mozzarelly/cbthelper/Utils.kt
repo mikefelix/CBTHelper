@@ -6,27 +6,32 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.preference.PreferenceManager
-import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.*
-import androidx.lifecycle.Observer
-import java.lang.IllegalArgumentException
-import java.util.*
-
 import android.os.Binder
 import android.os.Bundle
+import android.os.Parcelable
+import android.preference.PreferenceManager
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.BulletSpan
+import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.BundleCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.mozzarelly.cbthelper.analyze.AnalyzeActivity
 import kotlinx.coroutines.CancellationException
+import java.io.Serializable
+import java.util.*
 import java.util.Calendar.DAY_OF_YEAR
+import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
@@ -61,7 +66,7 @@ fun <T : Any> fragmentArgument(defaultValue: T? = null) = FragmentArgumentDelega
  * @param T property type
  */
 class FragmentArgumentDelegate<T : Any>(private val defaultValue: T?) :
-    kotlin.properties.ReadWriteProperty<Fragment, T> {
+    ReadWriteProperty<Fragment, T> {
 
     override operator fun getValue(thisRef: Fragment, property: KProperty<*>): T {
         return getValueOrDefault(thisRef, property.name)
@@ -86,8 +91,8 @@ class FragmentArgumentDelegate<T : Any>(private val defaultValue: T?) :
                 is Float -> putFloat(key, value)
                 is Bundle -> putBundle(key, value)
                 is Binder -> BundleCompat.putBinder(this, key, value)
-                is android.os.Parcelable -> putParcelable(key, value)
-                is java.io.Serializable -> putSerializable(key, value)
+                is Parcelable -> putParcelable(key, value)
+                is Serializable -> putSerializable(key, value)
 //                is HttpUrl -> putString(key, value.toString())
                 else -> throw IllegalStateException("Type ${value.javaClass.canonicalName} of property $key is not supported")
             }
@@ -209,7 +214,7 @@ inline fun <reified T> SharedPreferences.getOrInit(key: String, orElse: () -> T)
 
 fun now(): Calendar = Calendar.getInstance().apply { time = Date() }
 fun Calendar(millis: Long): Calendar = Calendar.getInstance().apply { time = Date(millis) }
-fun Calendar.dayOfYear(): Int = this.get(Calendar.DAY_OF_YEAR)
+fun Calendar.dayOfYear(): Int = this.get(DAY_OF_YEAR)
 fun Calendar.day(): Int = (this.timeInMillis / 1000 / 60 / 60 / 24).toInt()
 fun Int.asCalendarDay(): Calendar = Calendar.getInstance().also {
     it.set(DAY_OF_YEAR, this)
@@ -278,27 +283,25 @@ fun intentToSendReminderNotification(context: Context, title: String?, message: 
     PendingIntent.FLAG_UPDATE_CURRENT
 )
 
-fun emotionTextSimple(vararg emotions: String?): String? {
-    val filtered = emotions.filterNotNull()
-    return when (filtered.size){
+fun emotionTextSimple(vararg emotions: Emotion?): String? = emotionTextSimple(*emotions.map { it?.emotion }.toTypedArray())
+
+fun emotionTextSimple(vararg emotions: String?): String? = with (emotions.filterNotNull()){
+    when (size){
         0 -> null
-        1 -> filtered[0]
-        2 -> "${filtered[0]} and ${filtered[1]}"
-        3 -> "${filtered[0]}, ${filtered[1]} and ${filtered[2]}"
-        else -> "${filtered[0]}, ${filtered[1]}, ${filtered[2]}..."
+        1 -> get(0)
+        2 -> "${get(0)} and ${get(1)}"
+        3 -> "${get(0)}, ${get(1)} and ${get(2)}"
+        else -> "${get(0)}, ${get(1)}, ${get(2)}..."
     }
 }
 
-fun emotionText(vararg emotions: Pair<String?, Int?>): String? {
-    fun Pair<String?, Int?>.text() = if (second == null) first else "$first ($second/10)"
-    
-    val filtered = emotions.filter { it.first != null }
-    return when (filtered.size){
+fun emotionText(vararg emotions: Emotion?, delimiter1: String = " and ", delimiter2: String = ", "): String? = with(emotions.filterNotNull()){
+    when (size){
         0 -> null
-        1 -> filtered[0].text()
-        2 -> "${filtered[0].text()} and ${filtered[1].text()}"
-        3 -> "${filtered[0].text()}, ${filtered[1].text()} and ${filtered[2].text()}"
-        else -> "${filtered[0].text()}, ${filtered[1].text()}, ${filtered[2].text()}..."
+        1 -> get(0).toString()
+        2 -> "${get(0)}${delimiter1}${get(1)}"
+        3 -> "${get(0)}${delimiter2}${get(1)}${delimiter1}${get(2)}"
+        else -> "${get(0)}${delimiter2}${get(1)}${delimiter1}${get(2)}..."
     }
 }
 
@@ -320,18 +323,14 @@ fun Context.doAfterConfirm(message: Int, ok: Int = R.string.ok, cancel: Int = R.
         .show()
 }
 
-fun Activity.hideKeyboard() {
-    currentFocus?.let {
-        val imm = ContextCompat.getSystemService(this, InputMethodManager::class.java)
-        imm?.hideSoftInputFromWindow(it.windowToken, 0)
-    }
+fun Activity.hideKeyboard(fromView: View? = null) {
+    val view = fromView ?: currentFocus ?: View(this)
+    val imm = ContextCompat.getSystemService(this, InputMethodManager::class.java)
+    imm?.hideSoftInputFromWindow(view.windowToken, 0)
 }
 
-fun Fragment.hideKeyboard() {
-    activity?.currentFocus?.let {
-        val imm = ContextCompat.getSystemService(requireActivity(), InputMethodManager::class.java)
-        imm?.hideSoftInputFromWindow(it.windowToken, 0)
-    }
+fun Fragment.hideKeyboard(view: View) {
+    requireActivity().hideKeyboard(view)
 }
 
 inline fun <T> MutableList<T>.removeWhere(filter: (T) -> Boolean): Boolean {
@@ -378,4 +377,67 @@ fun <V : CBTViewModel> CBTActivity<V>.showSavedEntryDialog(id: Int){
         show()
     }
 
+}
+
+/*
+class BottomSheetPopup : BottomSheetDialogFragment() {
+    var headingText: Int? = null
+    var explanation: Int? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return PopupBinding.inflate(inflater, container, false).apply {
+            heading.text = getString(headingText ?: error("Set the heading text!"))
+            text.text = getString(explanation ?: error("Set the text!"))
+            done.setOnClickListener { dismiss() }
+        }.root.also {
+            BottomSheetBehavior.from(it).run {
+                isDraggable = false
+                skipCollapsed = true
+                state = BottomSheetBehavior.STATE_EXPANDED
+            }
+        }
+    }
+}*/
+
+/**
+ * Returns a CharSequence containing a bulleted and properly indented list.
+ *
+ * @param leadingMargin In pixels, the space between the left edge of the bullet and the left edge of the text.
+ * @param context
+ * @param stringArrayResId A resource id pointing to a string array. Each string will be a separate line/bullet-point.
+ * @return
+ */
+fun makeBulletedList(leadingMargin: Int, context: Context, stringArrayResId: Int): CharSequence {
+    return makeBulletedList(leadingMargin, *context.resources.getStringArray(stringArrayResId))
+}
+
+/**
+ * Returns a CharSequence containing a bulleted and properly indented list.
+ *
+ * @param leadingMargin In pixels, the space between the left edge of the bullet and the left edge of the text.
+ * @param context
+ * @param linesResIds An array of string resource ids. Each string will be a separate line/bullet-point.
+ * @return
+ */
+fun makeBulletedList(leadingMargin: Int, context: Context, vararg linesResIds: Int): CharSequence {
+    val lines = linesResIds.map { context.getString(it) }
+    return makeBulletedList(leadingMargin, *lines.toTypedArray())
+}
+
+/**
+ * Returns a CharSequence containing a bulleted and properly indented list.
+ *
+ * @param leadingMargin In pixels, the space between the left edge of the bullet and the left edge of the text.
+ * @param lines An array of CharSequences. Each CharSequences will be a separate line/bullet-point.
+ * @return
+ */
+fun makeBulletedList(leadingMargin: Int, vararg lines: CharSequence): CharSequence {
+    val sb = SpannableStringBuilder()
+    for (i in lines.indices) {
+        val line = lines[i].toString() + if (i < lines.size - 1) "\n" else ""
+        val spannable = SpannableString(line)
+        spannable.setSpan(BulletSpan(leadingMargin), 0, spannable.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+        sb.append(spannable)
+    }
+    return sb
 }

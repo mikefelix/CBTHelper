@@ -27,7 +27,7 @@
             tools:ignore="HardcodedText"
             />
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/continueButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             android:layout_marginStart="8dp"
             />
 
-        <TextView style="@style/TextViewHeading"
+      <!--  <TextView style="@style/TextViewHeading"
             android:id="@+id/situationLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -72,8 +72,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Anger, Embarrassment"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="8dp"
             android:labelFor="@id/situationType"
+            tools:ignore="HardcodedText"
+            />-->
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/metaphor1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/apples_metaphor_1"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/metaphor_bullets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/apples_metaphor_bullets"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/metaphor2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/apples_metaphor_2"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/metaphor3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/apples_metaphor_3"
+            android:layout_marginTop="8dp"
             tools:ignore="HardcodedText"
             />
 
@@ -81,13 +117,12 @@
             android:id="@+id/testInvitation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Let’s test whether these thoughts were rational or irrational:"
-            android:layout_marginTop="32dp"
-            android:labelFor="@id/situationType"
+            tools:text="@string/check_for_apples"
+            android:layout_marginTop="8dp"
             tools:ignore="HardcodedText"
             />
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/testButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -119,24 +154,24 @@
             android:visibility="gone"
             >
 
-            <Button
+            <Button android:theme="@style/ButtonStyle"
                 android:id="@+id/skipRationalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rational"
                 android:padding="16dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="32dp"
                 android:layout_marginEnd="32dp"
-                />
+                tools:ignore="ButtonStyle" />
 
-            <Button
+            <Button android:theme="@style/ButtonStyle"
                 android:id="@+id/skipIrrationalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:text="@string/irrational"
-                />
+                tools:ignore="ButtonStyle" />
 
         </LinearLayout>
     </LinearLayout>

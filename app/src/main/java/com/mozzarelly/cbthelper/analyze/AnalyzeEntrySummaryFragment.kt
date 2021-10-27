@@ -9,6 +9,7 @@ import com.mozzarelly.cbthelper.CBTFragment
 import com.mozzarelly.cbthelper.R
 import com.mozzarelly.cbthelper.cogvalid.CogValidActivity
 import com.mozzarelly.cbthelper.databinding.FragmentAnalyze1EntrySummaryBinding
+import com.mozzarelly.cbthelper.makeBulletedList
 import com.mozzarelly.cbthelper.observe
 
 class AnalyzeEntrySummaryFragment : CBTFragment() {
@@ -20,9 +21,14 @@ class AnalyzeEntrySummaryFragment : CBTFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragmentAnalyze1EntrySummaryBinding.inflate(inflater, container, false).apply {
-            pageTitle.display(viewModel.typeString)
-            situation.displayDatum(viewModel.situation)
-            emotions.displayDatum(viewModel.emotionsChosen)
+            pageTitle.display(R.string.apples_metaphor)
+            metaphor1.display(R.string.apples_metaphor_1)
+            metaphor2.text = getString(R.string.apples_metaphor_2)
+            metaphorBullets.text = makeBulletedList(8, requireContext(), R.string.apples_metaphor_bullets_1, R.string.apples_metaphor_bullets_2, R.string.apples_metaphor_bullets_3)
+            metaphor3.display(R.string.apples_metaphor_3)
+            testInvitation.display(R.string.check_for_apples)
+//            situation.displayDatum(viewModel.situation)
+//            emotions.displayDatum(viewModel.emotionsChosen)
 
             observe(viewModel.cogValid){
                 when {
@@ -46,6 +52,12 @@ class AnalyzeEntrySummaryFragment : CBTFragment() {
                     }
                     else -> {
                         continueButton.visibility = View.VISIBLE
+                        continueButton.run {
+                            setText(R.string.continue_cognition_validity_test)
+                            setOnClickListener {
+                                start<CogValidActivity>(viewModel.id)
+                            }
+                        }
                         testButton.run {
                             setText(R.string.continue_cognition_validity_test)
                             setOnClickListener {

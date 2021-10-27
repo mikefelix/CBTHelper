@@ -96,7 +96,6 @@
                     android:id="@+id/radioAnswer2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     tools:text="Option 2"
                     tools:ignore="HardcodedText"
                     />

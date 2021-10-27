@@ -11,10 +11,13 @@ import android.widget.CheckBox
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.mozzarelly.cbthelper.databinding.FragmentBehaviorQuestion3RadiosBinding
+import androidx.viewbinding.ViewBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.mozzarelly.cbthelper.databinding.PopupBinding
 
 
 abstract class CBTFragment : Fragment() {
@@ -102,6 +105,17 @@ abstract class CBTFragment : Fragment() {
         })
     }
 
+    fun TextView.display(string: Int, vararg formatArgs: String){
+        display(getString(string, *formatArgs))
+    }
+
+    fun TextView.display(string: CharSequence){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+            justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
+
+        text = string
+    }
+
     inline fun <reified V: View, reified T: Any?> V.display(liveData: LiveData<T>, crossinline transform: (T?) -> String? = { it?.toString() }){
         if (this is TextView) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -170,5 +184,25 @@ abstract class CBTFragment : Fragment() {
         })
     }
     */
+
+    fun showExplanationPopup(headingText: Int, explanation: Int){
+        BottomSheetDialog(requireActivity(), R.style.BottomSheetDialogTheme).apply {
+            setContentView(PopupBinding.inflate(layoutInflater, null, false).apply {
+                heading.display(headingText)
+                text.display(explanation)
+                done.setOnClickListener { dismiss() }
+            }.root)
+
+            show()
+        }
+    }
+
+    inline fun <reified V: ViewBinding> showInBottomSheet(binding: V, setup: V.(BottomSheetDialog) -> Unit){
+        BottomSheetDialog(requireActivity(), R.style.BottomSheetDialogTheme).apply {
+            setup(binding, this)
+            setContentView(binding.root)
+            show()
+        }
+    }
 
 }

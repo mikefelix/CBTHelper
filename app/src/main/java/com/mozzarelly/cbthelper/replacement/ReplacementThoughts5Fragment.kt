@@ -7,25 +7,27 @@ import android.view.ViewGroup
 import com.mozzarelly.cbthelper.R
 import com.mozzarelly.cbthelper.databinding.FragmentReplacement3Binding
 import com.mozzarelly.cbthelper.databinding.FragmentReplacement4ImprovedExpressionBinding
+import com.mozzarelly.cbthelper.databinding.FragmentReplacement5ImaginedFutureBinding
 import com.mozzarelly.cbthelper.databinding.FragmentReplacement5ImprovedExpressionBinding
 
 class ReplacementThoughts5Fragment : ReplacementThoughtsFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        FragmentReplacement5ImprovedExpressionBinding.inflate(inflater, container, false).apply {
-            buttons.previous.setOnClickListener { previousPage() }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+        FragmentReplacement5ImaginedFutureBinding.inflate(inflater, container, false).apply {
+            text1.display(R.string.imaginedFuture1)
+            text2.display(R.string.imaginedFuture2)
+            text3.display(R.string.imaginedFuture3, viewModel.situationType.value ?: "situation")
+            text4.display(R.string.imaginedFuture4)
+            text5.display(R.string.imaginedFuture5, viewModel.situationType.value ?: "situation")
+            text6.display(R.string.imaginedFuture6)
+            text7.display(R.string.imaginedFuture7)
+            text8.display(R.string.imaginedFuture8)
 
-            buttons.next.run {
-                text = getString(R.string.finish)
+            replacementThoughts.display(viewModel.insteadValue)
 
-                setOnClickListener {
-//                    viewModel.complete = true
-                    viewModel.save()
-                    act.finish(1)
-                }
+            finishButton.setOnClickListener {
+                viewModel.save()
+                act.finish(1)
             }
-
-            wouldHaveDone.display(viewModel.wouldHaveDoneValue)
-            answer.bindTo(viewModel.wouldHaveAffectedValue)
         }.root
 }

@@ -18,8 +18,9 @@
         app:layout_constraintBottom_toTopOf="@id/buttons"
         >
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:id="@+id/content"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -29,10 +30,6 @@
                 android:layout_height="wrap_content"
                 android:labelFor="@id/instead"
                 android:text="@string/replacement3Question1"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/instead"
                 tools:ignore="HardcodedText" />
 
             <TextView style="@style/TextViewDatum"
@@ -41,10 +38,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/insteadHeading"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/emotionsHeading"
                 tools:ignore="HardcodedText"
                 tools:text="I was in the bar..." />
 
@@ -55,24 +48,35 @@
                 android:layout_marginTop="16dp"
                 android:labelFor="@id/emotions"
                 android:text="@string/replacement3Question2"
-                app:layout_constraintTop_toBottomOf="@id/instead"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/emotionSel"
                 tools:ignore="HardcodedText" />
 
-            <include
-                android:id="@+id/emotionSel"
-                layout="@layout/emotion_selection"
+            <TextView style="@style/TextViewDatum"
+                android:id="@+id/emotion1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/emotionsHeading"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                tools:text="Anger (5/10)"
                 />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView style="@style/TextViewDatum"
+                android:id="@+id/emotion2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                tools:text="Anger (5/10)"
+                />
+
+            <TextView style="@style/TextViewDatum"
+                android:id="@+id/emotion3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                tools:text="Anger (5/10)"
+                />
+        </LinearLayout>
     </ScrollView>
 
     <include

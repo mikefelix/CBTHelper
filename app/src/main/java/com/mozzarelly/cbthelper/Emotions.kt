@@ -1,11 +1,11 @@
 package com.mozzarelly.cbthelper
 
 object Emotions {
-    val emotionGroups = arrayOf("- Select -", "Fear-type", "Anger-type", "Sadness-type", "Shame-type", "Disgust-type", "Surprise-type", "Low-energy-type",
+    val emotionGroups = arrayOf("- Select a category -", "Fear-type", "Anger-type", "Sadness-type", "Shame-type", "Disgust-type", "Surprise-type", "Low-energy-type",
         "Joy-type", "Love-type", "Worth-type", "Confidence-type", "Other")
 
     val emotions = arrayOf(
-        arrayOf("- Select -"),
+        arrayOf("- Select an emotion -"),
         arrayOf("- Select -", "Scared", "Concerned", "Panicky", "Hesitant", "Threatened", "Apprehensive", "Worried", "Frightened", "Vulnerable", "Nervous", "Insignificant", "Exposed", "Anxious", "Terrified", "Shocked", "Insecure", "Bothered", "Inadequate", "Helpless", "Overwhelmed", "Worthless", "Defenseless", "Dreading"),
         arrayOf("- Select -", "Angry", "Annoyed", "Upset", "Furious", "Hurt", "Irritated", "Bitter", "Mad", "Disturbed", "Grouchy", "Betrayed", "Disrespected", "Resentful", "Offended", "Livid", "Hostile", "Insulted", "Bothered", "Enraged", "Cranky", "Frustrated", "Outraged", "Violated", "Jealous"),
         arrayOf("- Select -", "Sad", "Hurt", "Disappointed", "Discouraged", "Miserable", "Heartbroken", "Hopeless", "Lonely", "Empty", "Gloomy", "Depressed", "Despairing", "Tired", "Weary", "Pessimistic", "Abandoned", "Vulnerable", "Weak", "Fragile", "Forgotten", "Down", "Blue", "Let down", "Numb", "Unhappy", "Grieving"),

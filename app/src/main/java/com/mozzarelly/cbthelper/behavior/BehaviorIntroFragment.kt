@@ -12,7 +12,10 @@ class BehaviorIntroFragment : BehaviorFragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         FragmentBehaviorIntroBinding.inflate(inflater, container, false).apply {
             buttons.setupButtons()
-            emotions.displayDatum(viewModel.emotions)
-            expression.displayDatum(viewModel.expression)
+            emotions.display(viewModel.emotions)
+            expression.display(viewModel.expression)
+            intro1.display(R.string.behaviorIntro1)
+            intro2.display(R.string.behaviorIntro2)
+            instructions.display(R.string.behaviorPrompt)
         }.root
 }

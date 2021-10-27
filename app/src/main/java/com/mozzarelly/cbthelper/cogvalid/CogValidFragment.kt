@@ -1,9 +1,11 @@
 package com.mozzarelly.cbthelper.cogvalid
 
+import android.widget.CheckBox
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
 import com.mozzarelly.cbthelper.PageFragment
 import com.mozzarelly.cbthelper.databinding.*
+import com.mozzarelly.cbthelper.observe
 import com.mozzarelly.cbthelper.visible
 
 abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
@@ -28,10 +30,189 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
     protected fun FragmentCogvalQuestion2RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, answer1: Int, answer2: Int){
         buttons.setupButtons(enableNextWhenFilled = liveData)
 
-        question.setText(questionText)
+        question.display(questionText)
 
         radioAnswer1.bindTo(liveData, answer1, 1)
         radioAnswer2.bindTo(liveData, answer2, 2)
+    }
+
+    protected fun FragmentCogvalQuestion2RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: String, answer1: Int, answer2: Int){
+        buttons.setupButtons(enableNextWhenFilled = liveData)
+
+        question.display(questionText)
+
+        radioAnswer1.bindTo(liveData, answer1, 1)
+        radioAnswer2.bindTo(liveData, answer2, 2)
+    }
+
+    protected fun FragmentCogvalQuestion4RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int,
+                                                                    answer1: Int, answer2: Int, answer3: Int, answer4: Int){
+        buttons.setupButtons(enableNextWhenFilled = liveData)
+
+        question.display(questionText)
+
+        radioAnswer1.bindTo(liveData, answer1, 1)
+        radioAnswer2.bindTo(liveData, answer2, 2)
+        radioAnswer3.bindTo(liveData, answer3, 3)
+        radioAnswer4.bindTo(liveData, answer4, 4)
+    }
+
+    protected fun FragmentCogvalQuestion5RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int,
+                                                                    answer1: Int, answer2: Int, answer3: Int, answer4: Int, answer5: Int){
+        buttons.setupButtons(enableNextWhenFilled = liveData)
+
+        question.display(questionText)
+
+        radioAnswer1.bindTo(liveData, answer1, 1)
+        radioAnswer2.bindTo(liveData, answer2, 2)
+        radioAnswer3.bindTo(liveData, answer3, 3)
+        radioAnswer4.bindTo(liveData, answer4, 4)
+        radioAnswer5.bindTo(liveData, answer5, 5)
+    }
+
+    protected fun FragmentCogvalQuestion6RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int,
+                                                                    answer1: Int, answer2: Int, answer3: Int, answer4: Int, answer5: Int, answer6: Int){
+        buttons.setupButtons(enableNextWhenFilled = liveData)
+
+        question.display(questionText)
+
+        radioAnswer1.bindTo(liveData, answer1, 1)
+        radioAnswer2.bindTo(liveData, answer2, 2)
+        radioAnswer3.bindTo(liveData, answer3, 3)
+        radioAnswer4.bindTo(liveData, answer4, 4)
+        radioAnswer5.bindTo(liveData, answer5, 5)
+        radioAnswer6.bindTo(liveData, answer6, 6)
+    }
+
+    protected fun FragmentCogvalQuestion3CheckboxesBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int,
+                                                                    answer1: Int, answer2: Int, answer3: Int){
+        buttons.setupButtons(enableNextWhenFilled = liveData)
+
+        question.display(questionText)
+
+        checkboxAnswer1.display(answer1)
+        checkboxAnswer2.display(answer2)
+        checkboxAnswer3.display(answer3)
+
+        setupCheckboxBinding(liveData, listOf(checkboxAnswer1, checkboxAnswer2, checkboxAnswer3))
+    }
+
+    protected fun FragmentCogvalQuestion4CheckboxesBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int,
+                                                                    answer1: Int, answer2: Int, answer3: Int, answer4: Int){
+        buttons.setupButtons(enableNextWhenFilled = liveData)
+
+        question.display(questionText)
+
+        checkboxAnswer1.display(answer1)
+        checkboxAnswer2.display(answer2)
+        checkboxAnswer3.display(answer3)
+        checkboxAnswer4.display(answer4)
+
+        setupCheckboxBinding(liveData, listOf(checkboxAnswer1, checkboxAnswer2, checkboxAnswer3, checkboxAnswer4))
+    }
+
+    protected fun FragmentCogvalQuestion5CheckboxesBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int,
+                                                                    answer1: Int, answer2: Int, answer3: Int, answer4: Int, answer5: Int){
+        buttons.setupButtons(enableNextWhenFilled = liveData)
+
+        question.display(questionText)
+
+        checkboxAnswer1.display(answer1)
+        checkboxAnswer2.display(answer2)
+        checkboxAnswer3.display(answer3)
+        checkboxAnswer4.display(answer4)
+        checkboxAnswer5.display(answer5)
+
+        setupCheckboxBinding(liveData, listOf(checkboxAnswer1, checkboxAnswer2, checkboxAnswer3, checkboxAnswer4, checkboxAnswer5))
+    }
+
+    protected fun FragmentCogvalQuestion6CheckboxesBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int,
+                                                                    answer1: Int, answer2: Int, answer3: Int, answer4: Int, answer5: Int, answer6: Int){
+        buttons.setupButtons(enableNextWhenFilled = liveData)
+
+        question.display(questionText)
+
+        checkboxAnswer1.display(answer1)
+        checkboxAnswer2.display(answer2)
+        checkboxAnswer3.display(answer3)
+        checkboxAnswer4.display(answer4)
+        checkboxAnswer5.display(answer5)
+        checkboxAnswer6.display(answer6)
+
+        setupCheckboxBinding(liveData, listOf(checkboxAnswer1, checkboxAnswer2, checkboxAnswer3, checkboxAnswer4,
+            checkboxAnswer5, checkboxAnswer6))
+    }
+
+    protected fun FragmentCogvalQuestion7CheckboxesBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int,
+                                                                    answer1: Int, answer2: Int, answer3: Int, answer4: Int, answer5: Int, answer6: Int, answer7: Int){
+        buttons.setupButtons(enableNextWhenFilled = liveData)
+
+        question.display(questionText)
+
+        checkboxAnswer1.display(answer1)
+        checkboxAnswer2.display(answer2)
+        checkboxAnswer3.display(answer3)
+        checkboxAnswer4.display(answer4)
+        checkboxAnswer5.display(answer5)
+        checkboxAnswer6.display(answer6)
+        checkboxAnswer7.display(answer7)
+
+        setupCheckboxBinding(liveData, listOf(checkboxAnswer1, checkboxAnswer2, checkboxAnswer3, checkboxAnswer4,
+            checkboxAnswer5, checkboxAnswer6, checkboxAnswer7))
+    }
+
+    private fun setupCheckboxBinding(liveData: MutableLiveData<Int?>, boxes: List<CheckBox>){
+        var redisplaying = false
+        fun redisplay(){
+            redisplaying = true
+            fanOutToCheckboxes(liveData.value ?: 0, boxes)
+            redisplaying = false
+        }
+
+        boxes.forEach {
+            it.setOnCheckedChangeListener { box, _ ->
+                if (!redisplaying) {
+                    if (box == boxes.last())
+                        liveData.value = 0
+                    else
+                        aggregateFromCheckboxes(liveData, boxes)
+                }
+            }
+        }
+
+        observe(liveData){
+            redisplay()
+        }
+
+        redisplay()
+    }
+
+    private fun fanOutToCheckboxes(value: Int?, checkboxes: List<CheckBox>){
+        var mult = 1
+
+        checkboxes.forEachIndexed { i, box ->
+            box.isChecked = when {
+                value == null -> false
+                i == checkboxes.size - 1 -> value == 0
+                else -> (value and mult) > 0
+            }
+
+            mult *= 2
+        }
+    }
+
+    private fun aggregateFromCheckboxes(liveData: MutableLiveData<Int?>, checkboxes: List<CheckBox>){
+        var mult = 1
+        var value = 0
+
+        checkboxes.forEachIndexed { i, box ->
+            if (i < checkboxes.size - 1)
+                value += mult * if (box.isChecked) 1 else 0
+
+            mult *= 2
+        }
+
+        liveData.value = value
     }
 
     protected fun FragmentCogvalQuestion3RadiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, answer1: Int, answer2: Int, answer3: Int){
@@ -45,6 +226,14 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
     }
 
     protected fun FragmentCogvalQuestionTextBinding.bindQuestion(questionText: Int, answerData: MutableLiveData<String?>) {
+        buttons.setupButtons(enableNextWhenFilled = answerData)
+
+        question.setText(questionText)
+        answer.bindTo(answerData)
+    }
+
+    protected fun FragmentCogvalQuestion1TextBinding.bindQuestion(questionText: Int, answerData: MutableLiveData<String?>
+    ) {
         buttons.setupButtons(enableNextWhenFilled = answerData)
 
         question.setText(questionText)

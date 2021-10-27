@@ -25,7 +25,7 @@
             tools:ignore="HardcodedText"
             />
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/continueRationalButton"
             android:layout_width="wrap_content"
             android:minWidth="128dp"
@@ -63,13 +63,6 @@
             android:id="@+id/text4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="@string/validitySummary4Irrational"
-            />
-
-        <TextView style="@style/TextViewHeading"
-            android:id="@+id/text5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             tools:text="@string/validitySummary5Irrational"
             />
 
@@ -80,7 +73,7 @@
             android:gravity="center"
             >
 
-            <Button
+            <Button android:theme="@style/ButtonStyle"
                 android:id="@+id/beginRationalButton"
                 android:layout_width="wrap_content"
                 android:minWidth="128dp"
@@ -91,7 +84,7 @@
                 android:layout_marginEnd="8dp"
                 />
 
-            <Button
+            <Button android:theme="@style/ButtonStyle"
                 android:id="@+id/beginBehaviorButton"
                 android:layout_width="wrap_content"
                 android:minWidth="128dp"
@@ -103,12 +96,13 @@
                 android:layout_marginEnd="8dp"
                 />
 
-            <Button
+            <Button android:theme="@style/ButtonStyle"
                 android:id="@+id/skipRationalButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/skip_to_behavior"
                 android:visibility="gone"
+                tools:visibility="visible"
                 />
 
         </LinearLayout>

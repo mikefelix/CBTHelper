@@ -5,7 +5,6 @@ package com.mozzarelly.cbthelper.editentry
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.viewModelScope
 import com.mozzarelly.cbthelper.*
 import kotlinx.coroutines.launch
@@ -14,6 +13,12 @@ import org.threeten.bp.LocalDateTime
 class EditEntryViewModel : InterviewViewModel(), EntryModel {
 
     val dao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
+
+    // Not called
+    override fun load(id: Int) {
+        this.id = id
+        loadEntry(id)
+    }
 
     fun loadNewEntry() {
         viewModelScope.launch {
@@ -31,7 +36,7 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
             copyFrom(entry)
             changePage(when {
                 situation.isNullOrBlank() -> 1
-                emotion1.isNullOrBlank() -> 2
+                emotion1Name.isNullOrBlank() -> 2
                 thoughts.isNullOrBlank() -> 3
                 expression.isNullOrBlank() -> 4
                 relationships.isNullOrBlank() -> 5
@@ -55,7 +60,7 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
             .let { dao.insert(it) }
             .let { dao.get(it.toInt())!! }
 
-    val emotionSelection = EmotionSelectionViewModel()
+//    val emotionSelection = EmotionSelectionViewModel()
 
     val idValue = MutableLiveData<Int>()
     val situationTypeValue = MutableLiveData(false)
@@ -69,12 +74,18 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
     val bottledValue = MutableLiveData(false)
     val relationshipsValue = MutableLiveData<String?>()
     val assumptionsValue = MutableLiveData<String?>()
+    val markedValue = MutableLiveData<Boolean>()
+    
+    val emotion1Value = MutableLiveData<Emotion?>()
+    val emotion2Value = MutableLiveData<Emotion?>()
+    val emotion3Value = MutableLiveData<Emotion?>()
+
+    val emotionsChosenSimple = Triple(emotion1Value, emotion2Value, emotion3Value).map { e1, e2, e3 ->
+        emotionTextSimple(e1?.emotion, e2?.emotion, e3?.emotion)
+    }
 
     val saved = MutableLiveData<Boolean>(false)
 
-    override var id: Int
-        get() = idValue.valueNotNull()
-        set(value) { idValue.value = value }
     override var complete: Boolean
         get() = completeValue.valueNotNull()
         set(value) { completeValue.value = value }
@@ -90,24 +101,48 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
     override var date: LocalDateTime
         get() = dateValue.valueNotNull()
         set(value) { dateValue.value = value }
-    override var emotion1: String?
-        get() = emotionSelection.emotion1.value
-        set(value) { emotionSelection.emotion1.value = value }
-    override var emotion2: String?
-        get() = emotionSelection.emotion2.value
-        set(value) { emotionSelection.emotion2.value = value }
-    override var emotion3: String?
-        get() = emotionSelection.emotion3.value
-        set(value) { emotionSelection.emotion3.value = value }
+    override var emotion1Name: String?
+        get() = emotion1Value.value?.emotion
+        set(value) {
+            emotion1Value.value = value?.let {
+                Emotion(it, emotion1Intensity ?: 5)
+            }
+        }
+    override var emotion2Name: String?
+        get() = emotion2Value.value?.emotion
+        set(value) {
+            emotion2Value.value = value?.let {
+                Emotion(it, emotion2Intensity ?: 5)
+            }
+        }
+    override var emotion3Name: String?
+        get() = emotion3Value.value?.emotion
+        set(value) {
+            emotion3Value.value = value?.let {
+                Emotion(it, emotion3Intensity ?: 5)
+            }
+        }
     override var emotion1Intensity: Int?
-        get() = emotionSelection.emotion1Intensity.value
-        set(value) { emotionSelection.emotion1Intensity.value = value }
+        get() = emotion1Value.value?.intensity
+        set(value) {
+            emotion1Value.value = value?.let {
+                Emotion(emotion1Name ?: "unknown", emotion1Intensity ?: 5)
+            }
+        }
     override var emotion2Intensity: Int?
-        get() = emotionSelection.emotion2Intensity.value
-        set(value) { emotionSelection.emotion2Intensity.value = value }
+        get() = emotion2Value.value?.intensity
+        set(value) {
+            emotion2Value.value = value?.let {
+                Emotion(emotion2Name ?: "unknown", emotion2Intensity ?: 5)
+            }
+        }
     override var emotion3Intensity: Int?
-        get() = emotionSelection.emotion3Intensity.value
-        set(value) { emotionSelection.emotion3Intensity.value = value }
+        get() = emotion3Value.value?.intensity
+        set(value) {
+            emotion3Value.value = value?.let {
+                Emotion(emotion3Name ?: "unknown", emotion3Intensity ?: 5)
+            }
+        }
     override var thoughts: String?
         get() = thoughtsValue.value
         set(value) { thoughtsValue.value = value }
@@ -123,12 +158,15 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
     override var bottled: Boolean
         get() = bottledValue.valueNotNull()
         set(value) { bottledValue.value = value }
+    override var marked: Boolean
+        get() = markedValue.valueNotNull()
+        set(value) { markedValue.value = value }
 
     override val title: LiveData<String?> = Pair(completeValue, page).map { complete, page ->
         if (complete == true)
             "Completed entry"
         else
-            "Add entry" + if (page != null) " - ${page.first}/$numPages" else ""
+            page?.first?.takeIf { it > 0 }?.let { "Add entry - ${it}/$numPages" } ?: "Add entry"
     }
 
     override fun save() {
@@ -153,59 +191,4 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
 
 }
 
-typealias Emotion = Pair<String?, Int?>
 
-class EmotionSelectionViewModel {
-    val emotion1 = MutableLiveData<String?>()
-    val emotion2 = MutableLiveData<String?>()
-    val emotion3 = MutableLiveData<String?>()
-    val emotion1Intensity = MutableLiveData<Int?>()
-    val emotion2Intensity = MutableLiveData<Int?>()
-    val emotion3Intensity = MutableLiveData<Int?>()
-
-    fun deleteLastEmotion() = when {
-        emotion3.value != null -> { emotion3.value = null; emotion3Intensity.value = null }
-        emotion2.value != null -> { emotion2.value = null; emotion2Intensity.value = null }
-        else -> { emotion1.value = null; emotion1Intensity.value = null }
-    }
-
-    val editingEmotion: Pair<MutableLiveData<String?>, MutableLiveData<Int?>>?
-        get() = when {
-            emotion1.value == null -> Pair(emotion1, emotion1Intensity)
-            emotion2.value == null -> Pair(emotion2, emotion2Intensity)
-            emotion3.value == null -> Pair(emotion3, emotion3Intensity)
-            else -> null
-        }
-
-    val emotionsChosen = MediatorLiveData<String?>().apply {
-        val observer = Observer<Any?> {
-            value = emotionText(Pair(emotion1.value, emotion1Intensity.value),
-                Pair(emotion2.value, emotion2Intensity.value),
-                Pair(emotion3.value, emotion3Intensity.value))
-        }
-
-        addSource(emotion1, observer)
-        addSource(emotion2, observer)
-        addSource(emotion3, observer)
-        addSource(emotion1Intensity, observer)
-        addSource(emotion2Intensity, observer)
-        addSource(emotion3Intensity, observer)
-    }
-
-    val emotionsChosenSimple = MediatorLiveData<String?>().apply {
-        val observer = Observer<Any?> {
-            value = emotionTextSimple(emotion1.value, emotion2.value, emotion3.value)
-        }
-
-        addSource(emotion1, observer)
-        addSource(emotion2, observer)
-        addSource(emotion3, observer)
-    }
-
-    val canAddEmotions = MediatorLiveData<Boolean>().apply {
-        addSource(emotion3){
-            value = it == null
-        }
-    }
-
-}

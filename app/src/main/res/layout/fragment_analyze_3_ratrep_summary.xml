@@ -31,7 +31,7 @@
             tools:ignore="HardcodedText"
             />
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/continueButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -146,13 +146,11 @@
             app:layout_constraintTop_toBottomOf="@id/wouldHaveFelt"
             tools:ignore="HardcodedText" />
 
-        <EditText style="@style/EditTextStyle"
+        <TextView style="@style/TextViewDatum"
             android:id="@+id/comparison"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:importantForAutofill="no"
-            android:inputType="textLongMessage|textCapSentences"
-            android:minHeight="160dp"
             app:layout_constraintBottom_toTopOf="@id/expressedHeading"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -228,7 +226,7 @@
             app:layout_constraintTop_toBottomOf="@id/healthy"
             tools:ignore="HardcodedText" />
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/testButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -246,6 +244,7 @@
             android:layout_marginTop="16dp"
             android:labelFor="@id/situationType"
             android:visibility="gone"
+            tools:visibility="visible"
             android:text="No, skip the test because I already know that my behavior was:"
             app:layout_constraintBottom_toTopOf="@id/skipRationalButton"
             app:layout_constraintEnd_toEndOf="parent"
@@ -253,7 +252,7 @@
             app:layout_constraintTop_toBottomOf="@id/testButton"
             tools:ignore="HardcodedText" />
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/skipRationalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -261,18 +260,20 @@
             android:padding="16dp"
             android:text="@string/rational"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintEnd_toStartOf="@id/skipIrrationalButton"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/skipInvitation" />
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/skipIrrationalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:text="@string/irrational"
             android:visibility="gone"
+            tools:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/skipRationalButton"
             app:layout_constraintTop_toTopOf="@id/skipRationalButton" />

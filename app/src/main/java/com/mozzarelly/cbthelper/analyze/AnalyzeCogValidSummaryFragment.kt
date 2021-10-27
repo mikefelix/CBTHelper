@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mozzarelly.cbthelper.*
 import com.mozzarelly.cbthelper.behavior.BehaviorActivity
 import com.mozzarelly.cbthelper.databinding.FragmentAnalyze2CogvalSummaryBinding
@@ -22,23 +25,21 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
             observe(viewModel.thinkingErrors, viewModel.emotionsChosen, viewModel.ratRepState){ errorsMade, emotions, ratRepState ->
                 val wasValid = errorsMade.isNullOrEmpty()
                 if (wasValid) {
-                    text1.text = getString(R.string.validitySummary1Rational, viewModel.typeString)
+                    text1.text = getString(R.string.validitySummary1Rational, viewModel.typeString.value)
                     errors.visibility = View.GONE
                     judgment.text = getString(R.string.validitySummary3Rational, emotionTextSimple(emotions))
                     text4.text = getString(R.string.validitySummary4Rational)
-                    text5.text = getString(R.string.validitySummary5Rational)
 
                     skipRationalButton.setOnClickListener {
                         start<BehaviorActivity>(viewModel.id)
                     }
                 }
                 else {
-                    text1.text = getString(R.string.validitySummary1Irrational, viewModel.typeString)
+                    text1.text = getString(R.string.validitySummary1Irrational, viewModel.typeString.value)
                     errors.visibility = View.VISIBLE
                     errors.text = errorsMade?.joinToString(separator = "\n") ?: "None"
-                    judgment.text = getString(R.string.validitySummary3Irrational, emotionTextSimple(emotions))
-                    text4.text = getString(R.string.validitySummary4Irrational)
-                    text5.text = getString(R.string.validitySummary5Irrational)
+                    judgment.text = getString(R.string.validitySummary3Irrational)
+                    text4.visibility = View.GONE
 
                     skipRationalButton.setOnClickListener {
                         start<BehaviorActivity>(viewModel.id)
@@ -48,9 +49,13 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
                 when {
                     wasValid -> {
                         continueRationalButton.visibility = View.GONE
-                        beginRationalButton.visibility = View.GONE
+                        beginRationalButton.run {
+                            text = getString(R.string.negative_emotion_button_text)
+                            setOnClickListener {
+                                showExplanationPopup(R.string.negative_emotion_heading, R.string.negative_emotion_explanation)
+                            }
+                        }
                         beginBehaviorButton.run {
-                            visibility = View.VISIBLE
                             setOnClickListener {
                                 start<BehaviorActivity>(viewModel.id)
                             }
@@ -77,7 +82,12 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
                         }
                     }
                     else -> {
-                        continueRationalButton.visibility = View.VISIBLE
+                        continueRationalButton.run {
+                            visibility = View.VISIBLE
+                            setOnClickListener {
+                                start<ReplacementThoughtsActivity>(viewModel.id)
+                            }
+                        }
                         beginBehaviorButton.visibility = View.GONE
                         beginRationalButton.run {
                             setText(R.string.continue_replacement_thoughts)

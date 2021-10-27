@@ -9,75 +9,19 @@
     android:background="@color/colorBackground"
     >
 
-        <TextView style="@style/TextViewDatum"
-            android:id="@+id/emotionsChosen"
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="24sp"
-            android:drawableTint="@color/colorBackground"
+            android:text="Describe emotion"
             android:layout_marginTop="16dp"
-            tools:ignore="HardcodedText"
-            tools:text="Fear\nAnger"
-            />
-
-        <TextView style="@style/TextViewHeading"
-            android:id="@+id/groupLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choose a category:"
-            android:layout_marginTop="16dp"
-            android:labelFor="@id/emotionGroups"
-            tools:ignore="HardcodedText"
-            />
-
-        <Spinner
-            style="@style/SpinnerStyle"
-            android:id="@+id/emotionGroups"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            />
-
-        <TextView style="@style/TextViewHeading"
-            android:id="@+id/emotionLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Choose an emotion:"
-            android:layout_marginTop="16dp"
-            tools:ignore="HardcodedText"
-            android:labelFor="@id/emotions"
-            />
-
-        <Spinner
-            style="@style/SpinnerStyle"
-            android:id="@+id/emotions"
-            android:textSize="24sp"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginStart="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            />
-
-        <TextView style="@style/TextViewHeading"
-            android:id="@+id/writeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Or write it in:"
-            android:layout_marginTop="16dp"
-            tools:ignore="HardcodedText"
             android:labelFor="@id/writeIn"
+            tools:ignore="HardcodedText"
             />
 
-        <EditText
+        <EditText style="@style/EditTextStyle"
             android:id="@+id/writeIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,6 +42,45 @@
             />
 
         <TextView style="@style/TextViewHeading"
+            android:id="@+id/groupLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Need a suggestion?"
+            android:layout_marginTop="16dp"
+            android:labelFor="@id/emotionGroups"
+            tools:ignore="HardcodedText"
+            />
+
+        <Spinner
+            style="@style/SpinnerStyle"
+            android:id="@+id/emotionGroups"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            />
+
+        <Spinner
+            style="@style/SpinnerStyle"
+            android:id="@+id/emotions"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            />
+
+
+        <TextView style="@style/TextViewHeading"
             android:id="@+id/intensityLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,21 +95,22 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:textSize="18sp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginTop="16dp"
             android:max="9"
             android:progress="4"
             tools:ignore="HardcodedText"
             />
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/addButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:minWidth="120dp"
-            android:text="Add"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:text="Save"
             android:enabled="false"
             android:layout_marginTop="32dp"
             android:layout_gravity="center"

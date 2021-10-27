@@ -23,6 +23,28 @@
         <item name="editTextStyle">@style/EditTextStyle</item>
         <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/slide_right</item>
+        <item name="android:windowExitTransition">@android:transition/slide_left</item>
+        <!--        <item name="android:background">@color/colorBackground</item>-->
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="editTextStyle">@style/EditTextStyle</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:backgroundTint">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/TextViewStyle</item>
+        <item name="android:textColor">?attr/colorOnBackground</item>
 <!--        <item name="android:background">@color/colorBackground</item>-->
     </style>
 
@@ -46,6 +68,8 @@
         <item name="android:gravity">start|top</item>
         <item name="android:layout_marginStart">16dp</item>
         <item name="android:layout_marginEnd">16dp</item>
+        <item name="android:textColor">@color/colorText</item>
+
     </style>
 
     <style name="TextViewHeading" parent="@android:style/Widget.TextView">
@@ -105,11 +129,23 @@
         <item name="android:layout_marginEnd">16dp</item>
     </style>
 
-    <style name="ButtonStyle" parent="@android:style/Widget.Button">
-        <item name="android:textSize">22sp</item>
+    <style name="CheckboxDatum" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/colorText</item>
-        <item name="android:background">@android:drawable/btn_default</item>
-        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:gravity">start</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <style name="ButtonStyle" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorButtonNormal</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+<!--        <item name="android:textSize">22sp</item>-->
+<!--        <item name="android:textColor">@color/colorText</item>-->
+<!--        <item name="android:background">@android:drawable/btn_default</item>-->
+<!--        <item name="android:gravity">center_vertical|center_horizontal</item>-->
     </style>
 
     <style name="TransparentButtonStyle" parent="@android:style/Widget.Button">

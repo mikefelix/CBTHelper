@@ -16,17 +16,10 @@ class AddEntry6Fragment : AddEntryFragment() {
     @SuppressLint("SetTextI18n")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragmentAdd6AssumptionsBinding.inflate(inflater).apply {
-            question.text = getString(R.string.assumptionsQuestion, if (viewModel.situationType) "in this situation" else "during this conversation")
+            question.display(R.string.assumptionsQuestion, if (viewModel.situationType) "in this situation" else "during this conversation")
 
             readMore.setOnClickListener {
-                BottomSheetDialog(requireContext()).apply {
-                    setCancelable(true)
-                    setContentView(View.inflate(requireContext(), R.layout.popup, null).apply {
-                        findViewById<TextView>(R.id.heading)?.run { text = getString(R.string.assumptionsReadMoreHeading) }
-                        findViewById<TextView>(R.id.text)?.run { text = getString(R.string.assumptionsReadMore) }
-                        findViewById<Button>(R.id.done)?.run { setOnClickListener { dismiss() } }
-                    })
-                }.show()
+                showExplanationPopup(R.string.assumptionsReadMoreHeading, R.string.assumptionsReadMore)
             }
 
             buttons.previous.setOnClickListener {
@@ -41,13 +34,8 @@ class AddEntry6Fragment : AddEntryFragment() {
                 setOnClickListener {
                     viewModel.complete = true
                     viewModel.save()
+                    act.finish(viewModel.id)
                 }
-            }
-
-            observe(viewModel.saved){
-               if (it) {
-                   act.finish(viewModel.id)
-               }
             }
 
             assumptions.bindTo(viewModel.assumptionsValue)

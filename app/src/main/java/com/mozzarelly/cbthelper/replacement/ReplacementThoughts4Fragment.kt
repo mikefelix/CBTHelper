@@ -7,19 +7,33 @@ import android.view.ViewGroup
 import com.mozzarelly.cbthelper.R
 import com.mozzarelly.cbthelper.databinding.FragmentReplacement3Binding
 import com.mozzarelly.cbthelper.databinding.FragmentReplacement4ImprovedExpressionBinding
+import com.mozzarelly.cbthelper.databinding.FragmentReplacement4LetsCompareBinding
+import com.mozzarelly.cbthelper.emotionhelp.EmotionHelpActivity
 
 class ReplacementThoughts4Fragment : ReplacementThoughtsFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
-        FragmentReplacement4ImprovedExpressionBinding.inflate(inflater, container, false).apply {
-            buttons.setupButtons(viewModel.wouldHaveDoneValue)
-            wouldHaveDone.bindTo(viewModel.wouldHaveDoneValue)
-            wouldHaveDoneLabel.display(viewModel.emotionSelection.emotionsChosen) {
-                getString(
-                    R.string.replacement4Question1,
-                    viewModel.situationType.value ?: "situation",
-                    it ?: "differently"
-                )
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+        FragmentReplacement4LetsCompareBinding.inflate(inflater, container, false).apply {
+            thoughts.display(viewModel.thoughts)
+            emotions.display(viewModel.actualEmotionText)
+            insteadThought.display(viewModel.insteadValue)
+            insteadFelt.display(viewModel.insteadFelt)
+
+            buttons.yes.setOnClickListener {
+                viewModel.comparison = "Yes"
+                nextPage()
+            }
+
+            buttons.no.setOnClickListener {
+                viewModel.comparison = "No"
+                viewModel.save()
+                act.finish(1)
+            }
+
+            buttons.dontKnow.setOnClickListener {
+                viewModel.comparison = "I don't know"
+                viewModel.save()
+                act.finish(1)
             }
         }.root
 }

@@ -9,7 +9,7 @@ import com.mozzarelly.cbthelper.databinding.FragmentAdd1SituationBinding
 import com.mozzarelly.cbthelper.observe
 
 class AddEntry1Fragment : AddEntryFragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         FragmentAdd1SituationBinding.inflate(inflater, container, false).apply {
             buttons.previous.run {
                 visibility = View.INVISIBLE
@@ -20,7 +20,7 @@ class AddEntry1Fragment : AddEntryFragment() {
             }
 
             buttons.next.run {
-                enableWhenHasValue(viewModel.situationValue)
+                enableWhenHasValue(viewModel.situationDetailValue, viewModel.situationValue)
 
                 setOnClickListener {
                     nextPage()

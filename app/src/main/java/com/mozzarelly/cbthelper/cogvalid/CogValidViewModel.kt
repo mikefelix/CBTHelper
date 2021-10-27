@@ -10,33 +10,15 @@ import kotlinx.coroutines.launch
 
 class CogValidViewModel : InterviewViewModel(), CogValidModel {
 
-    companion object {
-        var counter = 1
-    }
-
-    val cid: Int
-
-    init {
-        cid = counter.also { counter += 1 }
-        println("Creating CVVM #$cid:")
-    }
-
-    override fun toString(): String {
-        return "CVVM $cid"
-    }
-
     private val cogValidDao by lazy { CBTDatabase.getDatabase(applicationContext).cogValidDao() }
-    private val entryDao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
 
-    override var id: Int = 0
-
-    fun load(id: Int) {
+    override fun load(id: Int) {
         this.id = id
 
         viewModelScope.launch {
             (entryDao.get(id) ?: error("Can't find entry $id")).let {
                 thoughts.value = it.thoughts
-                emotions.value = emotionText(it.emotion1Pair, it.emotion2Pair, it.emotion3Pair)
+                emotions.value = emotionText(it.emotion1, it.emotion2, it.emotion3)
             }
         }
 
@@ -47,15 +29,13 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
             thinkingErrors.value = cogValid.thinkingErrors()
 
             changePage(when {
-                answer12 != null -> 13
-                answer11 != null -> 13
                 answer10 != null -> 12
                 answer9 != null -> 11
                 answer8 != null -> 10
                 answer7 != null -> 9
                 answer6 != null -> 8
                 answer5 != null -> 7
-                answer4a != null && answer4b != null -> 6
+                answer4 != null -> 6
                 answer3 != null -> 5
                 answer2 != null -> 4
                 answer1 != null -> 3
@@ -71,21 +51,18 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
     }
 
     override val complete
-        get() = answer12 != null
+        get() = answer10 != null
 
     val answer1Value = MutableLiveData<Int?>()
     val answer2Value = MutableLiveData<Int?>()
     val answer3Value = MutableLiveData<Int?>()
-    val answer4aValue = MutableLiveData<String?>()
-    val answer4bValue = MutableLiveData<String?>()
+    val answer4Value = MutableLiveData<Int?>()
     val answer5Value = MutableLiveData<Int?>()
     val answer6Value = MutableLiveData<Int?>()
     val answer7Value = MutableLiveData<Int?>()
-    val answer8Value = MutableLiveData<Int?>()
+    val answer8Value = MutableLiveData<String?>()
     val answer9Value = MutableLiveData<Int?>()
     val answer10Value = MutableLiveData<Int?>()
-    val answer11Value = MutableLiveData<String?>()
-    val answer12Value = MutableLiveData<Int?>()
     val thinkingErrors = MutableLiveData<List<String>>()
 
     // From entry
@@ -105,12 +82,9 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
     override var answer3: Int?
         get() = answer3Value.value
         set(value) { answer3Value.value = value }
-    override var answer4a: String?
-        get() = answer4aValue.value
-        set(value) { answer4aValue.value = value }
-    override var answer4b: String?
-        get() = answer4bValue.value
-        set(value) { answer4bValue.value = value }
+    override var answer4: Int?
+        get() = answer4Value.value
+        set(value) { answer4Value.value = value }
     override var answer5: Int?
         get() = answer5Value.value
         set(value) { answer5Value.value = value }
@@ -120,7 +94,7 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
     override var answer7: Int?
         get() = answer7Value.value
         set(value) { answer7Value.value = value }
-    override var answer8: Int?
+    override var answer8: String?
         get() = answer8Value.value
         set(value) { answer8Value.value = value }
     override var answer9: Int?
@@ -129,10 +103,5 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
     override var answer10: Int?
         get() = answer10Value.value
         set(value) { answer10Value.value = value }
-    override var answer11: String?
-        get() = answer11Value.value
-        set(value) { answer11Value.value = value }
-    override var answer12: Int?
-        get() = answer12Value.value
-        set(value) { answer12Value.value = value }
+
 }

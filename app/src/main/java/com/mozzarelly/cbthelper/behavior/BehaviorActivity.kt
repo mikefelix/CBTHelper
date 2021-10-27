@@ -18,7 +18,8 @@ class BehaviorActivity : InterviewActivity<BehaviorViewModel>() {
         Behavior3AFragment::class,
         Behavior3BFragment::class,
         Behavior3CFragment::class,
-        Behavior3DFragment::class
+        Behavior3DFragment::class,
+        Behavior4Fragment::class
     )
 
     override val viewModel: BehaviorViewModel by cbtViewModel()

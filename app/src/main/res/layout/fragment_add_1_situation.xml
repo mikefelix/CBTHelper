@@ -107,12 +107,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/textView3"
-                android:inputType="textCapSentences|textAutoCorrect"
+                android:inputType="textAutoCorrect"
                 android:textIsSelectable="true"
                 android:longClickable="true"
                 android:focusable="true"
                 android:importantForAutofill="no"
-                android:imeOptions="actionDone"
+                android:imeOptions="actionNext"
                 />
 
             <TextView style="@style/TextViewHeading"

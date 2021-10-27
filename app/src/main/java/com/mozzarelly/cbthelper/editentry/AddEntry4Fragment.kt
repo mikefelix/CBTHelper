@@ -29,8 +29,8 @@ class AddEntry4Fragment : AddEntryFragment() {
 
             bottledCheck.bindTo(viewModel.bottledValue)
 
-            observe(viewModel.emotionSelection.emotionsChosenSimple){
-                textView1.text = "What did you do and say to show the ${it?.toLowerCase(Locale.US) ?: "emotions"} you felt?"
+            observe(viewModel.emotionsChosenSimple){
+                textView1.text = "What did you do and say to show how ${it?.lowercase(Locale.US) ?: ""} you felt?"
             }
         }.root
 }

@@ -14,7 +14,7 @@ class Behavior1AFragment : BehaviorFragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         FragmentBehaviorQuestionTextBinding.inflate(inflater, container, false).apply {
             buttons.setupButtons(enableNextWhenFilled = viewModel.personValue)
-            expression.displayDatum(viewModel.expression)
+            expression.display(viewModel.expression)
 
             question.setText(R.string.behavior1Question1)
 
