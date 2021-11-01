@@ -22,13 +22,13 @@ class AddEntry5Fragment : AddEntryFragment() {
                 }
             }
 
-            relationships.bindTo(viewModel.relationshipsValue)
+            relationships.display(viewModel.relationshipsValue)
 
-            textView1.hint = getString(if (viewModel.bottled)
+            textView1.display(getString(if (viewModel.bottled)
                 R.string.relationshipsQuestionBottled
             else
                 R.string.relationshipsQuestion
-            )
+            ))
 
         }.root
 

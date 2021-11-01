@@ -18,6 +18,6 @@ class Behavior1AFragment : BehaviorFragment(){
 
             question.setText(R.string.behavior1Question1)
 
-            answer.bindTo(viewModel.personValue)
+            answer.bindTo(viewModel.personValue){ it?.let { replaceMyOur(it) } }
         }.root
 }

@@ -31,7 +31,7 @@
             android:id="@+id/text1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/beliefsAnalysisText1"
+            tools:text="@string/beliefsAnalysisText1"
             android:layout_marginTop="8dp"
             tools:ignore="HardcodedText"
             />
@@ -40,8 +40,8 @@
             android:id="@+id/example1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/beliefsAnalysisExample1"
             android:layout_marginTop="8dp"
+            tools:text="@string/beliefsAnalysisExample1"
             android:layout_marginStart="32dp"
             tools:ignore="HardcodedText"
             />
@@ -58,7 +58,7 @@
             android:id="@+id/text2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/beliefsAnalysisText2"
+            tools:text="@string/beliefsAnalysisText2"
             android:layout_marginTop="8dp"
             tools:ignore="HardcodedText"
             />
@@ -74,7 +74,7 @@
             android:id="@+id/text3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/beliefsAnalysisText3"
+            tools:text="@string/beliefsAnalysisText3"
             android:layout_marginTop="8dp"
             tools:ignore="HardcodedText"
             />
@@ -92,7 +92,7 @@
             android:id="@+id/text4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/beliefsAnalysisText4"
+            tools:text="@string/beliefsAnalysisText4"
             android:layout_marginTop="8dp"
             tools:ignore="HardcodedText"
             />
@@ -110,7 +110,7 @@
             android:id="@+id/text5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/beliefsAnalysisText5"
+            tools:text="@string/beliefsAnalysisText5"
             android:layout_marginTop="8dp"
             tools:ignore="HardcodedText"
             />

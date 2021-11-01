@@ -2,13 +2,9 @@ package com.mozzarelly.cbthelper.replacement
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import com.mozzarelly.cbthelper.R
-import com.mozzarelly.cbthelper.databinding.FragmentReplacement3Binding
-import com.mozzarelly.cbthelper.databinding.FragmentReplacement4ImprovedExpressionBinding
 import com.mozzarelly.cbthelper.databinding.FragmentReplacement5ImaginedFutureBinding
-import com.mozzarelly.cbthelper.databinding.FragmentReplacement5ImprovedExpressionBinding
 
 class ReplacementThoughts5Fragment : ReplacementThoughtsFragment() {
 
@@ -23,7 +19,7 @@ class ReplacementThoughts5Fragment : ReplacementThoughtsFragment() {
             text7.display(R.string.imaginedFuture7)
             text8.display(R.string.imaginedFuture8)
 
-            replacementThoughts.display(viewModel.insteadValue)
+            replacementThoughts.display(viewModel.thinkInsteadValue)
 
             finishButton.setOnClickListener {
                 viewModel.save()

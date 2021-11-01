@@ -38,6 +38,6 @@ class AddEntry6Fragment : AddEntryFragment() {
                 }
             }
 
-            assumptions.bindTo(viewModel.assumptionsValue)
+            assumptions.display(viewModel.assumptionsValue)
         }.root
 }

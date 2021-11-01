@@ -27,8 +27,6 @@ class AnalyzeEntrySummaryFragment : CBTFragment() {
             metaphorBullets.text = makeBulletedList(8, requireContext(), R.string.apples_metaphor_bullets_1, R.string.apples_metaphor_bullets_2, R.string.apples_metaphor_bullets_3)
             metaphor3.display(R.string.apples_metaphor_3)
             testInvitation.display(R.string.check_for_apples)
-//            situation.displayDatum(viewModel.situation)
-//            emotions.displayDatum(viewModel.emotionsChosen)
 
             observe(viewModel.cogValid){
                 when {

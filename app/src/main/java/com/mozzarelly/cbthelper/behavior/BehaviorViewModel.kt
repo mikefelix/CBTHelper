@@ -2,15 +2,25 @@
 
 package com.mozzarelly.cbthelper.behavior
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.mozzarelly.cbthelper.*
+import com.mozzarelly.cbthelper.map
 import kotlinx.coroutines.launch
 
 class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
 
     private val behaviorDao by lazy { CBTDatabase.getDatabase(applicationContext).behaviorDao() }
+    private val cogValDao by lazy { CBTDatabase.getDatabase(applicationContext).cogValidDao() }
+    private val ratRepDao by lazy { CBTDatabase.getDatabase(applicationContext).ratRepDao() }
+
+    val reacted = MutableLiveData<String?>()
+    val situationType = MutableLiveData<String>()
+    val feltEmotions = MutableLiveData<String>()
+    val feltEmotionsSimple = MutableLiveData<String>()
+    val expression = MutableLiveData<String>()
+    val insteadEmotions = MutableLiveData<String>()
+    val cogValRational = MutableLiveData<Boolean>()
+    val replacedThoughts = MutableLiveData<String?>()
 
     override val title: LiveData<String?> = page.map {
         "Behavior - ${it.first}/$numPages"
@@ -61,25 +71,67 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
         set(value) {
             otherValue.value = value
         }
-    override var rational: Int?
-        get() = rationalValue.value
+    override var otherPersonRational: Int?
+        get() = otherPersonRationalValue.value
         set(value) {
-            rationalValue.value = value
+            otherPersonRationalValue.value = value
+        }
+    override var moreRationalActions: String?
+        get() = moreRationalActionsValue.value
+        set(value) {
+            moreRationalActionsValue.value = value
+        }
+    override var moreRationalAffect: String?
+        get() = moreRationalAffectValue.value
+        set(value) {
+            moreRationalAffectValue.value = value
+        }
+    override var otherBehaviorRational: Int?
+        get() = otherBehaviorRationalValue.value
+        set(value) {
+            otherBehaviorRationalValue.value = value
         }
 
     override fun load(id: Int) {
         this.id = id
 
+        // Rework with Flow?
         viewModelScope.launch {
-            entry.value = entryDao.get(id) ?: error("Can't find entry $id")
+            (entryDao.get(id) ?: error("Can't find entry $id")).let { entry ->
+                reacted.value = entry.relationships
+                situationType.value = if (entry.situationType) "situation" else "conversation"
+                feltEmotions.value = entry.emotionStringWithNewlines ?: "the emotions you felt"
+                feltEmotionsSimple.value = entry.simpleEmotionString?.lowercase() ?: "the emotions you felt"
+                expression.value = entry.expression ?: "[text not found]"
+            }
         }
 
         viewModelScope.launch {
-            (behaviorDao.get(id) ?: Behavior.new(id).also { behaviorDao.create(it) }).let {
-                copyFrom(it)
-            }
+            val cogVal = cogValDao.get(id) ?: CogValid.new(id).also { cogValDao.create(it) }
+            cogValRational.value = cogVal.isRational
+        }
+
+        viewModelScope.launch {
+            val ratRep = ratRepDao.get(id) ?: RatRep.new(id).also { ratRepDao.create(it) }
+            insteadEmotions.value = ratRep.simpleEmotionString ?: "the emotions you should have felt"
+            replacedThoughts.value = ratRep.thinkInstead
+        }
+
+        viewModelScope.launch {
+            copyFrom((behaviorDao.get(id) ?: Behavior.new(id).also { behaviorDao.create(it) }))
 
             changePage(when {
+                moreRationalAffect != null -> 15
+                moreRationalActions != null -> 14
+                other != null -> 12
+                occupations != null -> 11
+                health != null -> 10
+                relationships != null -> 9
+                honest != null -> 8
+                embarrassed != null -> 7
+                disapprove != null -> 6
+                disappointed != null -> 5
+                person != null -> 4
                 else -> 1
             })
         }
@@ -92,10 +144,7 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
     }
 
     override val complete
-        get() = rational != null
-
-    val emotions = entry.mapValueAs { emotionString }
-    val expression = entry.mapValueAs { expression }
+        get() = otherBehaviorRational != null
 
     val honestValue = MutableLiveData<Int?>()
     val personValue = MutableLiveData<String?>()
@@ -106,5 +155,14 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
     val occupationsValue = MutableLiveData<Int?>()
     val healthValue = MutableLiveData<Int?>()
     val otherValue = MutableLiveData<Int?>()
-    val rationalValue = MutableLiveData<Int?>()
+    val otherPersonRationalValue = MutableLiveData<Int?>()
+    val moreRationalActionsValue = MutableLiveData<String?>()
+    val moreRationalAffectValue = MutableLiveData<String?>()
+    val otherBehaviorRationalValue = MutableLiveData<Int?>()
+    val errors = mediator(disapproveValue, disappointedValue, honestValue, embarrassedValue, healthValue, occupationsValue, relationshipsValue, otherValue){
+        errors()
+    }
+
+    var skipTest = false
+
 }

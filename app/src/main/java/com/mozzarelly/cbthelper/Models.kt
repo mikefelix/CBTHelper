@@ -9,7 +9,7 @@ interface EntryModel {
     var id: Int
     var complete: Boolean
     var situationType: Boolean
-    var situationDetail: String?
+    var whoWhere: String?
     var situation: String?
     var date: LocalDateTime
     var emotion1Name: String?
@@ -37,7 +37,7 @@ interface EntryModel {
         complete = model.complete
         date = model.date
         situationType = model.situationType
-        situationDetail = model.situationDetail
+        whoWhere = model.whoWhere
         thoughts = model.thoughts
         assumptions = model.assumptions
         expression = model.expression
@@ -50,7 +50,10 @@ interface EntryModel {
     val emotion2 get() = emotion2Name?.let { Emotion(it, emotion2Intensity ?: 6) }
     val emotion3 get() = emotion3Name?.let { Emotion(it, emotion3Intensity ?: 6) }
 
+    val emotions get() = listOfNotNull(emotion1, emotion2, emotion3)
     val emotionString get() = emotionText(emotion1, emotion2, emotion3)
+    val emotionStringWithNewlines get() = emotionText(emotion1, emotion2, emotion3, delimiter1 = "\n", delimiter2 = "\n")
+    val simpleEmotionString get() = emotionTextSimple(emotion1, emotion2, emotion3)
 
     val started: Boolean
         get() = situation != null
@@ -62,7 +65,7 @@ data class Entry(
     @ColumnInfo(name = "complete") override var complete: Boolean = false,
     @ColumnInfo(name = "deleted") var deleted: Boolean = false,
     @ColumnInfo(name = "situationType") override var situationType: Boolean = true,
-    @ColumnInfo(name = "situationDetail") override var situationDetail: String? = null,
+    @ColumnInfo(name = "whoWhere") override var whoWhere: String? = null,
     @ColumnInfo(name = "situation") override var situation: String? = null,
     @ColumnInfo(name = "date") override var date: LocalDateTime,
     @ColumnInfo(name = "emotion1") override var emotion1Name: String? = null,
@@ -98,7 +101,7 @@ data class Entry(
             complete = model.complete,
             date = model.date,
             situationType = model.situationType,
-            situationDetail = model.situationDetail,
+            whoWhere = model.whoWhere,
             thoughts = model.thoughts,
             relationships = model.relationships,
             assumptions = model.assumptions,
@@ -140,45 +143,7 @@ interface CogValidModel {
     val started: Boolean
         get() = answer1 != null
 
-}
-
-@Entity
-data class CogValid(
-    @PrimaryKey(autoGenerate = false) override var id: Int = 0,
-    @ColumnInfo(name = "answer1") override var answer1:  Int? = null,
-    @ColumnInfo(name = "answer2") override var answer2:  Int? = null,
-    @ColumnInfo(name = "answer3") override var answer3:  Int? = null,
-    @ColumnInfo(name = "answer4a") override var answer4: Int? = null,
-    @ColumnInfo(name = "answer5") override var answer5:  Int? = null,
-    @ColumnInfo(name = "answer6") override var answer6:  Int? = null,
-    @ColumnInfo(name = "answer7") override var answer7:  Int? = null,
-    @ColumnInfo(name = "answer8") override var answer8:  String? = null,
-    @ColumnInfo(name = "answer9") override var answer9:  Int? = null,
-    @ColumnInfo(name = "answer10") override var answer10: Int? = null
-) : CogValidModel {
-
-    val isValid: Boolean
-        get() = thinkingErrors().isEmpty()
-
-    companion object {
-        fun from(other: CogValidModel) = CogValid(
-            other.id,
-            other.answer1,
-            other.answer2,
-            other.answer3,
-            other.answer4,
-            other.answer5,
-            other.answer6,
-            other.answer7,
-            other.answer8,
-            other.answer9,
-            other.answer10
-        )
-
-        fun new(id: Int): CogValid = CogValid(id)
-    }
-
-    fun thinkingErrors() = listOfNotNull(
+    fun errors() = listOfNotNull(
         "Mislabeling".takeIf { answer1 in 1..2 },
         "Emotional reasoning".takeIf { answer2 == 2 },
         "Catastrophizing".takeIf { answer3 == 1 },
@@ -198,11 +163,49 @@ data class CogValid(
         "Confusing needing and deserving".takeIf { answer7 == 5 },
         "Cognitive dissonance".takeIf { answer9 == 2 }
     )
+
+    val isRational: Boolean
+        get() = errors().isEmpty()
+
+}
+
+@Entity
+data class CogValid(
+    @PrimaryKey(autoGenerate = false) override var id: Int = 0,
+    @ColumnInfo(name = "answer1") override var answer1:  Int? = null,
+    @ColumnInfo(name = "answer2") override var answer2:  Int? = null,
+    @ColumnInfo(name = "answer3") override var answer3:  Int? = null,
+    @ColumnInfo(name = "answer4a") override var answer4: Int? = null,
+    @ColumnInfo(name = "answer5") override var answer5:  Int? = null,
+    @ColumnInfo(name = "answer6") override var answer6:  Int? = null,
+    @ColumnInfo(name = "answer7") override var answer7:  Int? = null,
+    @ColumnInfo(name = "answer8") override var answer8:  String? = null,
+    @ColumnInfo(name = "answer9") override var answer9:  Int? = null,
+    @ColumnInfo(name = "answer10") override var answer10: Int? = null
+) : CogValidModel {
+
+    companion object {
+        fun from(other: CogValidModel) = CogValid(
+            other.id,
+            other.answer1,
+            other.answer2,
+            other.answer3,
+            other.answer4,
+            other.answer5,
+            other.answer6,
+            other.answer7,
+            other.answer8,
+            other.answer9,
+            other.answer10
+        )
+
+        fun new(id: Int): CogValid = CogValid(id)
+    }
 }
 
 interface RatRepModel {
     var id: Int
-    var instead: String?
+    var thinkInstead: String?
     var believe: Int?
     var emotion1Name: String?
     var emotion2Name: String?
@@ -215,7 +218,7 @@ interface RatRepModel {
     var comparison: String?
 
     fun copyFrom(other: RatRepModel){
-        instead = other.instead
+        thinkInstead = other.thinkInstead
         believe = other.believe
         emotion1Name = other.emotion1Name
         emotion2Name = other.emotion2Name
@@ -236,13 +239,13 @@ interface RatRepModel {
         get() = comparison != null
 
     val started: Boolean
-        get() = instead != null
+        get() = thinkInstead != null
 }
 
 @Entity
 data class RatRep(
     @PrimaryKey(autoGenerate = false) override var id: Int = 0,
-    @ColumnInfo(name = "instead") override var instead: String? = null,
+    @ColumnInfo(name = "thinkInstead") override var thinkInstead: String? = null,
     @ColumnInfo(name = "believe") override var believe: Int? = null,
     @ColumnInfo(name = "emotion1") override var emotion1Name: String? = null,
     @ColumnInfo(name = "emotion2") override var emotion2Name: String? = null,
@@ -258,7 +261,7 @@ data class RatRep(
     companion object {
         fun from(other: RatRepModel) = RatRep(
             id = other.id,
-            instead = other.instead,
+            thinkInstead = other.thinkInstead,
             believe = other.believe,
             emotion1Name = other.emotion1Name,
             emotion2Name = other.emotion2Name,
@@ -274,6 +277,9 @@ data class RatRep(
         fun new(id: Int): RatRep = RatRep(id)
     }
 
+    val emotions get() = listOfNotNull(emotion1, emotion2, emotion3)
+    val emotionString get() = emotionText(emotion1, emotion2, emotion3)
+    val simpleEmotionString get() = emotionTextSimple(emotion1, emotion2, emotion3)
 }
 
 interface BehaviorModel {
@@ -287,7 +293,10 @@ interface BehaviorModel {
     var occupations: Int?
     var health: Int?
     var other: Int?
-    var rational: Int?
+    var otherPersonRational: Int?
+    var moreRationalActions: String?
+    var moreRationalAffect: String?
+    var otherBehaviorRational: Int?
 
     fun copyFrom(other: Behavior){
         honest = other.honest
@@ -299,14 +308,29 @@ interface BehaviorModel {
         occupations = other.occupations
         health = other.health
         this.other = other.other
-        rational = other.rational
+        otherPersonRational = other.otherPersonRational
+        moreRationalActions = other.moreRationalActions
+        moreRationalAffect = other.moreRationalAffect
+        otherBehaviorRational = other.otherBehaviorRational
     }
 
     val complete: Boolean
-        get() = rational != null
+        get() {
+            return otherBehaviorRational != null
+        }
 
     val started: Boolean
         get() = person != null
+
+    fun errors() = listOfNotNull(
+        "Cognitive Dissonance".takeIf { disapprove == 1 || disappointed == 1 || embarrassed == 1 },
+        "Negative Outcomes".takeIf { relationships == 2 || health == 2 || occupations == 2 || other == 2 },
+        "Over-reacting".takeIf { honest == 1 },
+        "Under-reacting".takeIf { honest == 2 }
+    )
+
+    val isRational: Boolean
+        get() = errors().isEmpty()
 }
 
 @Entity
@@ -321,7 +345,10 @@ data class Behavior(
     @ColumnInfo(name = "occupations") override var occupations: Int? = null,
     @ColumnInfo(name = "health") override var health: Int? = null,
     @ColumnInfo(name = "other") override var other: Int? = null,
-    @ColumnInfo(name = "rational") override var rational: Int? = null
+    @ColumnInfo(name = "otherRational") override var otherPersonRational: Int? = null,
+    @ColumnInfo(name = "moreRationalActions") override var moreRationalActions: String? = null,
+    @ColumnInfo(name = "moreRationalAffect") override var moreRationalAffect: String? = null,
+    @ColumnInfo(name = "otherBehaviorRational") override var otherBehaviorRational: Int? = null
 ) : BehaviorModel {
     companion object {
         fun from(other: BehaviorModel) = Behavior(
@@ -335,7 +362,10 @@ data class Behavior(
             other.occupations,
             other.health,
             other.other,
-            other.rational
+            other.otherPersonRational,
+            other.moreRationalActions,
+            other.moreRationalAffect,
+            other.otherBehaviorRational
         )
 
         fun new(id: Int): Behavior = Behavior(id)

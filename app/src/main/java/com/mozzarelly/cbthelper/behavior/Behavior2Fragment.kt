@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mozzarelly.cbthelper.R
-import com.mozzarelly.cbthelper.databinding.FragmentBehaviorIntroBinding
 import com.mozzarelly.cbthelper.databinding.FragmentBehaviorQuestion3RadiosBinding
 
 class Behavior2Fragment : BehaviorFragment(){
@@ -13,7 +12,7 @@ class Behavior2Fragment : BehaviorFragment(){
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
         FragmentBehaviorQuestion3RadiosBinding.inflate(inflater, container, false).apply {
             buttons.setupButtons(enableNextWhenFilled = viewModel.honestValue)
-            expression.displayDatum(viewModel.expression)
+            expression.display(viewModel.expression)
 
             question.setText(R.string.behavior2Question)
 

@@ -5,7 +5,6 @@ package com.mozzarelly.cbthelper.analyze
 import androidx.lifecycle.*
 import com.mozzarelly.cbthelper.*
 import com.mozzarelly.cbthelper.map
-import kotlinx.coroutines.launch
 
 enum class Stage {
     Begun,
@@ -21,85 +20,70 @@ enum class Stage {
 
 class AnalyzeViewModel : CBTViewModel() {
 
-    val entryDao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
-    val cogValidDao by lazy { CBTDatabase.getDatabase(applicationContext).cogValidDao() }
-    val ratRepDao by lazy { CBTDatabase.getDatabase(applicationContext).ratRepDao() }
-    val behaviorDao by lazy { CBTDatabase.getDatabase(applicationContext).behaviorDao() }
+    private val entryDao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
+    private val cogValidDao by lazy { CBTDatabase.getDatabase(applicationContext).cogValidDao() }
+    private val ratRepDao by lazy { CBTDatabase.getDatabase(applicationContext).ratRepDao() }
+    private val behaviorDao by lazy { CBTDatabase.getDatabase(applicationContext).behaviorDao() }
 
     var id: Int
         get() = idValue.value ?: 0
         set(value) {
             idValue.value = value
-            init()
         }
-
-    fun init(){
-        val value = idValue.value?.takeIf { it > 0 } ?: throw RuntimeException("Don't init with 0 ID!")
-
-        entry =  entryDao.getAsync(value)
-        cogValid = cogValidDao.getAsync(value)
-        ratRep = ratRepDao.getAsync(value)
-        behavior = behaviorDao.getAsync(value)
-
-        ratRepState = ratRep.map { it?.complete }
-        situation = entry.mapValue { it.situation }
-        typeString = entry.mapValueAs { if (situationType) "Situation" else "Conversation" }
-        emotionsChosen = entry.mapValueAs { emotionString }
-        thinkingErrors = cogValid.map { it?.thinkingErrors() ?: emptyList() }
-        wasValid = cogValid.map { it?.isValid == true }
-        thoughts = entry.mapValue { it.thoughts }
-        instead = ratRep.mapValue { it.instead }
-        actualEmotions = entry.mapValue { emotionText(it.emotion1, it.emotion2, it.emotion3) }
-        expressed = entry.mapValue { it.expression }
-        relationships = entry.mapValue { it.relationships }
-        possibleEmotions = ratRep.mapValue { emotionText(it.emotion1, it.emotion2, it.emotion3) }
-        comparison = ratRep.mapValue { it.comparison }
-
-        stage = MediatorLiveData<Stage>().apply {
-            val observer = Observer<Any?> {
-                val new = when {
-                    behavior.value?.complete == true -> Stage.BehaviorComplete
-                    behavior.value?.started == true -> Stage.BehaviorPartial
-                    ratRep.value?.complete == true -> Stage.RatRepComplete
-                    ratRep.value?.started == true -> Stage.RatRepPartial
-                    cogValid.value?.complete == true -> Stage.CogValComplete
-                    cogValid.value?.started == true -> Stage.CogValPartial
-                    entry.value?.complete == true -> Stage.EntryComplete
-                    entry.value?.started == true -> Stage.EntryPartial
-                    else -> Stage.Begun
-                }
-
-                if (this@apply.value != new)
-                    this@apply.value = new
-            }
-
-            addSource(entry, observer)
-            addSource(cogValid, observer)
-            addSource(ratRep, observer)
-            addSource(behavior, observer)
-        }
-    }
 
     private val idValue = MutableLiveData<Int>()
 
-    lateinit var entry: LiveData<Entry?>
-    lateinit var cogValid: LiveData<CogValid?>
-    lateinit var ratRep: LiveData<RatRep?>
-    lateinit var ratRepState: LiveData<Boolean?>
-    lateinit var behavior: LiveData<Behavior?>
-    lateinit var stage: LiveData<Stage>
-    lateinit var situation: LiveData<String?>
-    lateinit var typeString: LiveData<String?>
-    lateinit var emotionsChosen: LiveData<String?>
-    lateinit var thinkingErrors: LiveData<List<String>>
-    lateinit var wasValid: LiveData<Boolean>
-    lateinit var thoughts: LiveData<String?>
-    lateinit var instead: LiveData<String?>
-    lateinit var actualEmotions: LiveData<String?>
-    lateinit var expressed: LiveData<String?>
-    lateinit var comparison: LiveData<String?>
-    lateinit var relationships: LiveData<String?>
-    lateinit var possibleEmotions: LiveData<String?>
+    val entry = idValue.flatMap { entryDao.getAsync(it) }
+    val cogValid = idValue.flatMap { cogValidDao.getAsync(it) }
+    val ratRep = idValue.flatMap { ratRepDao.getAsync(it) }
+    val behavior = idValue.flatMap { behaviorDao.getAsync(it) }
+
+    val stage: LiveData<Stage?> = mediator(entry, cogValid, ratRep, behavior){
+        val entryVal = entry.value ?: return@mediator null
+        val cogValidVal = cogValid.value ?: return@mediator null
+        val ratRepVal = ratRep.value ?: return@mediator null
+        val behaviorVal = behavior.value ?: return@mediator null
+
+        when {
+            behaviorVal.complete -> Stage.BehaviorComplete
+            behaviorVal.started -> Stage.BehaviorPartial
+            ratRepVal.complete -> Stage.RatRepComplete
+            ratRepVal.started -> Stage.RatRepPartial
+            cogValidVal.complete -> Stage.CogValComplete
+            cogValidVal.started -> Stage.CogValPartial
+            entryVal.complete -> Stage.EntryComplete
+            entryVal.started -> Stage.EntryPartial
+            else -> Stage.Begun
+        }
+    }
+
+    val ratRepState = ratRep.map { it?.complete }
+    val thinkInstead = ratRep.mapValue { it.thinkInstead }
+    val comparison = ratRep.mapValue { it.comparison }
+    val possibleEmotions = ratRep.mapValue { emotionText(it.emotion1, it.emotion2, it.emotion3) }
+    val otherPeopleRational = behavior.mapValue { it.otherBehaviorRational }
+
+    val feltInstead = Pair(entry, ratRep).mapValues { e, r ->
+        emotionTextContrasted(r.emotions, e.emotions, delimiter1 = "and", delimiter2 = ", ")
+    }
+
+    val situation = entry.mapValue { it.situation }
+    val typeString = entry.mapValueAs { if (situationType) "Situation" else "Conversation" }
+    val emotionsFelt = entry.mapValueAs { emotionString }
+    val emotionsFeltSimple = entry.mapValueAs { simpleEmotionString }
+    val thoughts = entry.mapValue { it.thoughts }
+    val assumptions = entry.mapValue { it.assumptions }
+    val expressed = entry.mapValue { it.expression }
+    val relationships = entry.mapValue { it.relationships }
+    val entryDesc = entry.mapValueAs { "A ${if (situationType) "situation at" else "conversation with" } $whoWhere" }
+    val detail = entry.mapValueAs { situation }
+
+    val thinkingErrors = cogValid.map { it?.errors() ?: emptyList() }
+    val behavingErrors = behavior.map {
+        it?.errors() ?: emptyList()
+    }
+    val moreRationalAction = behavior.mapValue { it.moreRationalActions }
+    val othersReactions = behavior.mapValue { it.moreRationalAffect }
 
 /*    fun save(){
         comparison.value?.takeIf { it != ratRep.value?.comparison }?.let {

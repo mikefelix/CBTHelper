@@ -25,12 +25,12 @@ class AddEntry4Fragment : AddEntryFragment() {
                 }
             }
 
-            expression.bindTo(viewModel.expressionValue)
+            expression.display(viewModel.expressionValue)
 
             bottledCheck.bindTo(viewModel.bottledValue)
 
             observe(viewModel.emotionsChosenSimple){
-                textView1.text = "What did you do and say to show how ${it?.lowercase(Locale.US) ?: ""} you felt?"
+                textView1.display("What did you do and say to show how ${it?.lowercase(Locale.US) ?: ""} you felt?")
             }
         }.root
 }

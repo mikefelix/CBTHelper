@@ -8,6 +8,7 @@ import android.text.Layout
 import android.text.TextWatcher
 import android.view.View
 import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -29,81 +30,76 @@ abstract class CBTFragment : Fragment() {
 
     abstract val title: String
 
-    inline fun <reified T: Any?> TextView.displayDatum(liveData: LiveData<T>){
-/*
-        val drawable = TopGravityDrawable(resources, BitmapFactory.decodeResource(resources, R.drawable.ic_quote))
-        drawable.setTintList(foregroundTintList)
-        drawable.setTintMode(PorterDuff.Mode.SRC_IN)
-        setCompoundDrawablesWithIntrinsicBounds(drawable, null, null, null)
-        compoundDrawablePadding = 8
-        compoundDrawableTintList = foregroundTintList
-*/
-
-/*
-        viewLifecycleOwner.observe(liveData) {
-            val imageSpan = ImageSpan(context, R.drawable.ic_quote);
-            val ss = SpannableString(" " + it.toString());
-            ss.setSpan(imageSpan, 0, 1, 0);
-            text = ss
-        }
-*/
-        display(liveData)
-    }
-
-    inline fun <reified V: View, reified T: Any?> V.bindTo(liveData: MutableLiveData<T>, text: Int? = null, value: Any? = null){
-        when (this) {
-            is RadioButton -> {
-                text?.let { this.text = getString(it) }
-                this.setTag(value)
-                this.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked && value != liveData.value)
-                        liveData.value = (value as? T) ?: error("Need value for radio")
-                }
-            }
-            is CheckBox -> {
-                text?.let { this.text = getString(it) }
-                this.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked != liveData.value)
-                        liveData.value = isChecked as T
-                }
-            }
-            is TextView -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
-                }
-
-                text?.let { this.text = getString(it) }
-                this.addTextChangedListener(object: TextWatcher {
-                    override fun afterTextChanged(s: Editable?) {}
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        /*this@bindTo.text?*/s?.toString()?.takeIf { it != liveData.value }?.let {
-                            liveData.value = it as T
-                        }
-                    }
-                })
-            }
-            else -> error("Can't handle ${this::class.java.name} && ${T::class.java.name}")
+    inline fun EditText.bindTo(liveData: MutableLiveData<String?>, crossinline transform: (String?) -> String? = { it?.toString() }){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
         }
 
-        liveData.observe(viewLifecycleOwner, Observer { new ->
-            when (this){
-                is RadioButton -> (new as? Int).let {
-                    if (this.getTag() == it)
-                        this.isChecked = true
+        this.addTextChangedListener(object: TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                s?.toString()?.takeIf { it != liveData.value }?.let {
+                    liveData.value = transform(it)
                 }
-                is CheckBox -> new.toBoolean().let {
-                    if (this.isChecked != it)
-                        this.isChecked = it
-                }
-                is TextView -> new?.toString()?.let {
-                    if (it != this.text.toString())
-                        this.text = it
-                }
-                else -> error("Can't support ${this::class.qualifiedName}")
             }
         })
+
+        liveData.observe(viewLifecycleOwner){ new ->
+            if (new != this.text.toString())
+                (this as TextView).text = new
+        }
     }
+
+    fun RadioButton.bindTo(liveData: MutableLiveData<Int?>, text: Int? = null, value: Int){
+        text?.let { this.text = getString(it) }
+        this.tag = value
+        this.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked && value != liveData.value)
+                liveData.value = (value as? Int) ?: error("Need value for radio")
+        }
+
+        liveData.observe(viewLifecycleOwner) {
+            if (this.tag == it)
+                this.isChecked = true
+        }
+    }
+
+    fun CheckBox.bindTo(liveData: MutableLiveData<Boolean>, text: Int? = null){
+        text?.let { this.text = getString(it) }
+        this.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked != liveData.value)
+                liveData.value = isChecked
+        }
+
+        liveData.observe(viewLifecycleOwner){
+            if (this.isChecked != it)
+                this.isChecked = it
+        }
+    }
+
+/*
+    fun TextView.bindTextTo(liveData: MutableLiveData<String?>, transform: ((String?) -> String?) = { it ?: "" }){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
+        }
+
+        this.addTextChangedListener(object: TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                s?.toString()?.takeIf { it != liveData.value }?.let {
+                    liveData.value = it
+                }
+            }
+        })
+
+        liveData.observe(viewLifecycleOwner) {
+            if (it != this.text.toString())
+                this.text = transform(it)
+        }
+    }
+*/
 
     fun TextView.display(string: Int, vararg formatArgs: String){
         display(getString(string, *formatArgs))
@@ -117,6 +113,8 @@ abstract class CBTFragment : Fragment() {
     }
 
     inline fun <reified V: View, reified T: Any?> V.display(liveData: LiveData<T>, crossinline transform: (T?) -> String? = { it?.toString() }){
+        visibility = View.VISIBLE
+
         if (this is TextView) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD

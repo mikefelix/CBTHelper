@@ -65,7 +65,7 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
     val idValue = MutableLiveData<Int>()
     val situationTypeValue = MutableLiveData(false)
     val situationValue = MutableLiveData<String?>()
-    val situationDetailValue = MutableLiveData<String?>()
+    val whoWhereValue = MutableLiveData<String?>()
 
     val completeValue = MutableLiveData(false)
     val dateValue = MutableLiveData<LocalDateTime>()
@@ -95,9 +95,9 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
     override var situation: String?
         get() = situationValue.value
         set(value) { situationValue.value = value }
-    override var situationDetail: String?
-        get() = situationDetailValue.value
-        set(value) { situationDetailValue.value = value }
+    override var whoWhere: String?
+        get() = whoWhereValue.value
+        set(value) { whoWhereValue.value = value }
     override var date: LocalDateTime
         get() = dateValue.valueNotNull()
         set(value) { dateValue.value = value }

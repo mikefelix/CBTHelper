@@ -120,9 +120,9 @@ class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
             @SuppressLint("SetTextI18n")
             fun bind(entry: Entry){
                 title.text = when {
-                    entry.situationDetail?.startsWith("DEBUG:") == true -> entry.situationDetail?.removePrefix("DEBUG:")
-                    entry.situationType -> "A situation at ${entry.situationDetail}"
-                    else -> "A conversation with ${entry.situationDetail}"
+                    entry.whoWhere?.startsWith("DEBUG:") == true -> entry.whoWhere?.removePrefix("DEBUG:")
+                    entry.situationType -> "A situation at ${entry.whoWhere}"
+                    else -> "A conversation with ${entry.whoWhere}"
                 }
 
                 //emotions.text = """You felt ${emotionText(entry.emotion1, entry.emotion2, entry.emotion3)?.toLowerCase(Locale.US) ?: " emotions"}."""

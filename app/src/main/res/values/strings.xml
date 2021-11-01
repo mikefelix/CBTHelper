@@ -154,6 +154,7 @@
 
     <string name="moveOn">OK. Let’s move on and test whether the way that you expressed what you felt was rational or irrational.</string>
     <string name="finish">Finish</string>
+    <string name="summary">Summary</string>
     <string name="completely_false">Completely false</string>
     <string name="completely_true">Completely true</string>
     <string name="iNeedHelp">I need help!</string>
@@ -183,6 +184,7 @@
     <string name="behaviorAnalogy3">When our behavior is emotionally healthy we call it rational. Rational behavior makes it easier for us to be loved by, cared for, and connected to others; however, irrational behavior (like a false advertising sign at the farmer’s market) makes people not want to connect to us emotionally. </string>
     <string name="behaviorAnalogy4">It can be helpful to “quality check” your behavior (the way you displayed your emotion) to help improve your relationships. </string>
     <string name="behaviorAnalogy5">Let’s review your behavior and look for “false advertising”.</string>
+    <string name="behaviorSkipAreYouSure">Remember, this CBT process is about learning to identify errors in thinking and behaving. It is possible that you could be making a thinking error right now by assuming that your behaviors were rational without testing them.\n\nAre you sure you want to skip the test?</string>
     <string name="behaviorIntro1">You noted that you originally felt:</string>
     <string name="behaviorIntro2">When asked how you expressed this emotion you wrote:</string>
     <string name="behaviorPrompt">Please answer the following questions about your words and actions. No one will see your answers except you, so be as honest as you can.</string>
@@ -203,6 +205,16 @@
     <string name="behavior3Answer2">More harm</string>
     <string name="behavior3Answer3">Neither</string>
     <string name="behavior4Question">Based on the three answers above, how rational or irrational were your words and actions on the following scale?</string>
+    <string name="behaviorResultsRat1">What you said and did in this %1$s may not have been perfect, but it appears to likely be rational given the circumstance you were in.\n\nBehavioral Errors Identified:</string>
+    <string name="behaviorResultsRat2">Think back on the way people reacted to you. You wrote:</string>
+    <string name="behaviorResultsRat3">Were their words and actions rational or irrational? (If not sure, just make your best guess.)</string>
+    <string name="behaviorResultsIrrat1">Sounds like the way you expressed your emotion was not as rational or healthy as it could have been. For example, your responses suggested these errors:</string>
+    <string name="behaviorResultsIrrat2">Let’s identify what you could have done differently that may have been healthier.</string>
+    <string name="behaviorResultsRepRatCog1">Imagine yourself back in that %1$s feeling %2$s.\n\nAlthough it makes sense that you felt that way, looking back we can see that the words/actions you used to show that %2$s weren’t as healthy as they could have been.\n\nIf you could go back in time and do it again, what would you do or say to more rationally express what you were feeling?</string>
+    <string name="behaviorResultsRepIrratCog1">Imagine yourself back in that %1$s, but this time you are feeling %2$s instead because you believe…</string>
+    <string name="behaviorResultsRepIrratCog2">If that was the case, what would you do or say to more rationally express your %1$s?</string>
+    <string name="behaviorResultsReactions1">How would acting this way affect the people around you? How might they likely respond to this?</string>
+    <string name="behaviorResultsReactions2">If you are correct (if they really did respond that way), would their behavior be rational or irrational?</string>
 
     <string name="emhelp1Text1">It looks like you’re having trouble finding replacement thoughts that feel true. Try this: let’s first identify what you wish you would have felt instead. You wrote:</string>
     <string name="emhelp1Text2">In this situation, what do you wish you would have felt?</string>

@@ -20,7 +20,7 @@ class AddEntry1Fragment : AddEntryFragment() {
             }
 
             buttons.next.run {
-                enableWhenHasValue(viewModel.situationDetailValue, viewModel.situationValue)
+                enableWhenHasValue(viewModel.whoWhereValue, viewModel.situationValue)
 
                 setOnClickListener {
                     nextPage()
@@ -29,13 +29,13 @@ class AddEntry1Fragment : AddEntryFragment() {
 
             observe(viewModel.situationTypeValue){
                 if (it)
-                    textView2.setText(R.string.situationQuestion)
+                    textView2.display(R.string.situationQuestion)
                 else
-                    textView2.setText(R.string.conversationQuestion)
+                    textView2.display(R.string.conversationQuestion)
             }
 
-            situationDesc.bindTo(viewModel.situationValue)
-            whoWhere.bindTo(viewModel.situationDetailValue)
+            situationDesc.display(viewModel.situationValue)
+            whoWhere.display(viewModel.whoWhereValue)
 
             viewLifecycleOwner.observe(viewModel.situationTypeValue) {
                 if (it)

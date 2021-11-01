@@ -79,7 +79,6 @@
             android:text="@string/begin_behavior_validity_test"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             />
@@ -88,10 +87,8 @@
             android:id="@+id/skipInvitation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:labelFor="@id/situationType"
             android:layout_gravity="center"
-            android:visibility="gone"
-            android:text="Or you can skip this test because you already know that your behavior was..."
+            tools:text="Or you can skip this test because you already know that your behavior was..."
             tools:ignore="HardcodedText"
             />
 
@@ -99,7 +96,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="gone"
             android:gravity="center"
             >
 
@@ -111,8 +107,6 @@
             android:text="@string/rational"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:visibility="gone"
-            tools:visibility="visible"
             tools:ignore="ButtonStyle" />
 
         <Button android:theme="@style/ButtonStyle"
@@ -122,8 +116,6 @@
             android:minHeight="48dp"
             android:text="@string/irrational"
             android:layout_marginTop="8dp"
-            android:visibility="gone"
-            tools:visibility="visible"
             tools:ignore="ButtonStyle" />
         </LinearLayout>
 

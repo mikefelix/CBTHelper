@@ -26,8 +26,6 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
             val cogValid = cogValidDao.get(id) ?: CogValid.new(id).also { cogValidDao.create(it) }
             copyFrom(cogValid)
 
-            thinkingErrors.value = cogValid.thinkingErrors()
-
             changePage(when {
                 answer10 != null -> 12
                 answer9 != null -> 11
@@ -63,7 +61,9 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
     val answer8Value = MutableLiveData<String?>()
     val answer9Value = MutableLiveData<Int?>()
     val answer10Value = MutableLiveData<Int?>()
-    val thinkingErrors = MutableLiveData<List<String>>()
+
+    val thinkingErrors = mediator(answer10Value, answer9Value, answer8Value, answer7Value, answer6Value,
+        answer5Value, answer4Value, answer3Value, answer2Value, answer1Value){ errors() }
 
     // From entry
     var thoughts = MutableLiveData<String?>()

@@ -30,7 +30,7 @@ class AddEntry2Fragment : AddEntryFragment() {
             listOf(emotion1, emotion2, emotion3).bind(viewModel.emotion1Value, viewModel.emotion2Value, viewModel.emotion3Value)
 
             observe(viewModel.situationTypeValue) {
-                textView1.text = "What emotions did you feel during this ${if (it) "situation" else "conversation"}?"
+                textView1.display("What emotions did you feel during this ${if (it) "situation" else "conversation"}?")
             }
 
         }.root

@@ -12,7 +12,7 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
 
     val thinkingErrors = MutableLiveData<String?>()
     val situation = MutableLiveData<String?>()
-    val insteadValue = MutableLiveData<String?>()
+    val thinkInsteadValue = MutableLiveData<String?>()
     val situationType = MutableLiveData<String>()
     val believeValue = MutableLiveData<Int?>()
     val wouldHaveDoneValue = MutableLiveData<String?>()
@@ -72,10 +72,10 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
     val actualEmotionText = MutableLiveData<String?>()
     val comparisonValue = MutableLiveData<String?>()
 
-    override var instead: String?
-        get() = insteadValue.value
+    override var thinkInstead: String?
+        get() = thinkInsteadValue.value
         set(value) {
-            insteadValue.value = value
+            thinkInsteadValue.value = value
         }
 
     override var wouldHaveDone: String?
@@ -125,7 +125,7 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
                 wouldHaveDone != null -> 5
                 emotion1Name != null -> 4
                 believe != null -> 3
-                instead != null -> 2
+                thinkInstead != null -> 2
                 else -> 1
             })
         }
@@ -142,7 +142,7 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
         viewModelScope.launch {
             (cogValidDao.get(id) ?: error("Can't find cogval $id")).let {
 //                val advice = it.answer10
-                thinkingErrors.value = it.thinkingErrors().joinToString(separator = "\n")// + "\n" + advice
+                thinkingErrors.value = it.errors().joinToString(separator = "\n")// + "\n" + advice
             }
         }
     }

@@ -1,16 +1,16 @@
 package com.mozzarelly.cbthelper.analyze
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
-import com.mozzarelly.cbthelper.*
+import com.mozzarelly.cbthelper.CBTActivity
+import com.mozzarelly.cbthelper.R
 import com.mozzarelly.cbthelper.behavior.BehaviorActivity
+import com.mozzarelly.cbthelper.cbtViewModel
 import com.mozzarelly.cbthelper.cogvalid.CogValidActivity
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
+import com.mozzarelly.cbthelper.observe
 import com.mozzarelly.cbthelper.replacement.ReplacementThoughtsActivity
-import java.lang.IllegalArgumentException
 import kotlin.reflect.KClass
 
 class AnalyzeActivity : CBTActivity<AnalyzeViewModel>() {
@@ -85,7 +85,7 @@ class AnalyzeActivity : CBTActivity<AnalyzeViewModel>() {
         title = "Analyze"
 
         observe(viewModel.stage){
-            stage = it
+            it?.let { stage = it }
         }
     }
 

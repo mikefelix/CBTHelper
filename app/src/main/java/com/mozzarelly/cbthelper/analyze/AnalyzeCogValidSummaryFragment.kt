@@ -4,15 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mozzarelly.cbthelper.*
 import com.mozzarelly.cbthelper.behavior.BehaviorActivity
 import com.mozzarelly.cbthelper.databinding.FragmentAnalyze2CogvalSummaryBinding
 import com.mozzarelly.cbthelper.replacement.ReplacementThoughtsActivity
-import java.util.*
 
 class AnalyzeCogValidSummaryFragment : CBTFragment() {
 
@@ -22,7 +18,7 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         FragmentAnalyze2CogvalSummaryBinding.inflate(inflater, container, false).apply {
-            observe(viewModel.thinkingErrors, viewModel.emotionsChosen, viewModel.ratRepState){ errorsMade, emotions, ratRepState ->
+            observe(viewModel.thinkingErrors, viewModel.emotionsFelt, viewModel.ratRepState){ errorsMade, emotions, ratRepState ->
                 val wasValid = errorsMade.isNullOrEmpty()
                 if (wasValid) {
                     text1.text = getString(R.string.validitySummary1Rational, viewModel.typeString.value)

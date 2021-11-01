@@ -19,6 +19,12 @@ class EmotionHelp2Fragment : EmotionHelpFragment(){
 
             helpButton.setOnClickListener {
                 showInBottomSheet(FragmentEmhelpBeliefsAnalysisPopupBinding.inflate(layoutInflater, null, false)){ dialog ->
+                    text1.display(R.string.beliefsAnalysisText1)
+                    example1.display(R.string.beliefsAnalysisExample1)
+                    text2.display(R.string.beliefsAnalysisText2)
+                    text3.display(R.string.beliefsAnalysisText3)
+                    text4.display(R.string.beliefsAnalysisText4)
+                    text5.display(R.string.beliefsAnalysisText5)
                     textBullets.display(makeBulletedList(8, requireContext(), R.string.beliefsAnalysisBullet1, R.string.beliefsAnalysisBullet2))
                     beliefs.display(viewModel.assumptions)
                     markBox.setOnCheckedChangeListener { _, isChecked -> viewModel.markEntry(isChecked) }
@@ -31,6 +37,6 @@ class EmotionHelp2Fragment : EmotionHelpFragment(){
                 emotionTextSimple(viewModel.desiredEmotion.value) ?: "that emotion",
                 viewModel.situationType.value ?: "situation")
 
-            answer.bindTo(viewModel.thinkAndBelieve)
+            answer.display(viewModel.thinkAndBelieve)
         }.root
 }

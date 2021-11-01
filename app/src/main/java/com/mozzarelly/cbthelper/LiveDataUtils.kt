@@ -23,56 +23,6 @@ inline fun <reified T> LifecycleOwner.observe(data: LiveData<T>, crossinline lam
     })
 }
 
-
-inline fun <T, R> List<LiveData<T>>.mapData(crossinline convert: (List<T?>) -> R) = MediatorLiveData<R>().apply {
-    this@mapData.forEach {
-        addSource<T>(it) {
-            val values = this@mapData.map { it.value }
-            value = convert(values)
-        }
-    }
-}
-
-fun mapAny(vararg ts: LiveData<Boolean>) = MediatorLiveData<Boolean>().apply {
-    ts.forEach {
-        addSource(it) {
-            value = ts.map { it.value }.reduceRight { b, acc -> (b ?: false) || (acc ?: false) }
-        }
-    }
-}
-
-fun mapAll(vararg ts: LiveData<Boolean>) = MediatorLiveData<Boolean>().apply {
-    ts.forEach {
-        addSource(it) {
-            value = ts.map { it.value }.reduceRight { b, acc -> (b ?: false) && (acc ?: false) }
-        }
-    }
-}
-
-/**
- * Return a LiveData that responds to changes in this LiveData by updating its value using the convert function.
- * If the value of this LiveData is null return null, else call the convert function.
- *
- * @param convert A function to convert T to R (with T as the receiver).
- */
-inline fun <T: Any?, R> LiveData<T?>.mapNullOr(crossinline convert: (T) -> R?): LiveData<R?> = MediatorLiveData<R?>().apply {
-    addSource<T>(this@mapNullOr) { t ->
-        value = if (t == null) null else convert(t)
-    }
-}
-
-/**
- * Return a LiveData that responds to changes in this LiveData by updating its value using the convert function.
- * If the value of this LiveData is null return null, else call the convert function with a smart-casted receiver value.
- *
- * @param convert A function to convert T? to R (with T as a receiver param).
- */
-inline fun <T: Any?, R> LiveData<T?>.mapAsNullOr(crossinline convert: T.() -> R?): LiveData<R?> = MediatorLiveData<R?>().apply {
-    addSource<T>(this@mapAsNullOr) {
-        value = convert(it)
-    }
-}
-
 /**
  * Return a LiveData that responds to changes in this LiveData by updating its value using the convert function.
  * If the value of this LiveData is null return null, else map to the convert function.
@@ -80,7 +30,7 @@ inline fun <T: Any?, R> LiveData<T?>.mapAsNullOr(crossinline convert: T.() -> R?
  * @param convert A function to convert T? to R.
  */
 inline fun <T, R> LiveData<T>.map(crossinline convert: (T) -> R): LiveData<R> = MediatorLiveData<R>().apply {
-    addSource<T>(this@map) { t ->
+    addSource(this@map) { t ->
         value = if (t == null) null else convert(t)
     }
 }
@@ -102,7 +52,7 @@ inline fun <T, R> LiveData<T>.flatMap(crossinline convert: (T) -> LiveData<R>): 
  * @param convert A function to convert T to R (with T as the receiver).
  */
 inline fun <T, R> LiveData<T>.mapAs(crossinline convert: T.() -> R): LiveData<R> = MediatorLiveData<R>().apply {
-    addSource<T>(this@mapAs) { t ->
+    addSource(this@mapAs) { t ->
         value = if (t == null) null else convert(t)
     }
 }
@@ -125,7 +75,7 @@ inline fun <T: Any?, R: Any?> LiveData<T?>.mapValueAs(crossinline convert: T.() 
  *
  * @param convert A function to convert T to R (with T as the receiver).
  */
-/*inline */fun <T: Any?, R> LiveData<T?>.mapValue(/*crossinline */convert: (T) -> R?): LiveData<R?> = MediatorLiveData<R?>().apply {
+inline fun <T: Any?, R> LiveData<T?>.mapValue(crossinline convert: (T) -> R?): LiveData<R?> = MediatorLiveData<R?>().apply {
     addSource<T>(this@mapValue) { t ->
         value = if (t == null) null else convert(t)
     }
@@ -136,7 +86,7 @@ inline fun <T: Any?, R: Any?> LiveData<T?>.mapValueAs(crossinline convert: T.() 
  *
  * @param convert A function to convert (A, B) to R.
  */
- fun < A, B, R> Pair<LiveData<A>, LiveData<B>>.map( convert: (A?, B?) -> R): LiveData<R> = MediatorLiveData<R>().apply {
+ fun <A, B, R> Pair<LiveData<A>, LiveData<B>>.map(convert: (A?, B?) -> R): LiveData<R> = MediatorLiveData<R>().apply {
     val update: Function0<Unit> = {
         val a = first.value
         val b = second.value
@@ -144,6 +94,28 @@ inline fun <T: Any?, R: Any?> LiveData<T?>.mapValueAs(crossinline convert: T.() 
         when {
 //            a == null -> println("This $ {A::class.simpleName} shouldn't be but is null.")
 //            b == null -> println("This $ {B::class.simpleName} shouldn't be but is null.")
+            else -> value = convert(a, b)
+        }
+    }
+
+    addSource(first) { update() }
+    addSource(second) {update() }
+}
+
+/**
+ * Return a LiveData that responds to changes in two other LiveData by updating its value using the convert function.
+ * Null in either input results in null output without running the function.
+ *
+ * @param convert A function to convert (A, B) to R.
+ */
+fun <A, B, R> Pair<LiveData<A?>, LiveData<B?>>.mapValues(convert: (A, B) -> R): LiveData<R?> = MediatorLiveData<R>().apply {
+    val update: Function0<Unit> = {
+        val a = first.value
+        val b = second.value
+
+        when {
+            a == null -> value = null
+            b == null -> value = null
             else -> value = convert(a, b)
         }
     }
@@ -226,5 +198,18 @@ inline fun <reified A, reified B, reified C> observe(a: LiveData<A>, b: LiveData
     }
     c.observeForever {
         handler(a.value, b.value, c.value)
+    }
+}
+
+
+fun <V> mediator(vararg liveDatas: LiveData<*>, aggregate: () -> V): LiveData<V> = MediatorLiveData<V>().apply {
+    fun compute() {
+        val res = aggregate()
+        if (value != res)
+            value = res
+    }
+
+    liveDatas.forEach {
+        addSource(it) { compute() }
     }
 }

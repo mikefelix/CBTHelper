@@ -23,6 +23,9 @@ interface EntryDao {
     @Query("SELECT * FROM entry WHERE id = :id")
     fun getAsync(id: Int): LiveData<Entry?>
 
+    @Query("SELECT * FROM entry WHERE id = :id")
+    fun getFlow(id: Int): Flow<Entry?>
+
     @Insert(entity = Entry::class)
     suspend fun insert(entry: Entry): Long
 
@@ -203,7 +206,7 @@ abstract class CBTDatabase : RoomDatabase() {
 
         addEntities(
             Entry(
-                situationDetail = "DEBUG:E! C! R! B!",
+                whoWhere = "DEBUG:E! C! R! B!",
                 situation = "We talked about video games and how bad I am at Rocket League.",
                 complete = true,
                 situationType = true,
@@ -229,7 +232,7 @@ abstract class CBTDatabase : RoomDatabase() {
                 answer10 = 1
             ), RatRep(
                 believe = 1,
-                instead = "Do this instead",
+                thinkInstead = "Do this instead",
                 emotion1Name = "Happiness",
                 wouldHaveDone = "Talk better",
                 wouldHaveAffected = "They would be happier.",
@@ -239,17 +242,20 @@ abstract class CBTDatabase : RoomDatabase() {
                 person = "Beauregard",
                 disappointed = 1,
                 disapprove = 1,
-                embarrassed = 0,
+                embarrassed = 2,
                 relationships = 1,
-                occupations = 0,
+                occupations = 2,
                 health = 1,
-                other = 0,
-                rational = 1
+                other = 2,
+                otherPersonRational = 1,
+                moreRationalActions = "Be better",
+                moreRationalAffect = "Everyone happier",
+                otherBehaviorRational = 1
             )
         )
         addEntities(
             Entry(
-                situationDetail = "DEBUG:E! C! R! B...",
+                whoWhere = "DEBUG:E! C! R! B...",
                 situation = "We talked about video games and how bad I am at Rocket League.",
                 complete = true,
                 situationType = true,
@@ -275,7 +281,7 @@ abstract class CBTDatabase : RoomDatabase() {
                 answer10 = 1
             ), RatRep(
                 believe = 1,
-                instead = "Do this instead",
+                thinkInstead = "Do this instead",
                 emotion1Name = "Happiness",
                 wouldHaveDone = "Talk better",
                 wouldHaveAffected = "They would be happier.",
@@ -284,15 +290,14 @@ abstract class CBTDatabase : RoomDatabase() {
                 honest = 1,
                 person = "Beauregard",
                 disappointed = 1,
-                disapprove = 1,
-                embarrassed = 0,
-                relationships = 1
+                disapprove = 2,
+                embarrassed = 1
             )
         )
 
         addEntities(
             Entry(
-                situationDetail = "DEBUG:E! C! R!",
+                whoWhere = "DEBUG:E! C! R!",
                 situation = "We talked about video games and how bad I am at Rocket League.",
                 complete = true,
                 situationType = true,
@@ -318,7 +323,7 @@ abstract class CBTDatabase : RoomDatabase() {
                 answer10 = 1
             ), RatRep(
                 believe = 1,
-                instead = "Do this instead",
+                thinkInstead = "Do this instead",
                 emotion1Name = "Happiness",
                 wouldHaveDone = "Talk better",
                 wouldHaveAffected = "They would be happier.",
@@ -328,7 +333,7 @@ abstract class CBTDatabase : RoomDatabase() {
 
         addEntities(
             Entry(
-                situationDetail = "DEBUG:E! C! R…",
+                whoWhere = "DEBUG:E! C! R…",
                 situation = "We talked about video games and how bad I am at Rocket League.",
                 complete = true,
                 situationType = true,
@@ -354,7 +359,7 @@ abstract class CBTDatabase : RoomDatabase() {
                 answer10 = 1
             ), RatRep(
                 believe = 1,
-                instead = "Do this instead",
+                thinkInstead = "Do this instead",
                 emotion1Name = "Happiness",
                 emotion1Intensity = 1,
                 wouldHaveDone = "smarter things",
@@ -363,7 +368,7 @@ abstract class CBTDatabase : RoomDatabase() {
 
         addEntities(
             Entry(
-                situationDetail = "DEBUG:E! C!",
+                whoWhere = "DEBUG:E! C!",
                 situation = "We talked about video games and how bad I am at Rocket League.",
                 complete = true,
                 situationType = true,
@@ -391,7 +396,7 @@ abstract class CBTDatabase : RoomDatabase() {
 
         addEntities(
             Entry(
-                situationDetail = "DEBUG:E! C…",
+                whoWhere = "DEBUG:E! C…",
                 situation = "We talked about video games and how bad I am at Hades.",
                 complete = true,
                 situationType = true,
@@ -412,7 +417,7 @@ abstract class CBTDatabase : RoomDatabase() {
 
         addEntities(
             Entry(
-                situationDetail = "DEBUG:E!",
+                whoWhere = "DEBUG:E!",
                 situation = "We talked about video games and how bad I am at Factorio.",
                 complete = true,
                 situationType = true,
@@ -430,7 +435,7 @@ abstract class CBTDatabase : RoomDatabase() {
 
         addEntities(
             Entry(
-                situationDetail = "DEBUG:E…",
+                whoWhere = "DEBUG:E…",
                 complete = false,
                 situationType = true,
                 situation = "I heard a song on the radio.",

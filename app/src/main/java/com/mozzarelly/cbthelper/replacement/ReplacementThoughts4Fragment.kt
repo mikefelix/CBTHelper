@@ -2,13 +2,8 @@ package com.mozzarelly.cbthelper.replacement
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import com.mozzarelly.cbthelper.R
-import com.mozzarelly.cbthelper.databinding.FragmentReplacement3Binding
-import com.mozzarelly.cbthelper.databinding.FragmentReplacement4ImprovedExpressionBinding
 import com.mozzarelly.cbthelper.databinding.FragmentReplacement4LetsCompareBinding
-import com.mozzarelly.cbthelper.emotionhelp.EmotionHelpActivity
 
 class ReplacementThoughts4Fragment : ReplacementThoughtsFragment() {
 
@@ -16,7 +11,7 @@ class ReplacementThoughts4Fragment : ReplacementThoughtsFragment() {
         FragmentReplacement4LetsCompareBinding.inflate(inflater, container, false).apply {
             thoughts.display(viewModel.thoughts)
             emotions.display(viewModel.actualEmotionText)
-            insteadThought.display(viewModel.insteadValue)
+            insteadThought.display(viewModel.thinkInsteadValue)
             insteadFelt.display(viewModel.insteadFelt)
 
             buttons.yes.setOnClickListener {

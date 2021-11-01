@@ -41,7 +41,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/buttons"
-        app:layout_constraintVertical_weight="18"
         >
 
         <LinearLayout
@@ -49,12 +48,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
-
-          <!--  <TextView style="@style/TextViewHeading"
-                android:id="@+id/question1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />-->
 
             <TextView style="@style/TextViewDatum"
                 android:id="@+id/answer1"

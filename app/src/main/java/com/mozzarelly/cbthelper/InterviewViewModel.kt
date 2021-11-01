@@ -9,6 +9,7 @@ import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
+import kotlin.reflect.KClass
 
 data class LateInt(val int: Int)
 
@@ -22,7 +23,7 @@ abstract class InterviewViewModel : CBTViewModel(){
     lateinit var numberOfPages: LateInt
     lateinit var lateId: LateInt
 
-    val entry = MutableLiveData<Entry?>()
+    lateinit var entry: LiveData<Entry?>
 
     var id: Int
         get() = lateId.int
@@ -52,7 +53,12 @@ abstract class InterviewViewModel : CBTViewModel(){
         save()
     }
 
-    protected fun changePage(newPage: Int){
+//    fun <V, P: PageFragment<V>> goToPage(clazz: KClass<P>){
+//        changePage()
+//        save()
+//    }
+
+    fun changePage(newPage: Int){
         val oldPage = currPage
 
         val anim = newPage.compareTo(currPage)

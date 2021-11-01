@@ -229,7 +229,7 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
         buttons.setupButtons(enableNextWhenFilled = answerData)
 
         question.setText(questionText)
-        answer.bindTo(answerData)
+        answer.display(answerData)
     }
 
     protected fun FragmentCogvalQuestion1TextBinding.bindQuestion(questionText: Int, answerData: MutableLiveData<String?>
@@ -237,7 +237,7 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
         buttons.setupButtons(enableNextWhenFilled = answerData)
 
         question.setText(questionText)
-        answer.bindTo(answerData)
+        answer.display(answerData)
     }
 
     protected fun FragmentCogvalQuestion2TextsBinding.bindQuestion(question1Text: Int, answer1Data: MutableLiveData<String?>,
@@ -248,8 +248,8 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
         question1.setText(question1Text)
         question2.setText(question2Text)
 
-        answer1.bindTo(answer1Data)
-        answer2.bindTo(answer2Data)
+        answer1.display(answer1Data)
+        answer2.display(answer2Data)
     }
 
     protected fun FragmentCogvalQuestion5NestedradiosBinding.bindQuestion(liveData: MutableLiveData<Int?>, questionText: Int, outerAnswers: Pair<Int, Int>, innerAnswers: List<Int>){

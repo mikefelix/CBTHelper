@@ -305,6 +305,25 @@ fun emotionText(vararg emotions: Emotion?, delimiter1: String = " and ", delimit
     }
 }
 
+fun emotionTextContrasted(emotions: List<Emotion>, previous: List<Emotion>, delimiter1: String = " and ", delimiter2: String = ", "): String? = run {
+    fun get(i: Int){
+        val em = emotions.get(i)
+        val compared = previous.find { it.emotion == em.emotion }
+        if (compared != null)
+            "${em.emotion} (${em.intensity}/10 instead of ${compared.intensity}/10)"
+        else
+            em.toString()
+    }
+
+    when (emotions.size){
+        0 -> null
+        1 -> get(0).toString()
+        2 -> "${get(0)}${delimiter1}${get(1)}"
+        3 -> "${get(0)}${delimiter2}${get(1)}${delimiter1}${get(2)}"
+        else -> "${get(0)}${delimiter2}${get(1)}${delimiter1}${get(2)}..."
+    }
+}
+
 fun Context.presentChoice(message: Int, choice1: Int = R.string.ok, choice2: Int = R.string.cancel, choice1Action: () -> Unit, choice2Action: () -> Unit){
     AlertDialog.Builder(this)
         .setMessage(message)
@@ -345,7 +364,7 @@ inline fun <T> MutableList<T>.removeWhere(filter: (T) -> Boolean): Boolean {
     return removed
 }
 
-fun Exception.rethrowIfCancellation() {
+fun Throwable.rethrowIfCancellation() {
     if (this is CancellationException)
         throw this
 }

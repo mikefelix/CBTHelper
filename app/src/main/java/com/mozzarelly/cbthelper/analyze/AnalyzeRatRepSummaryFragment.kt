@@ -57,8 +57,8 @@ class AnalyzeRatRepSummaryFragment : CBTFragment() {
             }
 
             thought.display(viewModel.thoughts)
-            instead.display(viewModel.instead)
-            emotions.display(viewModel.actualEmotions)
+            instead.display(viewModel.thinkInstead)
+            emotions.display(viewModel.emotionsFelt)
             wouldHaveFelt.display(viewModel.possibleEmotions)
             expressed.display(viewModel.expressed)
             reacted.display(viewModel.relationships)

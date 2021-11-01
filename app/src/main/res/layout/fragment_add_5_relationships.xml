@@ -67,7 +67,6 @@
             android:textIsSelectable="true"
             android:longClickable="true"
             android:focusable="true"
-            android:hint="@string/relationshipsHint"
             />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

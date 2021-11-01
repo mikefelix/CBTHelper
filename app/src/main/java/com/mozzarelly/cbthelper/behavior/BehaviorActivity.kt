@@ -2,7 +2,6 @@ package com.mozzarelly.cbthelper.behavior
 
 import com.mozzarelly.cbthelper.LateInt
 import com.mozzarelly.cbthelper.InterviewActivity
-import com.mozzarelly.cbthelper.R
 import com.mozzarelly.cbthelper.cbtViewModel
 
 class BehaviorActivity : InterviewActivity<BehaviorViewModel>() {
@@ -19,7 +18,11 @@ class BehaviorActivity : InterviewActivity<BehaviorViewModel>() {
         Behavior3BFragment::class,
         Behavior3CFragment::class,
         Behavior3DFragment::class,
-        Behavior4Fragment::class
+//        Behavior4Fragment::class,
+        BehaviorResultsFragment::class,
+        BehaviorReplacingFragment::class,
+        BehaviorNewReactions1Fragment::class,
+        BehaviorNewReactions2Fragment::class
     )
 
     override val viewModel: BehaviorViewModel by cbtViewModel()
