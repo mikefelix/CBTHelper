@@ -460,3 +460,13 @@ fun makeBulletedList(leadingMargin: Int, vararg lines: CharSequence): CharSequen
     }
     return sb
 }
+
+inline fun <V: View> V.showIf(condition: Boolean, block: (V.() -> Unit) = { }){
+    if (condition){
+        visibility = View.VISIBLE
+        block(this)
+    }
+    else {
+        visibility = View.GONE
+    }
+}

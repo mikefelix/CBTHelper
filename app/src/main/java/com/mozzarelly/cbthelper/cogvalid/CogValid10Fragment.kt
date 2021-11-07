@@ -17,6 +17,7 @@ class CogValid10Fragment : CogValidFragment() {
             buttons.previous.setOnClickListener { previousPage() }
 
             buttons.next.run {
+                text = "Finish"
                 enableWhenHasValue(viewModel.answer10Value)
                 setOnClickListener {
                     viewModel.save()

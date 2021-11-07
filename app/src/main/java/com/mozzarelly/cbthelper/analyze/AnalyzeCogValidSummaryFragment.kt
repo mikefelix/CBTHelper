@@ -18,35 +18,44 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         FragmentAnalyze2CogvalSummaryBinding.inflate(inflater, container, false).apply {
-            observe(viewModel.thinkingErrors, viewModel.emotionsFelt, viewModel.ratRepState){ errorsMade, emotions, ratRepState ->
+            observe(viewModel.thinkingErrors, viewModel.emotionsFelt, viewModel.ratRepState) { errorsMade, emotions, ratRepState ->
                 val wasValid = errorsMade.isNullOrEmpty()
-                if (wasValid) {
-                    text1.text = getString(R.string.validitySummary1Rational, viewModel.typeString.value)
-                    errors.visibility = View.GONE
-                    judgment.text = getString(R.string.validitySummary3Rational, emotionTextSimple(emotions))
-                    text4.text = getString(R.string.validitySummary4Rational)
-
-                    skipRationalButton.setOnClickListener {
-                        start<BehaviorActivity>(viewModel.id)
+                observe(viewModel.typeString) {
+                    if (wasValid) {
+                        text1.display(getString(R.string.validitySummary1Rational, it ?: "situation"))
+                        judgment.display(getString(R.string.validitySummary3Rational, emotionTextSimple(emotions)))
                     }
-                }
-                else {
-                    text1.text = getString(R.string.validitySummary1Irrational, viewModel.typeString.value)
-                    errors.visibility = View.VISIBLE
-                    errors.text = errorsMade?.joinToString(separator = "\n") ?: "None"
-                    judgment.text = getString(R.string.validitySummary3Irrational)
-                    text4.visibility = View.GONE
-
-                    skipRationalButton.setOnClickListener {
-                        start<BehaviorActivity>(viewModel.id)
+                    else {
+                        text1.display(getString(R.string.validitySummary1Irrational, it))
+                        judgment.display(getString(R.string.validitySummary3Irrational))
                     }
                 }
 
+                errors.showIf(wasValid)
+                text4.showIf(wasValid) { display(getString(R.string.validitySummary4Rational)) }
+                readMore.showIf(wasValid) {
+                    setOnClickListener {
+                        showExplanationPopup(R.string.negative_emotion_heading, R.string.negative_emotion_explanation)
+                    }
+                }
+
+                beginRatRepButton.run {
+                    setText(R.string.begin_replacement_thoughts)
+                    setOnClickListener {
+                        start<ReplacementThoughtsActivity>(viewModel.id)
+                    }
+                }
+
+                skipToBehaviorButton.setOnClickListener {
+                    start<BehaviorActivity>(viewModel.id)
+                }
+
+/*
                 when {
                     wasValid -> {
                         continueRationalButton.visibility = View.GONE
-                        beginRationalButton.run {
-                            text = getString(R.string.negative_emotion_button_text)
+                        beginRatRepButton.run {
+                            setText(R.string.negative_emotion_button_text)
                             setOnClickListener {
                                 showExplanationPopup(R.string.negative_emotion_heading, R.string.negative_emotion_explanation)
                             }
@@ -60,7 +69,7 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
                     ratRepState == null -> {
                         continueRationalButton.visibility = View.GONE
                         beginBehaviorButton.visibility = View.GONE
-                        beginRationalButton.run {
+                        beginRatRepButton.run {
                             setText(R.string.begin_replacement_thoughts)
                             setOnClickListener {
                                 start<ReplacementThoughtsActivity>(viewModel.id)
@@ -93,6 +102,7 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
                         }
                     }
                 }
+*/
             }
         }.root
 

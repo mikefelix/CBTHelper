@@ -21,48 +21,32 @@ class AnalyzeEntrySummaryFragment : CBTFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
         FragmentAnalyze1EntrySummaryBinding.inflate(inflater, container, false).apply {
-            pageTitle.display(R.string.apples_metaphor)
-            metaphor1.display(R.string.apples_metaphor_1)
-            metaphor2.text = getString(R.string.apples_metaphor_2)
-            metaphorBullets.text = makeBulletedList(8, requireContext(), R.string.apples_metaphor_bullets_1, R.string.apples_metaphor_bullets_2, R.string.apples_metaphor_bullets_3)
-            metaphor3.display(R.string.apples_metaphor_3)
-            testInvitation.display(R.string.check_for_apples)
+            pageTitle.display(viewModel.typeStringCapitalized)
+            situationLabel.display(R.string.validitySituationLabel, viewModel.typeString.value ?: "situation")
+            situation.display(viewModel.situation)
+            emotions.display(viewModel.emotionsFelt)
+            testInvitation.display(R.string.validityTestInvitation)
 
             observe(viewModel.cogValid){
                 when {
-                    it == null -> {
-                        continueButton.visibility = View.GONE
-                        testButton.run {
+                    it == null -> testButton.run {
                             setText(R.string.begin_cognition_validity_test)
                             setOnClickListener {
                                 start<CogValidActivity>(viewModel.id)
                             }
                         }
-                    }
-                    it.complete -> {
-                        continueButton.visibility = View.GONE
-                        testButton.run {
+                    it.complete -> testButton.run {
                             setText(R.string.view_cognition_validity_test)
                             setOnClickListener {
                                 act.showFragment<AnalyzeCogValidSummaryFragment>()
                             }
                         }
-                    }
-                    else -> {
-                        continueButton.visibility = View.VISIBLE
-                        continueButton.run {
+                    else -> testButton.run {
                             setText(R.string.continue_cognition_validity_test)
                             setOnClickListener {
                                 start<CogValidActivity>(viewModel.id)
                             }
                         }
-                        testButton.run {
-                            setText(R.string.continue_cognition_validity_test)
-                            setOnClickListener {
-                                start<CogValidActivity>(viewModel.id)
-                            }
-                        }
-                    }
                 }
             }
 

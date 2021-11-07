@@ -34,9 +34,9 @@ class EmotionHelp2Fragment : EmotionHelpFragment(){
             }
 
             question.display(R.string.emhelp2Question,
-                emotionTextSimple(viewModel.desiredEmotion.value) ?: "that emotion",
+                emotionTextSimple(viewModel.desiredEmotion.value)?.lowercase() ?: "that emotion",
                 viewModel.situationType.value ?: "situation")
 
-            answer.display(viewModel.thinkAndBelieve)
+            answer.bindTo(viewModel.thinkAndBelieve)
         }.root
 }

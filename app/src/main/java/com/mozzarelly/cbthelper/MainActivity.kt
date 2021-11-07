@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelLazy
 import androidx.lifecycle.ViewModelProvider
-import com.mozzarelly.cbthelper.analyze.AnalyzeActivity
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
 import com.mozzarelly.cbthelper.viewentries.EntriesViewModel
 import com.mozzarelly.cbthelper.viewentries.ViewEntriesActivity
@@ -39,10 +38,6 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
         supportActionBar?.setDisplayShowHomeEnabled(false)
 
         findViewById<TextView>(R.id.version).text = "Version " + BuildConfig.VERSION_NAME
-
-//        addButton.setOnClickListener {
-//            start<AddEntryActivity>()
-//        }
 
         val addButton = findViewById<Button>(R.id.addButton)
 
@@ -95,6 +90,7 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
             R.id.action_settings -> startActivity(Intent(this, SettingsActivity::class.java))
             R.id.action_about -> showAbout()
             R.id.action_reminder -> supportFragmentManager.show(TimePickerFragment(this))
+/*
             R.id.action_delete -> AlertDialog.Builder(this)
                 .setTitle("Delete all data")
                 .setMessage("Delete all your data? This cannot be undone!")
@@ -103,6 +99,7 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
                 }
                 .setNegativeButton(android.R.string.cancel) { _, _ -> }
                 .show()
+*/
 
             else -> error("Unknown menu item")
         }

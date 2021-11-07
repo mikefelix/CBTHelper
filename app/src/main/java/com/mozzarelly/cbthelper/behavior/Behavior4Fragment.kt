@@ -10,6 +10,7 @@ import com.mozzarelly.cbthelper.map
 class Behavior4Fragment : BehaviorFragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+        // UNUSED
         FragmentBehaviorQuestionSliderBinding.inflate(inflater, container, false).apply {
             buttons.previous.setOnClickListener { previousPage() }
             buttons.next.run {

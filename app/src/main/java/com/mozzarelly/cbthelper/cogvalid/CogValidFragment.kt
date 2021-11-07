@@ -165,7 +165,11 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
         var redisplaying = false
         fun redisplay(){
             redisplaying = true
-            fanOutToCheckboxes(liveData.value ?: 0, boxes)
+            when (liveData.value){
+                null -> boxes.forEach { it.isChecked = false }
+                else -> fanOutToCheckboxes(liveData.value ?: 0, boxes)
+            }
+
             redisplaying = false
         }
 
@@ -229,7 +233,7 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
         buttons.setupButtons(enableNextWhenFilled = answerData)
 
         question.setText(questionText)
-        answer.display(answerData)
+        answer.bindTo(answerData)
     }
 
     protected fun FragmentCogvalQuestion1TextBinding.bindQuestion(questionText: Int, answerData: MutableLiveData<String?>
@@ -237,7 +241,7 @@ abstract class CogValidFragment : PageFragment<CogValidViewModel>(){
         buttons.setupButtons(enableNextWhenFilled = answerData)
 
         question.setText(questionText)
-        answer.display(answerData)
+        answer.bindTo(answerData)
     }
 
     protected fun FragmentCogvalQuestion2TextsBinding.bindQuestion(question1Text: Int, answer1Data: MutableLiveData<String?>,

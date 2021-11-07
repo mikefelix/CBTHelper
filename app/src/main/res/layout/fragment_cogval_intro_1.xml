@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBackground"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/metaphor1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/apples_metaphor_1"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/metaphor_bullets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/metaphor2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/apples_metaphor_2"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/metaphor3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/apples_metaphor_3"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/testInvitation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="@string/check_for_apples"
+            android:layout_marginTop="8dp"
+            tools:ignore="HardcodedText"
+            />
+
+        <Button android:theme="@style/ButtonStyle"
+            android:id="@+id/nextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/begin_test"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            />
+
+        <TextView style="@style/TextViewHeading"
+            android:id="@+id/skipInvitation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Or you can skip the test because you already know that your thoughts were:"
+            android:layout_marginTop="16dp"
+            android:labelFor="@id/situationType"
+            tools:ignore="HardcodedText"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <Button android:theme="@style/ButtonStyle"
+                android:id="@+id/skipRationalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rational"
+                android:padding="16dp"
+                android:layout_gravity="top"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginEnd="32dp"
+                tools:ignore="ButtonStyle" />
+
+            <Button android:theme="@style/ButtonStyle"
+                android:id="@+id/skipIrrationalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginTop="16dp"
+                android:padding="16dp"
+                android:text="@string/irrational"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

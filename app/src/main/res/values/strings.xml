@@ -100,6 +100,7 @@
     <string name="validityQuestion10">Would %1$s say that your thinking was:</string>
     <string name="validityAnswer10A">Rational</string>
     <string name="validityAnswer10B">Irrational</string>
+    <string name="validitySkipConfirm">Remember, this CBT process is about learning to identify errors in your thoughts and behaviors. It is possible that you could be making a thinking error right now by assuming that your thoughts were rational without testing them.\n\nAre you sure you want to skip the test?</string>
 
     <string name="oldvalidityQuestion2">When you had these thoughts, were you looking for information or confirmation? In other words, were you considering all of the facts of the situation, or just those that confirmed what you already believed or wanted to believe?</string>
     <string name="oldvalidityAnswer2A">I was looking for confirmation of what I already believed.</string>
@@ -122,7 +123,7 @@
     <string name="validitySummary3Irrational">Having thinking errors means there is room to improve your emotional health. Let’s explore how this can happen. First, let’s try replacing your irrational thoughts with a more rational way of thinking.</string>
     <string name="validitySummary3Rational">You may have made thinking errors which were not identifiable by this test, but let’s suppose you didn’t. Let’s assume that your thoughts were fully rational and therefore led to a healthy emotional experience. This means the %1$s you felt in this situation was likely healthy.</string>
     <string name="validitySummary4Irrational">Do You Want to Improve?</string>
-    <string name="validitySummary4Rational">Congratulations! But wait! What if the emotion you felt was not positive? How can it be healthy to feel negative emotions?≥≥≥≥≥..........................................................</string>
+    <string name="validitySummary4Rational">Congratulations! But wait! What if the emotion you felt was not positive? How can it be healthy to feel negative emotions?</string>
     <string name="validitySummary5Irrational">Let’s explore how you could have been healthier. Let’s first try replace the irrational thoughts that you had with a more rational way of thinking.</string>
     <string name="validitySummary5Rational">Okay, let’s move on. Let’s examine the way you expressed what you felt.</string>
     <string name="validitySummary5">Let’s explore how you could have been healthier. Let’s first try replace the irrational thoughts that you had with a more rational way of thinking.</string>
@@ -160,10 +161,14 @@
     <string name="iNeedHelp">I need help!</string>
     <string name="iDontKnowINeedHelp">I don’t know. I need help!</string>
 
-    <string name="begin_cognition_validity_test">Begin Cognition Validity Test</string>
+    <string name="begin_cognition_validity_test">Examine Cognition Validity</string>
+    <string name="begin_test">Begin Test</string>
+    <string name="validityTestInvitation">Let’s test whether these thoughts were rational or irrational:</string>
+    <string name="validitySituationLabel">Your description of the %1$s you were in:</string>
+    <string name="validitySkipInvitation">Or you can skip the test because you already know that your thoughts were:</string>
     <string name="continue_cognition_validity_test">Continue Cognition Validity Test</string>
     <string name="view_cognition_validity_test">Cognition Validity Test Results</string>
-    <string name="begin_behavior_validity_test">Begin Behavior Validity Test</string>
+    <string name="begin_behavior_validity_test">Examine Behavior Validity</string>
     <string name="continue_behavior_validity_test">Continue Behavior Validity Test</string>
     <string name="view_behavior_validity_test">View Behavior Validity Test</string>
     <string name="rational">Rational</string>
@@ -223,7 +228,7 @@
 
     <string name="about">App design and wording by:\nDaniel S. Felix, PhD, LMFT\ndaniel.felix@usd.edu\n\nAndroid programming and design by:\nMichael Felix\nmichael.felix@gmail.com\n\nCBT Helper is intended for use in collaboration with a licensed therapist.</string>
 
-    <string name="begin_replacement_thoughts">OK, begin</string>
+    <string name="begin_replacement_thoughts">Examine replacement thoughts</string>
     <string name="continue_replacement_thoughts">Continue replacement thoughts test</string>
     <string name="view_replacement_thoughts">View replacement thoughts</string>
     <string name="skip_to_behavior">Skip to behavior analysis</string>
@@ -244,10 +249,10 @@
 
     <string name="beliefsAnalysisHeading">Beliefs analysis</string>
     <string name="beliefsAnalysisText1">It’s possible that one reason you’re struggling to come up with replacement thoughts which actually feel true is this: Our thoughts are anchored in deep-seated core beliefs. These assumptions we have about ourselves are not specific to situations such as the one you are analyzing here in this entry; rather, they are broader and deeper. They influence all the situations and conversations we find ourselves in.\n\nIt’s possible that core assumptions like these may be preventing you from discovering and actually believing a healthier, more rational way of thinking.\n\nHere’s an example of how this happens:</string>
-    <string name="beliefsAnalysisExample1">A woman and her husband are discussing their finances and budget. She feels rejected and disrespected during the conversation and storms off, leaving him confused about why she left so abruptly.\n\nShe recognizes later, with the help of this app, that her thinking was irrational. She now realizes she was making the thinking error ’Mindreading’ by assuming that she knew what he was thinking. Without evidence, she believed that he was upset with her for not making enough money.\n\nNow that she recognizes this thinking error she wants to fix it. Instead of unfairly reading his mind, she instead wants to come up with healthier thinking for future financial conversations with him, but she’s having a hard time finding replacement thoughts that she can actually believe. For example,</string>
-    <string name="beliefsAnalysisBullet1">She first tries to think, "He’s proud of me. He doesn’t see me as a failure at all," but that just doesn’t feel true to her because she saw the look in his eye when he saw how much debt they still have.</string>
-    <string name="beliefsAnalysisBullet2">So she tries to believe, "There’s nothing wrong with how much money I make." Unfortunately this also feels untrue because sometimes they simply don’t have enough money to pay all their bills.</string>
-    <string name="beliefsAnalysisText2">If we ask him he’ll tell the truth: He does not think she’s a failure, even though money is tight. He is actually proud and grateful for her hard work ethic. And he tells her this. So why is she having such a hard time believing it?\n\nDeep down she has core assumptions about herself. She’s not fully aware that these assumptions are even there, but if she could put them into words they would be something like, "I am a failure at most things. I am destined to fail."\n\nSounds harsh, doesn’t it? She hears echoes of her step-father’s voice in her head when she reflects on it, and she wonders if that’s where these deep core beliefs might come from, but that’s another story.\n\nThe point here is, without realizing it she is filtering out evidence of the truth that she has, in fact, not been a failure. She instead she finds herself looking for evidence to confirm the belief which she has assumed is true for many years, that failure is her fate. Given these core assumptions, it’s understandable why she is struggling to actually believe her replacement thoughts. They just don’t fit together:</string>
+    <string name="beliefsAnalysisExample1">A woman and her husband are discussing their finances and budget. She feels rejected and disrespected during the conversation and storms off, leaving him confused about why she left so abruptly.\n\nShe recognizes later, with the help of this app, that her thinking was irrational. She now realizes she was making the thinking error “Mindreading” by assuming that she knew what he was thinking. Without evidence, she believed that he was upset with her for not making enough money.\n\nNow that she recognizes this thinking error she wants to fix it. Instead of unfairly reading his mind, she instead wants to come up with healthier thinking for future financial conversations with him, but she’s having a hard time finding replacement thoughts that she can actually believe. For example,</string>
+    <string name="beliefsAnalysisBullet1">She first tries to think, “He’s proud of me. He doesn’t see me as a failure at all,” but that just doesn’t feel true to her because she saw the look in his eye when he saw how much debt they still have.</string>
+    <string name="beliefsAnalysisBullet2">So she tries to believe, “There’s nothing wrong with how much money I make.” Unfortunately this also feels untrue because sometimes they simply don’t have enough money to pay all their bills.</string>
+    <string name="beliefsAnalysisText2">If we ask him he’ll tell the truth: he does not think she’s a failure, even though money is tight. He is actually proud and grateful for her hard work ethic. And he tells her this. So why is she having such a hard time believing it?\n\nDeep down she has core assumptions about herself. She’s not fully aware that these assumptions are even there, but if she could put them into words they would be something like, “I am a failure at most things. I am destined to fail.”\n\nSounds harsh, doesn’t it? She hears echoes of her step-father’s voice in her head when she reflects on it, and she wonders if that’s where these deep core beliefs might come from, but that’s another story.\n\nThe point here is, without realizing it she is filtering out evidence of the truth that she has, in fact, not been a failure. She instead she finds herself looking for evidence to confirm the belief which she has assumed is true for many years, that failure is her fate. Given these core assumptions, it’s understandable why she is struggling to actually believe her replacement thoughts. They just don’t fit together.</string>
     <string name="beliefsAnalysisText3">It’s possible that the reason you are also struggling is because the replacement thoughts you want to believe just don’t fit certain assumptions you may have—certain core beliefs that you assume are true about yourself or your world.\n\nThe core beliefs and assumptions which you identified as part of this entry were:</string>
     <string name="beliefsAnalysisText4">You may need to challenge and change some of these core assumptions, but it is beyond the scope of this app to help you do so. It would likely benefit you to discuss this later with your therapist.</string>
     <string name="beliefsAnalysisText5">Would you like to continue on to analyze behavior, or go back to the main menu?</string>

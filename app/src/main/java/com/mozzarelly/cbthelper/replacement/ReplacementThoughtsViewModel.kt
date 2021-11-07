@@ -141,7 +141,6 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
 
         viewModelScope.launch {
             (cogValidDao.get(id) ?: error("Can't find cogval $id")).let {
-//                val advice = it.answer10
                 thinkingErrors.value = it.errors().joinToString(separator = "\n")// + "\n" + advice
             }
         }

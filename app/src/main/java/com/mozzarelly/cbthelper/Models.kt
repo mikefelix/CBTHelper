@@ -5,9 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import org.threeten.bp.LocalDateTime
 
-interface EntryModel {
-    var id: Int
-    var complete: Boolean
+interface Model {
+    val id: Int
+    val started: Boolean
+    val complete: Boolean
+}
+
+interface EntryModel : Model {
+    override var id: Int
+    override var complete: Boolean
     var situationType: Boolean
     var whoWhere: String?
     var situation: String?
@@ -55,7 +61,7 @@ interface EntryModel {
     val emotionStringWithNewlines get() = emotionText(emotion1, emotion2, emotion3, delimiter1 = "\n", delimiter2 = "\n")
     val simpleEmotionString get() = emotionTextSimple(emotion1, emotion2, emotion3)
 
-    val started: Boolean
+    override val started: Boolean
         get() = situation != null
 }
 
@@ -111,8 +117,14 @@ data class Entry(
     }
 }
 
-interface CogValidModel {
-    var id: Int
+interface CogValidModel : Model{
+    companion object {
+        val Rational = true
+        val Irrational = false
+    }
+
+    override var id: Int
+    var skippedBecause: Boolean?
     var answer1: Int?
     var answer2: Int?
     var answer3: Int?
@@ -125,6 +137,7 @@ interface CogValidModel {
     var answer10: Int?
 
     fun copyFrom(other: CogValidModel){
+        skippedBecause = other.skippedBecause
         answer1 = other.answer1
         answer2 = other.answer2
         answer3 = other.answer3
@@ -137,32 +150,36 @@ interface CogValidModel {
         answer10 = other.answer10
     }
 
-    val complete: Boolean
+    override val complete: Boolean
         get() = answer10 != null
 
-    val started: Boolean
+    override val started: Boolean
         get() = answer1 != null
 
-    fun errors() = listOfNotNull(
-        "Mislabeling".takeIf { answer1 in 1..2 },
-        "Emotional reasoning".takeIf { answer2 == 2 },
-        "Catastrophizing".takeIf { answer3 == 1 },
-        "Magnifying".takeIf { answer3 == 2 || answer6 == 2 },
-        "Minimizing".takeIf { answer3 == 3 },
-        "Jumping to conclusions".takeIf { answer3 == 4 },
-        "Overgeneralizing".takeIf { answer3 == 5 },
-        "Confusing possible with probable".takeIf { answer3 == 6 },
-        "Mindreading".takeIf { answer4 == 1 },
-        "Filtering".takeIf { answer5 == 1 },
-        "Self projecting".takeIf { answer5 == 2 },
-        "All-or-nothing thinking".takeIf { answer6 == 1 || answer6 == 2 },
-        "Other-blaming".takeIf { answer6 == 3 },
-        "Self-blaming (personalizing)".takeIf { answer6 == 4 },
-        "Overshoulding".takeIf { answer7 in 1..3 },
-        "Confusing wanting and needing".takeIf { answer7 == 4 },
-        "Confusing needing and deserving".takeIf { answer7 == 5 },
-        "Cognitive dissonance".takeIf { answer9 == 2 }
-    )
+    fun errors() = when(skippedBecause) {
+        Rational -> emptyList()
+        Irrational -> listOf("(Test was skipped)")
+        else -> listOfNotNull(
+            "Mislabeling".takeIf { answer1 in 1..2 },
+            "Emotional reasoning".takeIf { answer2 == 2 },
+            "Catastrophizing".takeIf { answer3 == 1 },
+            "Magnifying".takeIf { answer3 == 2 || answer6 == 2 },
+            "Minimizing".takeIf { answer3 == 3 },
+            "Jumping to conclusions".takeIf { answer3 == 4 },
+            "Overgeneralizing".takeIf { answer3 == 5 },
+            "Confusing possible with probable".takeIf { answer3 == 6 },
+            "Mindreading".takeIf { answer4 == 1 },
+            "Filtering".takeIf { answer5 == 1 },
+            "Self projecting".takeIf { answer5 == 2 },
+            "All-or-nothing thinking".takeIf { answer6 == 1 || answer6 == 2 },
+            "Other-blaming".takeIf { answer6 == 3 },
+            "Self-blaming (personalizing)".takeIf { answer6 == 4 },
+            "Overshoulding".takeIf { answer7 in 1..3 },
+            "Confusing wanting and needing".takeIf { answer7 == 4 },
+            "Confusing needing and deserving".takeIf { answer7 == 5 },
+            "Cognitive dissonance".takeIf { answer9 == 2 }
+        )
+    }
 
     val isRational: Boolean
         get() = errors().isEmpty()
@@ -172,6 +189,7 @@ interface CogValidModel {
 @Entity
 data class CogValid(
     @PrimaryKey(autoGenerate = false) override var id: Int = 0,
+    @ColumnInfo(name = "skippedBecause") override var skippedBecause:  Boolean? = null,
     @ColumnInfo(name = "answer1") override var answer1:  Int? = null,
     @ColumnInfo(name = "answer2") override var answer2:  Int? = null,
     @ColumnInfo(name = "answer3") override var answer3:  Int? = null,
@@ -187,6 +205,7 @@ data class CogValid(
     companion object {
         fun from(other: CogValidModel) = CogValid(
             other.id,
+            other.skippedBecause,
             other.answer1,
             other.answer2,
             other.answer3,
@@ -203,8 +222,8 @@ data class CogValid(
     }
 }
 
-interface RatRepModel {
-    var id: Int
+interface RatRepModel : Model {
+    override var id: Int
     var thinkInstead: String?
     var believe: Int?
     var emotion1Name: String?
@@ -235,10 +254,10 @@ interface RatRepModel {
     val emotion2 get() = emotion2Name?.let { Emotion(it, emotion2Intensity ?: 6) }
     val emotion3 get() = emotion3Name?.let { Emotion(it, emotion3Intensity ?: 6) }
 
-    val complete: Boolean
+    override val complete: Boolean
         get() = comparison != null
 
-    val started: Boolean
+    override val started: Boolean
         get() = thinkInstead != null
 }
 
@@ -282,8 +301,8 @@ data class RatRep(
     val simpleEmotionString get() = emotionTextSimple(emotion1, emotion2, emotion3)
 }
 
-interface BehaviorModel {
-    var id: Int
+interface BehaviorModel : Model {
+    override var id: Int
     var honest: Int?
     var person: String?
     var disappointed: Int?
@@ -314,12 +333,10 @@ interface BehaviorModel {
         otherBehaviorRational = other.otherBehaviorRational
     }
 
-    val complete: Boolean
-        get() {
-            return otherBehaviorRational != null
-        }
+    override val complete: Boolean
+        get() = otherBehaviorRational != null
 
-    val started: Boolean
+    override val started: Boolean
         get() = person != null
 
     fun errors() = listOfNotNull(

@@ -8,7 +8,8 @@ import com.mozzarelly.cbthelper.*
 class CogValidActivity : InterviewActivity<CogValidViewModel>() {
 
     override val fragmentTypes = listOf(
-        CogValidIntroFragment::class,
+        CogValidIntro1Fragment::class,
+        CogValidIntro2Fragment::class,
         CogValid1Fragment::class,
         CogValid2Fragment::class,
         CogValid3Fragment::class,

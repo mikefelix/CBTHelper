@@ -130,7 +130,7 @@ abstract class CBTFragment : Fragment() {
         }
     }
 
-    inline fun <reified V: View, reified T: Any?> LiveData<T>.displayIn(view: V, crossinline transform: (T?) -> String? = { it?.toString() }){
+    inline fun <reified V: View, reified T: Any?> LiveData<T>.displayIn(view: V){
         view.display(this)
     }
 

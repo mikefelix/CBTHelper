@@ -41,7 +41,7 @@ interface NotificationSender {
             setLargeIcon(
                 BitmapFactory.decodeResource(
                     resources,
-                    R.mipmap.ic_launcher
+                    R.mipmap.ic_launcher2
                 )
             )
             setChannelId("Reminder")

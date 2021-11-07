@@ -42,6 +42,21 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
         }
     }
 
+    fun skip(rational: Boolean){
+        skippedBecause = rational
+/*        answer1 = 3
+        answer2 = 1
+        answer3 = 7
+        answer4 = 3
+        answer5 = 3
+        answer6 = 5
+        answer7 = 6
+        answer8 = "someone you consider rational"
+        answer9 = 1
+        answer10 = 1*/
+        save()
+    }
+
     override fun save() {
         viewModelScope.launch {
             cogValidDao.update(CogValid.from(this@CogValidViewModel))
@@ -49,8 +64,9 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
     }
 
     override val complete
-        get() = answer10 != null
+        get() = skippedBecause != null || answer10 != null
 
+    val skippedBecauseValue = MutableLiveData<Boolean?>()
     val answer1Value = MutableLiveData<Int?>()
     val answer2Value = MutableLiveData<Int?>()
     val answer3Value = MutableLiveData<Int?>()
@@ -62,15 +78,15 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
     val answer9Value = MutableLiveData<Int?>()
     val answer10Value = MutableLiveData<Int?>()
 
-    val thinkingErrors = mediator(answer10Value, answer9Value, answer8Value, answer7Value, answer6Value,
-        answer5Value, answer4Value, answer3Value, answer2Value, answer1Value){ errors() }
-
     // From entry
     var thoughts = MutableLiveData<String?>()
     var emotions = MutableLiveData<String?>()
 
     override val title: LiveData<String?> = page.map {
-        "Cognition Validity - ${it.first}/$numPages"
+        when (it.first) {
+            1 -> "Cognition Validity"
+            else -> "Cognition Validity - ${it.first - 1}/${numPages - 1}"
+        }
     }
 
     override var answer1: Int?
@@ -103,5 +119,8 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
     override var answer10: Int?
         get() = answer10Value.value
         set(value) { answer10Value.value = value }
+    override var skippedBecause: Boolean?
+        get() = skippedBecauseValue.value
+        set(value) { skippedBecauseValue.value = value }
 
 }

@@ -18,7 +18,7 @@ class TimePickerFragment(private val _context: Context) : DialogFragment(), Time
         val (hour, minute) = time
 
         return TimePickerDialog(
-            context, android.R.style.Theme_Material_Light_Dialog_Alert, this,
+            context, android.R.style.Theme_Material_Dialog, this,
             hour, minute, DateFormat.is24HourFormat(activity)
         ).apply {
             setButton(DialogInterface.BUTTON_POSITIVE, "Set reminder", this)

@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mozzarelly.cbthelper.databinding.FragmentCogvalIntroBinding
+import com.mozzarelly.cbthelper.databinding.FragmentCogvalIntro2Binding
 
-class CogValidIntroFragment : CogValidFragment() {
+class CogValidIntro2Fragment : CogValidFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-        FragmentCogvalIntroBinding.inflate(inflater, container, false).apply {
+        FragmentCogvalIntro2Binding.inflate(inflater, container, false).apply {
             buttons.setupButtons()
             buttons.previous.visibility = View.INVISIBLE
             thoughts.display(viewModel.thoughts)

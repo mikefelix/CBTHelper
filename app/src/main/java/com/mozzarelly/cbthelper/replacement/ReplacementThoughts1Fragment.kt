@@ -14,7 +14,7 @@ class ReplacementThoughts1Fragment : ReplacementThoughtsFragment() {
             thoughts.display(viewModel.thoughts)
             situation.display(viewModel.situation)
             errors.display(viewModel.thinkingErrors)
-            answer.display(viewModel.thinkInsteadValue)
+            answer.bindTo(viewModel.thinkInsteadValue)
             helpButton.setOnClickListener {
                 start<EmotionHelpActivity>(viewModel.id)
             }

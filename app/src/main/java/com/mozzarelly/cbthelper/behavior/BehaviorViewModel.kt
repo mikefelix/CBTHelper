@@ -5,6 +5,7 @@ package com.mozzarelly.cbthelper.behavior
 import androidx.lifecycle.*
 import com.mozzarelly.cbthelper.*
 import com.mozzarelly.cbthelper.map
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
@@ -94,6 +95,16 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
 
     override fun load(id: Int) {
         this.id = id
+        viewModelScope.launch {
+            entryDao.getFlow(id).collect { entry ->
+                entry ?: return@collect
+                reacted.value = entry.relationships
+                situationType.value = if (entry.situationType) "situation" else "conversation"
+                feltEmotions.value = entry.emotionStringWithNewlines ?: "the emotions you felt"
+                feltEmotionsSimple.value = entry.simpleEmotionString?.lowercase() ?: "the emotions you felt"
+                expression.value = entry.expression ?: "[text not found]"
+            }
+        }
 
         // Rework with Flow?
         viewModelScope.launch {

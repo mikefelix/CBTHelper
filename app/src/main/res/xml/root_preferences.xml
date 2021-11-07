@@ -6,6 +6,10 @@
             app:key="dark"
             app:title="Dark theme" />
 
+        <Preference
+            app:key="wipe"
+            app:title="Delete all data" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

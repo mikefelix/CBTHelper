@@ -24,28 +24,28 @@ class AnalyzeActivity : CBTActivity<AnalyzeViewModel>() {
             if (field != value) {
                 when (value) {
                     Stage.BehaviorComplete -> {
-                        title = "Behavior"
+//                        title = "Behavior"
                         show(AnalyzeBehaviorSummaryFragment())
                     }
                     Stage.BehaviorPartial -> {
                         start<BehaviorActivity>(viewModel.id)
                     }
                     Stage.RatRepComplete -> {
-                        title = "Replacement Thoughts"
+//                        title = "Replacement Thoughts"
                         show(AnalyzeRatRepSummaryFragment())
                     }
                     Stage.RatRepPartial -> {
                         start<ReplacementThoughtsActivity>(viewModel.id)
                     }
                     Stage.CogValComplete -> {
-                        title = "Cognition Validity"
+//                        title = "Cognition Validity"
                         show(AnalyzeCogValidSummaryFragment())
                     }
                     Stage.CogValPartial -> {
                         start<CogValidActivity>(viewModel.id)
                     }
                     Stage.EntryComplete -> {
-                        title = "Analyze Entry"
+//                        title = "Analyze Entry"
                         show(AnalyzeEntrySummaryFragment())
                     }
                     Stage.EntryPartial -> {
