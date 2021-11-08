@@ -18,20 +18,11 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         FragmentAnalyze2CogvalSummaryBinding.inflate(inflater, container, false).apply {
-            observe(viewModel.thinkingErrors, viewModel.emotionsFelt, viewModel.ratRepState) { errorsMade, emotions, ratRepState ->
-                val wasValid = errorsMade.isNullOrEmpty()
-                observe(viewModel.typeString) {
-                    if (wasValid) {
-                        text1.display(getString(R.string.validitySummary1Rational, it ?: "situation"))
-                        judgment.display(getString(R.string.validitySummary3Rational, emotionTextSimple(emotions)))
-                    }
-                    else {
-                        text1.display(getString(R.string.validitySummary1Irrational, it))
-                        judgment.display(getString(R.string.validitySummary3Irrational))
-                    }
-                }
 
-                errors.showIf(wasValid)
+            observe(viewModel.thinkingErrors) { errorsMade ->
+                val wasValid = errorsMade.isNullOrEmpty()
+
+                errors.showIf(!wasValid) { display(errorsMade?.joinToString("\n") ?: "") }
                 text4.showIf(wasValid) { display(getString(R.string.validitySummary4Rational)) }
                 readMore.showIf(wasValid) {
                     setOnClickListener {
@@ -39,16 +30,32 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
                     }
                 }
 
-                beginRatRepButton.run {
-                    setText(R.string.begin_replacement_thoughts)
+                beginRatRepButton.showIf(!wasValid) {
                     setOnClickListener {
                         start<ReplacementThoughtsActivity>(viewModel.id)
                     }
                 }
 
-                skipToBehaviorButton.setOnClickListener {
-                    start<BehaviorActivity>(viewModel.id)
+                beginBehaviorButton.showIf(wasValid) {
+                    setOnClickListener {
+                        start<BehaviorActivity>(viewModel.id)
+                    }
                 }
+
+            }
+
+            observe(viewModel.typeString, viewModel.emotionsFelt, viewModel.thinkingErrors) { type, emotionsFelt, errorsMade ->
+                if (errorsMade.isNullOrEmpty()) {
+                    text1.display(getString(R.string.validitySummary1Rational, type ?: "situation"))
+                    judgment.display(getString(R.string.validitySummary3Rational, emotionsFelt?.toSimpleText(), if ((emotionsFelt?.size ?: 0) == 1) "was" else "were"))
+                }
+                else {
+                    text1.display(getString(R.string.validitySummary1Irrational, type))
+                    judgment.display(getString(R.string.validitySummary3Irrational))
+                }
+
+                content.visibility = View.VISIBLE
+            }
 
 /*
                 when {
@@ -103,7 +110,6 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
                     }
                 }
 */
-            }
         }.root
 
 }

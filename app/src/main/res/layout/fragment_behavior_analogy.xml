@@ -107,6 +107,7 @@
             android:text="@string/rational"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
             tools:ignore="ButtonStyle" />
 
         <Button android:theme="@style/ButtonStyle"
@@ -116,6 +117,7 @@
             android:minHeight="48dp"
             android:text="@string/irrational"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             tools:ignore="ButtonStyle" />
         </LinearLayout>
 

@@ -16,7 +16,9 @@ class BehaviorAnalogyFragment : BehaviorFragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
         FragmentBehaviorAnalogyBinding.inflate(inflater, container, false).apply {
-            beginButton.setOnClickListener { nextPage() }
+            beginButton.setOnClickListener {
+                nextPage()
+            }
             skipRationalButton.setOnClickListener {
                 AlertDialog.Builder(requireContext()).apply {
                     setTitle("Are you sure?")

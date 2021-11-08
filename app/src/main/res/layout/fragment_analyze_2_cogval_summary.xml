@@ -7,10 +7,12 @@
     >
 
     <LinearLayout
-        android:id="@+id/scroll"
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
         >
 
         <TextView
@@ -32,6 +34,7 @@
             android:layout_height="wrap_content"
             android:text="@string/continue_replacement_thoughts"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="8dp"
@@ -76,45 +79,28 @@
             tools:ignore="HardcodedText"
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+       <Button android:theme="@style/ButtonStyle"
+            android:id="@+id/beginRatRepButton"
+            android:layout_width="wrap_content"
+            android:minWidth="128dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            >
+            android:text="@string/begin_replacement_thoughts"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+        />
 
-            <Button android:theme="@style/ButtonStyle"
-                android:id="@+id/beginRatRepButton"
-                android:layout_width="wrap_content"
-                android:minWidth="128dp"
-                android:layout_height="wrap_content"
-                android:text="@string/begin_replacement_thoughts"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="8dp"
-                />
+        <Button android:theme="@style/ButtonStyle"
+            android:id="@+id/beginBehaviorButton"
+            android:layout_width="wrap_content"
+            android:minWidth="128dp"
+            android:layout_height="wrap_content"
+            android:text="@string/begin_behavior_validity_test"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            />
 
-            <Button android:theme="@style/ButtonStyle"
-                android:id="@+id/beginBehaviorButton"
-                android:layout_width="wrap_content"
-                android:minWidth="128dp"
-                android:layout_height="wrap_content"
-                android:text="@string/begin_behavior_validity_test"
-                tools:visibility="gone"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginEnd="8dp"
-                />
 
-            <Button android:theme="@style/ButtonStyle"
-                android:id="@+id/skipToBehaviorButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/skip_to_behavior"
-                android:visibility="gone"
-                tools:visibility="visible"
-                />
-
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

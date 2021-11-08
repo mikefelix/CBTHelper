@@ -129,7 +129,6 @@ inline fun <reified VM : CBTViewModel> CBTActivity<VM>.cbtViewModel(): Lazy<VM> 
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return modelClass.newInstance().also {
                 (it as VM).run {
-                    applicationContext = this@cbtViewModel.applicationContext
                     setup()
                 }
             }

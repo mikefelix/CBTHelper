@@ -22,7 +22,7 @@ class AddEntry3Fragment : AddEntryFragment() {
                 }
             }
 
-            thoughts.display(viewModel.thoughtsValue)
+            thoughts.bindTo(viewModel.thoughtsValue)
 
             textView1.display(viewModel.emotionsChosenSimple) {
                 """What were you thinking that led you to feel ${it?.lowercase(Locale.US) ?: "your emotions"}?"""

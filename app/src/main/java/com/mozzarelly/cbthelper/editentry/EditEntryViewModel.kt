@@ -2,17 +2,14 @@
 
 package com.mozzarelly.cbthelper.editentry
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.mozzarelly.cbthelper.*
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDateTime
 
 class EditEntryViewModel : InterviewViewModel(), EntryModel {
 
-    val dao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
+    val dao by lazy { CBTDatabase.getDatabase().entryDao() }
 
     // Not called
     override fun load(id: Int) {
@@ -22,7 +19,6 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
 
     fun loadNewEntry() {
         viewModelScope.launch {
-            saved.value = false
             dao.deleteIncomplete()
             copyFrom(createAndLoadNew())
             changePage(1)
@@ -32,7 +28,6 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
     fun loadEntryInProgress(){
         viewModelScope.launch {
             val entry = dao.getIncomplete() ?: createAndLoadNew()
-            saved.value = false
             copyFrom(entry)
             changePage(when {
                 situation.isNullOrBlank() -> 1
@@ -48,7 +43,6 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
 
     fun loadEntry(id: Int) {
         viewModelScope.launch {
-            saved.value = false
             copyFrom(dao.get(id) ?: error("Entry $id not found."))
             changePage(1)
         }
@@ -81,10 +75,8 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
     val emotion3Value = MutableLiveData<Emotion?>()
 
     val emotionsChosenSimple = Triple(emotion1Value, emotion2Value, emotion3Value).map { e1, e2, e3 ->
-        emotionTextSimple(e1?.emotion, e2?.emotion, e3?.emotion)
+        listOf(e1, e2, e3).toSimpleText()
     }
-
-    val saved = MutableLiveData<Boolean>(false)
 
     override var complete: Boolean
         get() = completeValue.valueNotNull()
@@ -173,11 +165,9 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
         viewModelScope.launch {
             try {
                 dao.update(Entry.from(this@EditEntryViewModel))
-                saved.value = true
             }
             catch (e: Exception) {
                 e.rethrowIfCancellation()
-                saved.value = false
                 throw e
             }
         }

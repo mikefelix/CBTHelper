@@ -32,7 +32,7 @@ abstract class InterviewViewModel : CBTViewModel(){
     abstract val complete: Boolean
     abstract val title: LiveData<String?>
 
-    val entryDao by lazy { CBTDatabase.getDatabase(applicationContext).entryDao() }
+    val entryDao by lazy { CBTDatabase.getDatabase().entryDao() }
 
     private val changingPageChannel = BroadcastChannel<Pair<Int, Int?>>(Channel.BUFFERED)
     val changingPage = changingPageChannel.asFlow()

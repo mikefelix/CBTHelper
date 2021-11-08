@@ -8,6 +8,7 @@ import com.mozzarelly.cbthelper.R
 import com.mozzarelly.cbthelper.behavior.BehaviorActivity
 import com.mozzarelly.cbthelper.cbtViewModel
 import com.mozzarelly.cbthelper.cogvalid.CogValidActivity
+import com.mozzarelly.cbthelper.databinding.FragmentAnalyzeSummaryBinding
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
 import com.mozzarelly.cbthelper.observe
 import com.mozzarelly.cbthelper.replacement.ReplacementThoughtsActivity
@@ -19,59 +20,18 @@ class AnalyzeActivity : CBTActivity<AnalyzeViewModel>() {
 
     override val viewModel: AnalyzeViewModel by cbtViewModel()
 
-    var stage = Stage.Begun
-        set(value){
-            if (field != value) {
-                when (value) {
-                    Stage.BehaviorComplete -> {
-//                        title = "Behavior"
-                        show(AnalyzeBehaviorSummaryFragment())
-                    }
-                    Stage.BehaviorPartial -> {
-                        start<BehaviorActivity>(viewModel.id)
-                    }
-                    Stage.RatRepComplete -> {
-//                        title = "Replacement Thoughts"
-                        show(AnalyzeRatRepSummaryFragment())
-                    }
-                    Stage.RatRepPartial -> {
-                        start<ReplacementThoughtsActivity>(viewModel.id)
-                    }
-                    Stage.CogValComplete -> {
-//                        title = "Cognition Validity"
-                        show(AnalyzeCogValidSummaryFragment())
-                    }
-                    Stage.CogValPartial -> {
-                        start<CogValidActivity>(viewModel.id)
-                    }
-                    Stage.EntryComplete -> {
-//                        title = "Analyze Entry"
-                        show(AnalyzeEntrySummaryFragment())
-                    }
-                    Stage.EntryPartial -> {
-                        start<AddEntryActivity>(viewModel.id)
-                    }
-                    Stage.Begun -> {
-                        start<AddEntryActivity>(viewModel.id)
-                    }
-                }
-
-                field = value
-            }
-        }
-
     override val onReturnFrom: Map<KClass<*>, (Int) -> Unit> = mapOf(
         BehaviorActivity::class to {
             snackbar(if (it >= 0) "Behavior analysis saved." else "Behavior analysis could not be saved.")
-            viewModel.stage.value?.let { stage = it }
+//            viewModel.stage.value?.let { stage = it }
         },
         ReplacementThoughtsActivity::class to {
             snackbar(if (it >= 0) "Replacement thoughts results saved." else "Replacement thoughts results could not be saved.")
-            viewModel.stage.value?.let { stage = it }
+//            viewModel.stage.value?.let { stage = it }
         },
         CogValidActivity::class to {
             snackbar(if (it >= 0) "Cognition validity results saved." else "Cognition validity results could not be saved.")
-            viewModel.stage.value?.let { stage = it }
+//            viewModel.stage.value?.let { stage = it }
         }
     )
 
@@ -83,10 +43,46 @@ class AnalyzeActivity : CBTActivity<AnalyzeViewModel>() {
         super.onCreate(savedInstanceState)
 
         title = "Analyze"
+        viewModel.id = getIdExtra()
 
+        show(AnalyzeSummaryFragment())
+/*
         observe(viewModel.stage){
-            it?.let { stage = it }
+            when (it) {
+                Stage.BehaviorComplete -> {
+//                        title = "Behavior"
+                    show(AnalyzeBehaviorSummaryFragment())
+                }
+                Stage.BehaviorPartial -> {
+                    start<BehaviorActivity>(viewModel.id)
+                }
+                Stage.RatRepComplete -> {
+//                        title = "Replacement Thoughts"
+                    show(AnalyzeRatRepSummaryFragment())
+                }
+                Stage.RatRepPartial -> {
+                    start<ReplacementThoughtsActivity>(viewModel.id)
+                }
+                Stage.CogValComplete -> {
+//                        title = "Cognition Validity"
+                    show(AnalyzeCogValidSummaryFragment())
+                }
+                Stage.CogValPartial -> {
+                    start<CogValidActivity>(viewModel.id)
+                }
+                Stage.EntryComplete -> {
+//                        title = "Analyze Entry"
+                    show(AnalyzeEntrySummaryFragment())
+                }
+                Stage.EntryPartial -> {
+                    start<AddEntryActivity>(viewModel.id)
+                }
+                Stage.Begun -> {
+                    start<AddEntryActivity>(viewModel.id)
+                }
+            }
         }
+*/
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -283,9 +283,9 @@ fun intentToSendReminderNotification(context: Context, title: String?, message: 
     PendingIntent.FLAG_UPDATE_CURRENT
 )
 
-fun emotionTextSimple(vararg emotions: Emotion?): String? = emotionTextSimple(*emotions.map { it?.emotion }.toTypedArray())
+fun List<Emotion?>.toSimpleText(): String? = emotionTextSimple(mapNotNull { it?.emotion })
 
-fun emotionTextSimple(vararg emotions: String?): String? = with (emotions.filterNotNull()){
+fun emotionTextSimple(emotions: List<String>): String? = with (emotions){
     when (size){
         0 -> null
         1 -> get(0)
@@ -381,16 +381,23 @@ fun KClass<*>.requestCode() = (hashCode() and 0x0000ffff).also { println("reques
 
 fun <V : CBTViewModel> CBTActivity<V>.showSavedEntryDialog(id: Int){
     AlertDialog.Builder(this).apply {
-        if (id >= 0) {
-            setTitle("Entry saved")
-            setMessage("Your entry has been recorded. Would you like to analyze it now or later?")
-            setNegativeButton("Analyze later"){ dialog, _ -> dialog.dismiss() }
-            setPositiveButton("Analyze now") { _, _ -> start<AnalyzeActivity>(id) }
-        }
-        else {
-            setTitle(if (id >= 0) "Entry saved" else "Entry not saved!")
-            setMessage(if (id >= 0) "Your entry has been recorded. Would you like to analyze it now or later?" else "Something went wrong. Your entry could not be saved.")
-            setNegativeButton("OK"){ dialog, _ -> dialog.dismiss() }
+        when {
+            id > 0 -> {
+                setTitle("Entry saved")
+                setMessage("Your entry has been recorded. Would you like to analyze it now or later?")
+                setNegativeButton("Analyze later") { dialog, _ -> dialog.dismiss() }
+                setPositiveButton("Analyze now") { _, _ -> start<AnalyzeActivity>(id) }
+            }
+            id < 0 -> {
+                setTitle("Entry not saved!")
+                setMessage("Something went wrong. Your entry could not be saved.")
+                setNegativeButton("OK") { dialog, _ -> dialog.dismiss() }
+            }
+            else -> {
+                setTitle("Entry saved")
+                setMessage("Your entry in progress has been saved and can be continued later.")
+                setNegativeButton("OK") { dialog, _ -> dialog.dismiss() }
+            }
         }
 
         show()

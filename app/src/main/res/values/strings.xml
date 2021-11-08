@@ -121,9 +121,9 @@
     <string name="validitySummary1Rational">It appears that your thoughts about this %1$s may have been rational. The test identified no thinking errors.</string>
     <string name="validitySummary2">Thinking errors identified:</string>
     <string name="validitySummary3Irrational">Having thinking errors means there is room to improve your emotional health. Let’s explore how this can happen. First, let’s try replacing your irrational thoughts with a more rational way of thinking.</string>
-    <string name="validitySummary3Rational">You may have made thinking errors which were not identifiable by this test, but let’s suppose you didn’t. Let’s assume that your thoughts were fully rational and therefore led to a healthy emotional experience. This means the %1$s you felt in this situation was likely healthy.</string>
+    <string name="validitySummary3Rational">You may have made thinking errors which were not identifiable by this test, but let’s suppose you didn’t. Let’s assume that your thoughts were fully rational and therefore led to a healthy emotional experience. This means the feelings of %1$s you felt in this situation %2$s likely healthy. Congratulations!</string>
     <string name="validitySummary4Irrational">Do You Want to Improve?</string>
-    <string name="validitySummary4Rational">Congratulations! But wait! What if the emotion you felt was not positive? How can it be healthy to feel negative emotions?</string>
+    <string name="validitySummary4Rational">But wait! What if the emotion you felt was not positive? How can it be healthy to feel negative emotions?</string>
     <string name="validitySummary5Irrational">Let’s explore how you could have been healthier. Let’s first try replace the irrational thoughts that you had with a more rational way of thinking.</string>
     <string name="validitySummary5Rational">Okay, let’s move on. Let’s examine the way you expressed what you felt.</string>
     <string name="validitySummary5">Let’s explore how you could have been healthier. Let’s first try replace the irrational thoughts that you had with a more rational way of thinking.</string>

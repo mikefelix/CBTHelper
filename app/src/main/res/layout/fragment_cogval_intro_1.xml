@@ -63,7 +63,6 @@
             android:id="@+id/nextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:text="@string/begin_test"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
@@ -94,7 +93,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rational"
-                android:padding="16dp"
                 android:layout_gravity="top"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="32dp"
@@ -107,7 +105,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_marginTop="16dp"
-                android:padding="16dp"
                 android:text="@string/irrational"
                 tools:ignore="ButtonStyle" />
 

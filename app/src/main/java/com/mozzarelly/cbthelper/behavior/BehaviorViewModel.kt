@@ -10,9 +10,9 @@ import kotlinx.coroutines.launch
 
 class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
 
-    private val behaviorDao by lazy { CBTDatabase.getDatabase(applicationContext).behaviorDao() }
-    private val cogValDao by lazy { CBTDatabase.getDatabase(applicationContext).cogValidDao() }
-    private val ratRepDao by lazy { CBTDatabase.getDatabase(applicationContext).ratRepDao() }
+    private val behaviorDao by lazy { CBTDatabase.getDatabase().behaviorDao() }
+    private val cogValDao by lazy { CBTDatabase.getDatabase().cogValidDao() }
+    private val ratRepDao by lazy { CBTDatabase.getDatabase().ratRepDao() }
 
     val reacted = MutableLiveData<String?>()
     val situationType = MutableLiveData<String>()
@@ -24,7 +24,10 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
     val replacedThoughts = MutableLiveData<String?>()
 
     override val title: LiveData<String?> = page.map {
-        "Behavior - ${it.first}/$numPages"
+        when (it.first) {
+            1 -> "Behavior"
+            else -> "Behavior - ${it.first - 1}/${numPages - 1}"
+        }
     }
 
     override var honest: Int?
@@ -99,7 +102,7 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
             entryDao.getFlow(id).collect { entry ->
                 entry ?: return@collect
                 reacted.value = entry.relationships
-                situationType.value = if (entry.situationType) "situation" else "conversation"
+                situationType.value = entry.situationTypeText
                 feltEmotions.value = entry.emotionStringWithNewlines ?: "the emotions you felt"
                 feltEmotionsSimple.value = entry.simpleEmotionString?.lowercase() ?: "the emotions you felt"
                 expression.value = entry.expression ?: "[text not found]"
@@ -110,7 +113,7 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
         viewModelScope.launch {
             (entryDao.get(id) ?: error("Can't find entry $id")).let { entry ->
                 reacted.value = entry.relationships
-                situationType.value = if (entry.situationType) "situation" else "conversation"
+                situationType.value = entry.situationTypeText
                 feltEmotions.value = entry.emotionStringWithNewlines ?: "the emotions you felt"
                 feltEmotionsSimple.value = entry.simpleEmotionString?.lowercase() ?: "the emotions you felt"
                 expression.value = entry.expression ?: "[text not found]"

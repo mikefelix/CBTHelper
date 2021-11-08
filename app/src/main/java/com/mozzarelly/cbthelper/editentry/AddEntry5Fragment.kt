@@ -22,7 +22,7 @@ class AddEntry5Fragment : AddEntryFragment() {
                 }
             }
 
-            relationships.display(viewModel.relationshipsValue)
+            relationships.bindTo(viewModel.relationshipsValue)
 
             textView1.display(getString(if (viewModel.bottled)
                 R.string.relationshipsQuestionBottled

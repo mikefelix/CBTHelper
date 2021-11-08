@@ -25,7 +25,7 @@ class AddEntry4Fragment : AddEntryFragment() {
                 }
             }
 
-            expression.display(viewModel.expressionValue)
+            expression.bindTo(viewModel.expressionValue)
 
             bottledCheck.bindTo(viewModel.bottledValue)
 

@@ -34,8 +34,8 @@ class AddEntry1Fragment : AddEntryFragment() {
                     textView2.display(R.string.conversationQuestion)
             }
 
-            situationDesc.display(viewModel.situationValue)
-            whoWhere.display(viewModel.whoWhereValue)
+            situationDesc.bindTo(viewModel.situationValue)
+            whoWhere.bindTo(viewModel.whoWhereValue)
 
             viewLifecycleOwner.observe(viewModel.situationTypeValue) {
                 if (it)

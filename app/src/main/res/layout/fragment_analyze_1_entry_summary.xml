@@ -99,11 +99,10 @@
             tools:ignore="HardcodedText"
             />
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/testButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:text="@string/begin_cognition_validity_test"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
@@ -127,12 +126,11 @@
             tools:ignore="HardcodedText"
             />
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/skipRationalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rational"
-            android:padding="16dp"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
             app:layout_constraintHorizontal_chainStyle="spread"
@@ -141,11 +139,10 @@
             app:layout_constraintEnd_toStartOf="@id/skipIrrationalButton"
             />
 
-        <Button
+        <Button android:theme="@style/ButtonStyle"
             android:id="@+id/skipIrrationalButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:text="@string/irrational"
             app:layout_constraintTop_toTopOf="@id/skipRationalButton"
             app:layout_constraintStart_toEndOf="@id/skipRationalButton"

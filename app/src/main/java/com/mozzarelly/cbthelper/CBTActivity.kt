@@ -24,18 +24,19 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 
+/*
     val viewModelProvider: ViewModelProvider.NewInstanceFactory = object: ViewModelProvider.NewInstanceFactory() {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return modelClass.newInstance().also {
                 (it as V).run {
-//                    applicationContext = this@CBTActivity.applicationContext
-                    applicationContext = application.applicationContext
+//                    applicationContext = application.applicationContext
                     setup()
                 }
             }
         }
     }
+*/
 
     open val onReturnFrom = mapOf<KClass<*>, (Int) -> Unit>(
 

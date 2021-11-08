@@ -69,6 +69,9 @@ interface CogValidDao {
     @Query("SELECT * FROM cogvalid WHERE id = :id")
     fun getAsync(id: Int): LiveData<CogValid?>
 
+    @Query("SELECT * FROM cogvalid WHERE id = :id")
+    fun getFlow(id: Int): Flow<CogValid?>
+
     @Insert(entity = CogValid::class)
     suspend fun create(model: CogValid): Long
 
@@ -89,6 +92,9 @@ interface RatRepDao {
     @Query("SELECT * FROM ratrep WHERE id = :id")
     fun getAsync(id: Int): LiveData<RatRep?>
 
+    @Query("SELECT * FROM ratrep WHERE id = :id")
+    fun getFlow(id: Int): Flow<RatRep?>
+
     @Insert(entity = RatRep::class)
     suspend fun create(model: RatRep): Long
 
@@ -108,6 +114,9 @@ interface BehaviorDao {
 
     @Query("SELECT * FROM behavior WHERE id = :id")
     fun getAsync(id: Int): LiveData<Behavior?>
+
+    @Query("SELECT * FROM behavior WHERE id = :id")
+    fun getFlow(id: Int): Flow<Behavior?>
 
     @Insert(entity = Behavior::class)
     suspend fun create(model: Behavior): Long
@@ -136,6 +145,10 @@ abstract class CBTDatabase : RoomDatabase() {
             return instance ?: synchronized(this) {
                 instance ?: buildDatabase(context).also { instance = it }
             }
+        }
+
+        fun getDatabase(): CBTDatabase {
+            return instance ?: error("Database not initialized! Pass a context first.")
         }
 
         fun getEntryDao(context: Context): EntryDao = getDatabase(context).entryDao()
@@ -188,7 +201,7 @@ abstract class CBTDatabase : RoomDatabase() {
             override suspend fun doWork(): Result = coroutineScope {
                 try {
                     if (BuildConfig.DEBUG) {
-                        CBTDatabase.getDatabase(context).populateSampleData()
+                        getDatabase(context).populateSampleData()
                     }
 
                     Result.success()
@@ -445,15 +458,11 @@ abstract class CBTDatabase : RoomDatabase() {
 
     }
 
-    suspend fun Context.clean(addSampleData: Boolean = false){
-        behaviorDao().deleteAll()
-        ratRepDao().deleteAll()
-        cogValidDao().deleteAll()
-        entryDao().deleteAll()
+    suspend fun clean(addSampleData: Boolean = false){
+        clearAllTables()
 
         if (addSampleData){
-            val request = OneTimeWorkRequestBuilder<PopulateDatabaseWorker>().build()
-            WorkManager.getInstance(this).enqueue(request)
+            populateSampleData()
         }
     }
 

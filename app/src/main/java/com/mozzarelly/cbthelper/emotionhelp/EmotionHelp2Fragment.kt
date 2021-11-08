@@ -4,12 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mozzarelly.cbthelper.R
-import com.mozzarelly.cbthelper.RESULT_EXIT_TO_MAIN
+import com.mozzarelly.cbthelper.*
 import com.mozzarelly.cbthelper.databinding.FragmentEmhelp2Binding
 import com.mozzarelly.cbthelper.databinding.FragmentEmhelpBeliefsAnalysisPopupBinding
-import com.mozzarelly.cbthelper.emotionTextSimple
-import com.mozzarelly.cbthelper.makeBulletedList
 
 class EmotionHelp2Fragment : EmotionHelpFragment(){
 
@@ -33,9 +30,11 @@ class EmotionHelp2Fragment : EmotionHelpFragment(){
                 }
             }
 
-            question.display(R.string.emhelp2Question,
-                emotionTextSimple(viewModel.desiredEmotion.value)?.lowercase() ?: "that emotion",
-                viewModel.situationType.value ?: "situation")
+            observe(viewModel.desiredEmotion, viewModel.situationType){ emotion, type ->
+                question.display(R.string.emhelp2Question,
+                    emotion?.emotion?.lowercase() ?: "that emotion",
+                    type ?: "situation")
+            }
 
             answer.bindTo(viewModel.thinkAndBelieve)
         }.root

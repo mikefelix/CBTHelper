@@ -7,8 +7,8 @@ import com.mozzarelly.cbthelper.*
 import kotlinx.coroutines.launch
 
 class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
-    private val cogValidDao by lazy { CBTDatabase.getDatabase(applicationContext).cogValidDao() }
-    private val ratRepDao by lazy { CBTDatabase.getDatabase(applicationContext).ratRepDao() }
+    private val cogValidDao by lazy { CBTDatabase.getDatabase().cogValidDao() }
+    private val ratRepDao by lazy { CBTDatabase.getDatabase().ratRepDao() }
 
     val thinkingErrors = MutableLiveData<String?>()
     val situation = MutableLiveData<String?>()
@@ -22,7 +22,7 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
     val emotion3Value = MutableLiveData<Emotion?>()
 
     val insteadFelt = Triple(emotion1Value, emotion2Value, emotion3Value).map { e1, e2, e3 ->
-        emotionTextSimple(e1?.emotion, e2?.emotion, e3?.emotion)
+        listOf(e1, e2, e3).toSimpleText()
     }
 
     override var emotion1Name: String?
@@ -134,7 +134,7 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
             (entryDao.get(id) ?: error("Can't find entry $id")).let {
                 thoughts.value = it.thoughts
                 situation.value = it.situation
-                situationType.value = if (it.situationType) "situation" else "conversation"
+                situationType.value = it.situationTypeText
                 actualEmotionText.value = emotionText(it.emotion1, it.emotion2, it.emotion3)
             }
         }

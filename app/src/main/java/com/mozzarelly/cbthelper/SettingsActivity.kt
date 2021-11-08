@@ -6,9 +6,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -58,10 +61,19 @@ class SettingsActivity : AppCompatActivity() {
                         .setMessage("Delete all saved entries and analyses? Cannot be undone.")
                         .setNegativeButton(R.string.cancel) { dialog, _ -> dialog.dismiss() }
                         .setPositiveButton(R.string.ok) { dialog, _ ->
-//                            lifecycleScope.launch {
-                                CBTDatabase.getDatabase(requireContext()).clearAllTables()
+                            lifecycleScope.launch(Dispatchers.IO) {
+                                CBTDatabase.getDatabase(requireContext()).clean()
                                 dialog.dismiss()
-//                            }
+                            }
+                        }.apply {
+                            if (BuildConfig.DEBUG){
+                                setNeutralButton("Repop"){ dialog, _ ->
+                                    lifecycleScope.launch(Dispatchers.IO) {
+                                        CBTDatabase.getDatabase(requireContext()).clean(true)
+                                        dialog.dismiss()
+                                    }
+                                }
+                            }
                         }
                         .show()
 

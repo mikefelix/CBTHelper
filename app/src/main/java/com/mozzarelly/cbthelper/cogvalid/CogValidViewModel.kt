@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class CogValidViewModel : InterviewViewModel(), CogValidModel {
 
-    private val cogValidDao by lazy { CBTDatabase.getDatabase(applicationContext).cogValidDao() }
+    private val cogValidDao by lazy { CBTDatabase.getDatabase().cogValidDao() }
 
     override fun load(id: Int) {
         this.id = id

@@ -9,6 +9,8 @@ interface Model {
     val id: Int
     val started: Boolean
     val complete: Boolean
+
+    fun textSummary(): String
 }
 
 interface EntryModel : Model {
@@ -31,25 +33,25 @@ interface EntryModel : Model {
     var bottled: Boolean
     var marked: Boolean
 
-    fun copyFrom(model: EntryModel) {
-        id = model.id
-        situation = model.situation
-        emotion1Name = model.emotion1Name
-        emotion2Name = model.emotion2Name
-        emotion3Name = model.emotion3Name
-        emotion1Intensity = model.emotion1Intensity
-        emotion2Intensity = model.emotion2Intensity
-        emotion3Intensity = model.emotion3Intensity
-        complete = model.complete
-        date = model.date
-        situationType = model.situationType
-        whoWhere = model.whoWhere
-        thoughts = model.thoughts
-        assumptions = model.assumptions
-        expression = model.expression
-        relationships = model.relationships
-        bottled = model.bottled
-        marked = model.marked
+    fun copyFrom(model: EntryModel?) {
+        id = model?.id ?: 0
+        situation = model?.situation
+        emotion1Name = model?.emotion1Name
+        emotion2Name = model?.emotion2Name
+        emotion3Name = model?.emotion3Name
+        emotion1Intensity = model?.emotion1Intensity
+        emotion2Intensity = model?.emotion2Intensity
+        emotion3Intensity = model?.emotion3Intensity
+        complete = model?.complete ?: false
+        date = model?.date ?: LocalDateTime.now()
+        situationType = model?.situationType ?: true
+        whoWhere = model?.whoWhere
+        thoughts = model?.thoughts
+        assumptions = model?.assumptions
+        expression = model?.expression
+        relationships = model?.relationships
+        bottled = model?.bottled ?: false
+        marked = model?.marked ?: false
     }
 
     val emotion1 get() = emotion1Name?.let { Emotion(it, emotion1Intensity ?: 6) }
@@ -59,10 +61,19 @@ interface EntryModel : Model {
     val emotions get() = listOfNotNull(emotion1, emotion2, emotion3)
     val emotionString get() = emotionText(emotion1, emotion2, emotion3)
     val emotionStringWithNewlines get() = emotionText(emotion1, emotion2, emotion3, delimiter1 = "\n", delimiter2 = "\n")
-    val simpleEmotionString get() = emotionTextSimple(emotion1, emotion2, emotion3)
+    val simpleEmotionString get() = emotions.toSimpleText()
+
+    val situationTypeText: String
+        get() = if (situationType) "situation" else "conversation"
 
     override val started: Boolean
         get() = situation != null
+
+    override fun textSummary(): String = """
+        You described a $situationTypeText in which you felt $emotionString:
+        
+        “$situation”
+    """.trimIndent()
 }
 
 @Entity
@@ -177,13 +188,14 @@ interface CogValidModel : Model{
             "Overshoulding".takeIf { answer7 in 1..3 },
             "Confusing wanting and needing".takeIf { answer7 == 4 },
             "Confusing needing and deserving".takeIf { answer7 == 5 },
-            "Cognitive dissonance".takeIf { answer9 == 2 }
+            "Cognitive dissonance".takeIf { answer9 == 1 }
         )
     }
 
     val isRational: Boolean
         get() = errors().isEmpty()
 
+    override fun textSummary(): String = if (isRational) "No errors found." else "Errors found:\n\n" + errors().joinToString("\n")
 }
 
 @Entity
@@ -254,11 +266,21 @@ interface RatRepModel : Model {
     val emotion2 get() = emotion2Name?.let { Emotion(it, emotion2Intensity ?: 6) }
     val emotion3 get() = emotion3Name?.let { Emotion(it, emotion3Intensity ?: 6) }
 
+    val emotionString get() = emotionText(emotion1, emotion2, emotion3)
+    val emotions get() = listOfNotNull(emotion1, emotion2, emotion3)
+    val simpleEmotionString get() = emotions.toSimpleText()
+
     override val complete: Boolean
         get() = comparison != null
 
     override val started: Boolean
         get() = thinkInstead != null
+
+    override fun textSummary(): String = """
+        You discovered that you could have instead thought: “$thinkInstead”
+        
+        This would likely have helped you feel: $emotionString 
+    """.trimIndent()
 }
 
 @Entity
@@ -296,9 +318,6 @@ data class RatRep(
         fun new(id: Int): RatRep = RatRep(id)
     }
 
-    val emotions get() = listOfNotNull(emotion1, emotion2, emotion3)
-    val emotionString get() = emotionText(emotion1, emotion2, emotion3)
-    val simpleEmotionString get() = emotionTextSimple(emotion1, emotion2, emotion3)
 }
 
 interface BehaviorModel : Model {
@@ -348,6 +367,8 @@ interface BehaviorModel : Model {
 
     val isRational: Boolean
         get() = errors().isEmpty()
+
+    override fun textSummary(): String = if (isRational) "No errors found." else "Errors found:\n\n" + errors().joinToString("\n")
 }
 
 @Entity

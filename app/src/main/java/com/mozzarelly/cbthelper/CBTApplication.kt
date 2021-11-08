@@ -12,6 +12,8 @@ class CBTApplication : android.app.Application() {
         super.onCreate()
         AndroidThreeTen.init(this)
 
+        CBTDatabase.getDatabase(this)
+
         val prefs = getSharedPreferences("settings", Context.MODE_PRIVATE) ?: error("Can't get prefs.")
         val dark = prefs.getOrInit("dark"){
             (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES

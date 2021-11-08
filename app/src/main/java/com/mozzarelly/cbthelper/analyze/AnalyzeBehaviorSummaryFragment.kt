@@ -29,7 +29,7 @@ class AnalyzeBehaviorSummaryFragment : CBTFragment() {
             emotions.display(viewModel.emotionsFelt)
 
             observe(viewModel.thinkingErrors) {
-                if (it.isEmpty()) {
+                if (it.isNullOrEmpty()) {
                     text5.display("You identified your thoughts and beliefs as rational, which means feeling ${viewModel.emotionsFeltSimple.value ?: "what you felt"} was emotionally healthy, even if it may not be exactly what you would prefer to feel. Good job.")
                     thinkingErrors.visibility = View.GONE
                     text6.visibility = View.GONE
@@ -56,7 +56,7 @@ class AnalyzeBehaviorSummaryFragment : CBTFragment() {
             relationships.display(viewModel.relationships)
 
             observe(viewModel.behavingErrors){
-                if (it.isEmpty()){
+                if (it.isNullOrEmpty()){
                     text12.display("You have identified your words and actions as rational, which is foundational for healthy relationships, even though you noted that in this instance the other people involved acted irrationally.")
                     behaviorErrors.visibility = View.GONE
                     text13.visibility = View.GONE

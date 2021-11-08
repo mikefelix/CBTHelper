@@ -86,7 +86,7 @@ inline fun <T: Any?, R> LiveData<T?>.mapValue(crossinline convert: (T) -> R?): L
  *
  * @param convert A function to convert (A, B) to R.
  */
- fun <A, B, R> Pair<LiveData<A>, LiveData<B>>.map(convert: (A?, B?) -> R): LiveData<R> = MediatorLiveData<R>().apply {
+ fun <A: Any?, B: Any?, R> Pair<LiveData<A>, LiveData<B>>.map(convert: (A?, B?) -> R): LiveData<R> = MediatorLiveData<R>().apply {
     val update: Function0<Unit> = {
         val a = first.value
         val b = second.value
@@ -180,25 +180,25 @@ inline fun <reified A, reified B, reified C, R> Triple<LiveData<A>, LiveData<B>,
     }
 }
 
-inline fun <reified A, reified B> observe(a: LiveData<A>, b: LiveData<B>, crossinline handler: (A?, B?) -> Unit) {
-    a.observeForever {
+inline fun <reified A, reified B> LifecycleOwner.observe(a: LiveData<A>, b: LiveData<B>, crossinline handler: (A?, B?) -> Unit) {
+    a.observe(this, Observer {
         handler(a.value, b.value)
-    }
-    b.observeForever {
+    })
+    b.observe(this, Observer {
         handler(a.value, b.value)
-    }
+    })
 }
 
-inline fun <reified A, reified B, reified C> observe(a: LiveData<A>, b: LiveData<B>, c: LiveData<C>, crossinline handler: (A?, B?, C?) -> Unit) {
-    a.observeForever {
+inline fun <reified A, reified B, reified C> LifecycleOwner.observe(a: LiveData<A>, b: LiveData<B>, c: LiveData<C>, crossinline handler: (A?, B?, C?) -> Unit) {
+    a.observe(this, Observer {
         handler(a.value, b.value, c.value)
-    }
-    b.observeForever {
+    })
+    b.observe(this, Observer {
         handler(a.value, b.value, c.value)
-    }
-    c.observeForever {
+    })
+    c.observe(this, Observer {
         handler(a.value, b.value, c.value)
-    }
+    })
 }
 
 
