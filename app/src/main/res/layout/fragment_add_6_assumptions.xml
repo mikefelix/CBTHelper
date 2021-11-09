@@ -33,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/textView1"
+                app:layout_constraintBottom_toTopOf="@id/question"
                 app:layout_constraintVertical_chainStyle="spread_inside"
                 android:visibility="gone"
                 tools:ignore="HardcodedText"
