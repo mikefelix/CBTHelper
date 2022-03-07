@@ -109,10 +109,9 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
         "Replacement Thoughts - ${it.first}/$numPages"
     }
 
-    override fun save() {
-        viewModelScope.launch {
-            ratRepDao.update(RatRep.from(this@ReplacementThoughtsViewModel))
-        }
+    override suspend fun saveAsync(): SaveResult {
+        ratRepDao.update(RatRep.from(this@ReplacementThoughtsViewModel))
+        return if (complete) SaveResult.SavedComplete(id) else SaveResult.SavedPartial(id)
     }
 
     override fun load(id: Int) {

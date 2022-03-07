@@ -19,48 +19,56 @@
 
         <activity
             android:name=".emotionhelp.EmotionHelpActivity"
+            android:exported="false"
             android:label="@string/title_activity_view_entries"
             android:theme="@style/AppTheme.NoActionBar"
             />
 
         <activity
             android:name=".SettingsActivity"
+            android:exported="false"
             android:label="@string/title_activity_settings"
             android:theme="@style/AppTheme.NoActionBar"
             />
 
         <activity
             android:name=".editentry.AddEntryActivity"
+            android:exported="false"
             android:label="@string/title_activity_add_entry"
             android:theme="@style/AppTheme.NoActionBar"
             />
 
         <activity
             android:name=".analyze.AnalyzeActivity"
+            android:exported="false"
             android:label="@string/title_activity_analyze_entry"
             android:theme="@style/AppTheme.NoActionBar"
             />
 
         <activity
             android:name=".cogvalid.CogValidActivity"
+            android:exported="false"
             android:label="@string/title_cogvalid_activity"
             android:theme="@style/AppTheme.NoActionBar"
             />
 
         <activity
             android:name=".replacement.ReplacementThoughtsActivity"
+            android:exported="false"
             android:label="@string/title_ratrep_activity"
             android:theme="@style/AppTheme.NoActionBar"
             />
 
         <activity
             android:name=".behavior.BehaviorActivity"
+            android:exported="false"
             android:label="@string/title_ratrep_activity"
             android:theme="@style/AppTheme.NoActionBar"
             />
 
         <activity android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

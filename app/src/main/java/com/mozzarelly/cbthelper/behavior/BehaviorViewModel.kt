@@ -4,6 +4,8 @@ package com.mozzarelly.cbthelper.behavior
 
 import androidx.lifecycle.*
 import com.mozzarelly.cbthelper.*
+import com.mozzarelly.cbthelper.SaveResult.SavedComplete
+import com.mozzarelly.cbthelper.SaveResult.SavedPartial
 import com.mozzarelly.cbthelper.map
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -151,10 +153,9 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
         }
     }
 
-    override fun save() {
-        viewModelScope.launch {
-            behaviorDao.update(Behavior.from(this@BehaviorViewModel))
-        }
+    override suspend fun saveAsync(): SaveResult {
+        behaviorDao.update(Behavior.from(this@BehaviorViewModel))
+        return if (complete) SavedComplete(id) else SavedPartial(id)
     }
 
     override val complete

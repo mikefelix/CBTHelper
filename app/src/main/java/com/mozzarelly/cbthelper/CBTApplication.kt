@@ -5,7 +5,7 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatDelegate
 import com.jakewharton.threetenabp.AndroidThreeTen
 
-
+@Suppress("unused") // It's not, check the manifest.
 class CBTApplication : android.app.Application() {
 
     override fun onCreate() {

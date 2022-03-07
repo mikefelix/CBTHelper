@@ -17,6 +17,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mozzarelly.cbthelper.databinding.PopupBinding
 
@@ -189,7 +190,13 @@ abstract class CBTFragment : Fragment() {
                 heading.display(headingText)
                 text.display(explanation)
                 done.setOnClickListener { dismiss() }
-            }.root)
+            }.root.also {
+                BottomSheetBehavior.from(it).run {
+                    isDraggable = false
+                    skipCollapsed = true
+                    state = BottomSheetBehavior.STATE_EXPANDED
+                }
+            })
 
             show()
         }

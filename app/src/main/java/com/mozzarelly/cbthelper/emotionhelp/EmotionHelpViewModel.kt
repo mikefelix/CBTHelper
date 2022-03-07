@@ -2,10 +2,8 @@ package com.mozzarelly.cbthelper.emotionhelp
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.mozzarelly.cbthelper.CBTDatabase
-import com.mozzarelly.cbthelper.Emotion
-import com.mozzarelly.cbthelper.InterviewViewModel
-import com.mozzarelly.cbthelper.emotionText
+import com.mozzarelly.cbthelper.*
+import com.mozzarelly.cbthelper.SaveResult.NoChange
 import kotlinx.coroutines.launch
 
 class EmotionHelpViewModel : InterviewViewModel() {
@@ -23,8 +21,7 @@ class EmotionHelpViewModel : InterviewViewModel() {
 
     override val title = MutableLiveData("Emotion help")
 
-    override fun save() {
-    }
+    override suspend fun saveAsync(): SaveResult = NoChange
 
     override fun load(id: Int){
         this.id = id

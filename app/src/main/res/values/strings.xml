@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CBT Helper</string>
+    <string name="app_name">CBT Patient Guide</string>
     <string name="title_activity_add_entry">Add an Entry</string>
     <string name="title_activity_analyze_entry">Analyze an Entry</string>
     <string name="action_settings">Settings</string>
@@ -7,7 +7,7 @@
     <string name="action_delete">Delete all data</string>
     <string name="action_reminder">Reminder time</string>
     <string name="title_activity_settings">SettingsActivity</string>
-    <string name="welcome_message">Welcome to CBT Helper!</string>
+    <string name="welcome_message">Welcome to CBT Patient Guide!</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

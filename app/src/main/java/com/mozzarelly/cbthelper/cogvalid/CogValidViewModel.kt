@@ -57,10 +57,9 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
         save()
     }
 
-    override fun save() {
-        viewModelScope.launch {
-            cogValidDao.update(CogValid.from(this@CogValidViewModel))
-        }
+    override suspend fun saveAsync(): SaveResult {
+        cogValidDao.update(CogValid.from(this@CogValidViewModel))
+        return if (complete) SaveResult.SavedComplete(id) else SaveResult.SavedPartial(id)
     }
 
     override val complete

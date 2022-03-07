@@ -4,8 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
 const val RESULT_EXIT_TO_MAIN = 733
@@ -38,7 +40,7 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
     }
 */
 
-    open val onReturnFrom = mapOf<KClass<*>, (Int) -> Unit>(
+    open val onReturnFrom = mapOf<KClass<*>, (SaveResult) -> Unit>(
 
     )
 
@@ -59,7 +61,8 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
         }
         else {
             println("Invoke return handler for requestCode $requestCode")
-            function.invoke(resultCode)
+            val result = SaveResult.from(resultCode)
+            function.invoke(result)
         }
     }
 
@@ -116,6 +119,18 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
         supportFragmentManager.runTx {
             replace(R.id.contentFragment, fragment)
             title = fragment.title
+        }
+    }
+
+    fun setResult(result: SaveResult){
+        setResult(result.resultCode)
+    }
+
+    protected fun <E> Flow<E>.collectWhileStarted(block: suspend (E) -> Unit){
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                collect(block)
+            }
         }
     }
 }

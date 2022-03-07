@@ -4,6 +4,7 @@ package com.mozzarelly.cbthelper.editentry
 
 import androidx.lifecycle.*
 import com.mozzarelly.cbthelper.*
+import com.mozzarelly.cbthelper.SaveResult.*
 import kotlinx.coroutines.launch
 import org.threeten.bp.LocalDateTime
 
@@ -161,15 +162,23 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
             page?.first?.takeIf { it > 0 }?.let { "Add entry - ${it}/$numPages" } ?: "Add entry"
     }
 
-    override fun save() {
-        viewModelScope.launch {
-            try {
-                dao.update(Entry.from(this@EditEntryViewModel))
+    override suspend fun saveAsync(): SaveResult {
+        return try {
+            when  {
+                situation.isNullOrBlank() -> NoChange
+                complete -> {
+                    dao.update(Entry.from(this@EditEntryViewModel))
+                    SavedComplete(id)
+                }
+                else -> {
+                    dao.update(Entry.from(this@EditEntryViewModel))
+                    SavedPartial(id)
+                }
             }
-            catch (e: Exception) {
-                e.rethrowIfCancellation()
-                throw e
-            }
+        }
+        catch (e: Exception) {
+            e.rethrowIfCancellation()
+            Error(e)
         }
     }
 

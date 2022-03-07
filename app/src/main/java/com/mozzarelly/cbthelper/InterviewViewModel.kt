@@ -9,7 +9,40 @@ import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.launch
-import kotlin.reflect.KClass
+
+sealed class SaveResult() {
+    object NoChange: SaveResult(){
+        override val resultCode: Int = 0
+    }
+
+    class SavedPartial(val id: Int): SaveResult(){
+        override val resultCode: Int = id
+    }
+
+    class SavedComplete(val id: Int): SaveResult(){
+        override val resultCode: Int = id + complete
+    }
+
+    class Error(val e: Throwable?): SaveResult(){
+        override val resultCode: Int = -1
+    }
+
+    val saved: Boolean
+        get() = this is SavedPartial || this is SavedComplete
+
+    abstract val resultCode: Int
+
+    companion object {
+        private const val complete = Int.MAX_VALUE / 2
+
+        fun from(resultCode: Int): SaveResult = when {
+            resultCode == 0 -> NoChange
+            resultCode < 0 -> Error(null)
+            resultCode > complete -> SavedComplete(resultCode - complete)
+            else -> SavedPartial(resultCode)
+        }
+    }
+}
 
 data class LateInt(val int: Int)
 
@@ -40,7 +73,13 @@ abstract class InterviewViewModel : CBTViewModel(){
     val currPage: Int
         get() = page.value?.first ?: 0
 
-    abstract fun save()
+    fun save() {
+        viewModelScope.launch {
+            saveAsync()
+        }
+    }
+
+    abstract suspend fun saveAsync(): SaveResult
     abstract fun load(id: Int)
 
     fun previousPage(){

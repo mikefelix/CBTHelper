@@ -13,12 +13,12 @@ import androidx.annotation.MainThread
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelLazy
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
 import com.mozzarelly.cbthelper.viewentries.EntriesViewModel
 import com.mozzarelly.cbthelper.viewentries.ViewEntriesActivity
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collect
 import kotlin.reflect.KClass
 
 class MainActivity : CBTActivity<EntriesViewModel>() {
@@ -39,16 +39,12 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
 
         findViewById<TextView>(R.id.version).text = "Version " + BuildConfig.VERSION_NAME
 
-        val addButton = findViewById<Button>(R.id.addButton)
-
-        observe(viewModel.incompleteEntry){
-            if (it == null) {
-                addButton.setOnClickListener {
+        viewModel.incompleteEntry.collectWhileStarted {
+            findViewById<Button>(R.id.addButton).setOnClickListener {
+                if (it == null) {
                     start<AddEntryActivity>()
                 }
-            }
-            else {
-                addButton.setOnClickListener {
+                else {
                     presentChoice(R.string.discardConfirmMsg,
                         choice1 = R.string.continueButton,
                         choice2 = R.string.newEntryButton,
@@ -63,24 +59,23 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
             }
         }
 
-        findViewById<Button>(R.id.viewButton).run {
-            observe(viewModel.allEntries){
-                this.visibility = if (visible) View.VISIBLE else View.GONE
-            }
-
-            setOnClickListener {
-                start<ViewEntriesActivity>()
+        viewModel.allEntries.collectWhileStarted {
+            findViewById<Button>(R.id.viewButton).run {
+                visibility = if (it.isNotEmpty()) View.VISIBLE else View.GONE
+                setOnClickListener {
+                    start<ViewEntriesActivity>()
+                }
             }
         }
     }
 
-    override val onReturnFrom = mapOf<KClass<*>, (Int) -> Unit>(
+    override val onReturnFrom = mapOf<KClass<*>, (SaveResult) -> Unit>(
         AddEntryActivity::class to { result ->
             showSavedEntryDialog(result)
         }
     )
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }

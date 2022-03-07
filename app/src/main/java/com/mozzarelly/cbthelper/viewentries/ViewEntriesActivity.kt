@@ -35,7 +35,22 @@ class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
         title = "Your entries"
 
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
-            start<AddEntryActivity>("forceNew" to "true")
+            val act = this
+            if (act.viewModel.incompleteEntry.value == null){
+                start<AddEntryActivity>()
+            }
+            else {
+                presentChoice(R.string.discardConfirmMsg,
+                    choice1 = R.string.continueButton,
+                    choice2 = R.string.newEntryButton,
+                    choice1Action = {
+                        start<AddEntryActivity>()
+                    },
+                    choice2Action = {
+                        start<AddEntryActivity>("forceNew" to "true")
+                    }
+                )
+            }
         }
 
         entriesAdapter = EntryAdapter().apply {
@@ -62,13 +77,13 @@ class ViewEntriesActivity : CBTActivity<EntriesViewModel>() {
             }))
         }
 
-        observe(viewModel.allEntries) {
+        viewModel.allEntries.collectWhileStarted {
             entriesAdapter.submitList(it)
             recycler.smoothScrollToPosition(0)
         }
     }
 
-    override val onReturnFrom = mapOf<KClass<*>, (Int) -> Unit>(
+    override val onReturnFrom = mapOf<KClass<*>, (SaveResult) -> Unit>(
         AddEntryActivity::class to { result ->
             showSavedEntryDialog(result)
         }

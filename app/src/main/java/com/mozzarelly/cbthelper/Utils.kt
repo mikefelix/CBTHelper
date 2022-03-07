@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
+import com.mozzarelly.cbthelper.SaveResult.*
 import com.mozzarelly.cbthelper.analyze.AnalyzeActivity
 import kotlinx.coroutines.CancellationException
 import java.io.Serializable
@@ -379,23 +380,27 @@ fun View.shortSnackbar(text: String) {
 
 fun KClass<*>.requestCode() = (hashCode() and 0x0000ffff).also { println("requestCode for $simpleName is $it") }
 
-fun <V : CBTViewModel> CBTActivity<V>.showSavedEntryDialog(id: Int){
+fun <V : CBTViewModel> CBTActivity<V>.showSavedEntryDialog(saveResult: SaveResult){
+    if (saveResult is NoChange)
+        return
+
     AlertDialog.Builder(this).apply {
-        when {
-            id > 0 -> {
+        when (saveResult) {
+            is SavedComplete -> {
                 setTitle("Entry saved")
                 setMessage("Your entry has been recorded. Would you like to analyze it now or later?")
                 setNegativeButton("Analyze later") { dialog, _ -> dialog.dismiss() }
-                setPositiveButton("Analyze now") { _, _ -> start<AnalyzeActivity>(id) }
+                setPositiveButton("Analyze now") { _, _ -> start<AnalyzeActivity>(saveResult.id) }
             }
-            id < 0 -> {
-                setTitle("Entry not saved!")
-                setMessage("Something went wrong. Your entry could not be saved.")
-                setNegativeButton("OK") { dialog, _ -> dialog.dismiss() }
-            }
-            else -> {
+            is SavedPartial -> {
                 setTitle("Entry saved")
                 setMessage("Your entry in progress has been saved and can be continued later.")
+                setNegativeButton("OK") { dialog, _ -> dialog.dismiss() }
+            }
+            is NoChange -> {}
+            is Error -> {
+                setTitle("Entry not saved!")
+                setMessage("Something went wrong. Your entry could not be saved.")
                 setNegativeButton("OK") { dialog, _ -> dialog.dismiss() }
             }
         }

@@ -3,14 +3,11 @@ package com.mozzarelly.cbthelper.analyze
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import com.mozzarelly.cbthelper.CBTActivity
-import com.mozzarelly.cbthelper.R
+import com.mozzarelly.cbthelper.*
 import com.mozzarelly.cbthelper.behavior.BehaviorActivity
-import com.mozzarelly.cbthelper.cbtViewModel
 import com.mozzarelly.cbthelper.cogvalid.CogValidActivity
 import com.mozzarelly.cbthelper.databinding.FragmentAnalyzeSummaryBinding
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
-import com.mozzarelly.cbthelper.observe
 import com.mozzarelly.cbthelper.replacement.ReplacementThoughtsActivity
 import kotlin.reflect.KClass
 
@@ -20,17 +17,17 @@ class AnalyzeActivity : CBTActivity<AnalyzeViewModel>() {
 
     override val viewModel: AnalyzeViewModel by cbtViewModel()
 
-    override val onReturnFrom: Map<KClass<*>, (Int) -> Unit> = mapOf(
+    override val onReturnFrom: Map<KClass<*>, (SaveResult) -> Unit> = mapOf(
         BehaviorActivity::class to {
-            snackbar(if (it >= 0) "Behavior analysis saved." else "Behavior analysis could not be saved.")
+            snackbar(if (it.saved) "Behavior analysis saved." else "Behavior analysis could not be saved.")
 //            viewModel.stage.value?.let { stage = it }
         },
         ReplacementThoughtsActivity::class to {
-            snackbar(if (it >= 0) "Replacement thoughts results saved." else "Replacement thoughts results could not be saved.")
+            snackbar(if (it.saved) "Replacement thoughts results saved." else "Replacement thoughts results could not be saved.")
 //            viewModel.stage.value?.let { stage = it }
         },
         CogValidActivity::class to {
-            snackbar(if (it >= 0) "Cognition validity results saved." else "Cognition validity results could not be saved.")
+            snackbar(if (it.saved) "Cognition validity results saved." else "Cognition validity results could not be saved.")
 //            viewModel.stage.value?.let { stage = it }
         }
     )

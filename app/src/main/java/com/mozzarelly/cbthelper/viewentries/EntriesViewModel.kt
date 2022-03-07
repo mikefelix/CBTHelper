@@ -6,14 +6,22 @@ import androidx.lifecycle.viewModelScope
 import com.mozzarelly.cbthelper.CBTDatabase
 import com.mozzarelly.cbthelper.CBTViewModel
 import com.mozzarelly.cbthelper.Entry
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class EntriesViewModel : CBTViewModel() {
 
     private val dao by lazy { CBTDatabase.getDatabase().entryDao() }
 
-    val allEntries: LiveData<List<Entry>> by lazy { dao.getAllCompleteAsync() }
-    val incompleteEntry: LiveData<Entry?> by lazy { dao.getIncompleteAsync() }
+    val allEntries: StateFlow<List<Entry>> by lazy {
+        dao.getAllCompleteAsync().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    }
+    val incompleteEntry: StateFlow<Entry?> by lazy {
+        dao.getIncompleteAsync().stateIn(viewModelScope, SharingStarted.Eagerly, null)
+    }
 
     fun load() {
        /* viewModelScope.launch {

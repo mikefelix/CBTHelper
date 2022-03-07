@@ -19,17 +19,24 @@ abstract class InterviewActivity<V: InterviewViewModel> : CBTActivity<V>() {
     protected abstract val fragmentTypes: List<KClass<out PageFragment<V>>>
 
     override fun onSupportNavigateUp(): Boolean {
-        viewModel.save()
-        finish()
+        lifecycleScope.launch {
+            val result = viewModel.saveAsync()
+            setResult(result)
+            finish()
+        }
         return true
     }
 
     override fun onBackPressed() {
-        if (viewModel.currPage > 1)
+        if (viewModel.currPage > 1) {
             viewModel.previousPage()
+        }
         else {
-            viewModel.save()
-            super.onBackPressed()
+            lifecycleScope.launch {
+                val result = viewModel.saveAsync()
+                setResult(result)
+                finish()
+            }
         }
     }
 

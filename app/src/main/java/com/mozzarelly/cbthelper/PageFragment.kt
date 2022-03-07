@@ -199,8 +199,8 @@ abstract class PageFragment<V: InterviewViewModel> : CBTFragment() {
 
         addButton.isEnabled = emotion.value != null
         addButton.setOnClickListener {
-            if (emotion.value == null)
-                Toast.makeText(requireContext(), "Please select emotion and intensity.", Toast.LENGTH_SHORT).show()
+//            if (emotion.value == null)
+//                Toast.makeText(requireContext(), "Please select emotion and intensity.", Toast.LENGTH_SHORT).show()
 
             if (addEmotion())
                 onDismiss()

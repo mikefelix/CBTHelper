@@ -33,16 +33,16 @@ interface EntryDao {
     suspend fun update(entry: Entry)
 
     @Query("SELECT * FROM entry WHERE complete = 1 AND deleted = 0 ORDER BY date DESC")
-    fun getAllCompleteAsync(): LiveData<List<Entry>>
+    fun getAllCompleteAsync(): Flow<List<Entry>>
 
     @Query("SELECT * FROM entry WHERE complete = 1 AND deleted = 0 ORDER BY date DESC")
-    suspend fun getAllComplete(): List<Entry>
+    fun getAllComplete(): Flow<List<Entry>>
 
     @Query("SELECT * FROM entry WHERE complete = 1 AND deleted = 0 ORDER BY date DESC")
     fun getAllCompleteFlow(): Flow<List<Entry>>
 
     @Query("SELECT * FROM entry WHERE complete = 0 AND deleted = 0 ORDER BY date DESC LIMIT 1")
-    fun getIncompleteAsync(): LiveData<Entry?>
+    fun getIncompleteAsync(): Flow<Entry?>
 
     @Query("SELECT * FROM entry WHERE complete = 0 AND deleted = 0 ORDER BY date DESC LIMIT 1")
     suspend fun getIncomplete(): Entry?
@@ -150,11 +150,6 @@ abstract class CBTDatabase : RoomDatabase() {
         fun getDatabase(): CBTDatabase {
             return instance ?: error("Database not initialized! Pass a context first.")
         }
-
-        fun getEntryDao(context: Context): EntryDao = getDatabase(context).entryDao()
-        fun getCogValidDao(context: Context): CogValidDao = getDatabase(context).cogValidDao()
-        fun getRatRepDao(context: Context): RatRepDao = getDatabase(context).ratRepDao()
-        fun getBehaviorDao(context: Context): BehaviorDao = getDatabase(context).behaviorDao()
 
         // Create and pre-populate the database. See this article for more details:
         // https://medium.com/google-developers/7-pro-tips-for-room-fbadea4bfbd1#4785
