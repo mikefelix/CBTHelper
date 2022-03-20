@@ -1,10 +1,15 @@
 package com.mozzarelly.cbthelper
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.webkit.WebResourceRequest
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
+import com.mozzarelly.cbthelper.databinding.WebviewBinding
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -132,5 +137,31 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
                 collect(block)
             }
         }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    protected fun showPatientGuide() {
+        showExpandedBottomSheet {
+            WebviewBinding.inflate(layoutInflater, null, false).apply {
+                val page = viewModel.patientGuidePage ?: PatientGuide.Page.Intro
+                webview.run {
+                    webViewClient = object: WebViewClient(){
+                        override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+                            loadUrl(request.url.toString())
+                            return false
+                        }
+                    }
+                    settings.run {
+                        javaScriptEnabled = true
+                        loadsImagesAutomatically = true
+                        builtInZoomControls = false
+                        setSupportZoom(false)
+                    }
+
+                    loadUrl("https://www.cbtpatientguide.net/${page.url}")
+                }
+            }.root
+        }
+
     }
 }

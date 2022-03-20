@@ -180,4 +180,5 @@ class BehaviorViewModel : InterviewViewModel(), BehaviorModel {
 
     var skipTest = false
 
+    override val patientGuidePage = PatientGuide.Page.ThreeD
 }

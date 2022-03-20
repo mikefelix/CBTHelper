@@ -1,21 +1,21 @@
 package com.mozzarelly.cbthelper
 
+import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.graphics.text.LineBreaker
 import android.os.Build
 import android.text.Editable
-import android.text.Layout
 import android.text.TextWatcher
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.RadioButton
 import android.widget.TextView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -185,20 +185,12 @@ abstract class CBTFragment : Fragment() {
     */
 
     fun showExplanationPopup(headingText: Int, explanation: Int){
-        BottomSheetDialog(requireActivity(), R.style.BottomSheetDialogTheme).apply {
-            setContentView(PopupBinding.inflate(layoutInflater, null, false).apply {
+        requireContext().showExpandedBottomSheet {
+            PopupBinding.inflate(layoutInflater, null, false).apply {
                 heading.display(headingText)
                 text.display(explanation)
                 done.setOnClickListener { dismiss() }
-            }.root.also {
-                BottomSheetBehavior.from(it).run {
-                    isDraggable = false
-                    skipCollapsed = true
-                    state = BottomSheetBehavior.STATE_EXPANDED
-                }
-            })
-
-            show()
+            }.root
         }
     }
 
@@ -206,6 +198,12 @@ abstract class CBTFragment : Fragment() {
         BottomSheetDialog(requireActivity(), R.style.BottomSheetDialogTheme).apply {
             setup(binding, this)
             setContentView(binding.root)
+            BottomSheetBehavior.from(binding.root).run {
+                isDraggable = false
+                isFitToContents = true
+                skipCollapsed = true
+                state = BottomSheetBehavior.STATE_EXPANDED
+            }
             show()
         }
     }

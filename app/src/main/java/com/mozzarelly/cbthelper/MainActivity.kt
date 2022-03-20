@@ -13,12 +13,12 @@ import androidx.annotation.MainThread
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelLazy
+import androidx.lifecycle.ViewModelProvider
 import com.mozzarelly.cbthelper.editentry.AddEntryActivity
 import com.mozzarelly.cbthelper.viewentries.EntriesViewModel
 import com.mozzarelly.cbthelper.viewentries.ViewEntriesActivity
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.collect
 import kotlin.reflect.KClass
 
 class MainActivity : CBTActivity<EntriesViewModel>() {
@@ -65,6 +65,12 @@ class MainActivity : CBTActivity<EntriesViewModel>() {
                 setOnClickListener {
                     start<ViewEntriesActivity>()
                 }
+            }
+        }
+
+        findViewById<Button>(R.id.readButton).run {
+            setOnClickListener {
+                showPatientGuide()
             }
         }
     }

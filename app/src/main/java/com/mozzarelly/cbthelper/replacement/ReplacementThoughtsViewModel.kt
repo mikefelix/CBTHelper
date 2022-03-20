@@ -144,4 +144,9 @@ class ReplacementThoughtsViewModel : InterviewViewModel(), RatRepModel {
             }
         }
     }
+
+    override val patientGuidePage = when {
+        currPage >= 3 -> PatientGuide.Page.FourA
+        else -> PatientGuide.Page.FourB1
+    }
 }

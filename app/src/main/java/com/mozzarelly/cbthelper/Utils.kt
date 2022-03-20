@@ -2,6 +2,7 @@ package com.mozzarelly.cbthelper
 
 import android.app.Activity
 import android.app.AlarmManager
+import android.app.Dialog
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -18,6 +19,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.BundleCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -25,6 +27,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
+import androidx.viewbinding.ViewBinding
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.mozzarelly.cbthelper.SaveResult.*
 import com.mozzarelly.cbthelper.analyze.AnalyzeActivity
@@ -480,5 +485,51 @@ inline fun <V: View> V.showIf(condition: Boolean, block: (V.() -> Unit) = { }){
     }
     else {
         visibility = View.GONE
+    }
+}
+
+fun View.setTopMargin(margin: Int) {
+    val displayMetrics = context?.resources?.displayMetrics ?: error("No display metrics")
+    layoutParams = layoutParams.apply {
+        height = (displayMetrics.heightPixels - margin * displayMetrics.density).toInt()
+    }
+}
+
+fun View.setHeightRatio(ratio: Double) {
+    val displayMetrics = context?.resources?.displayMetrics ?: error("No display metrics")
+    layoutParams = layoutParams.apply {
+        height = (displayMetrics.heightPixels * ratio).toInt()
+    }
+}
+
+inline fun Context.showExpandedBottomSheet(viewToShow: Dialog.() -> View) {
+    BottomSheetDialog(this, R.style.BottomSheetDialogTheme).also { dialog ->
+        val view = viewToShow(dialog).apply {
+            if (this !is CoordinatorLayout) error("The given view must be a CoordinatorLayout with child @id/content")
+            val content = findViewById<View>(R.id.content) ?: error("The given view must be a CoordinatorLayout with child @id/content")
+//            content.setHeightRatio(0.9)
+            content.setTopMargin(56)
+            BottomSheetBehavior.from(content).run {
+                isDraggable = false
+                isFitToContents = true
+                skipCollapsed = true
+                state = BottomSheetBehavior.STATE_EXPANDED
+            }
+
+            dialog.setOnShowListener {
+                dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)?.let {
+                    BottomSheetBehavior.from(it).run {
+                        isDraggable = false
+                        isFitToContents = true
+                        skipCollapsed = true
+                        state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                }
+            }
+        }
+
+        dialog.setContentView(view)
+        dialog.setCancelable(true)
+        dialog.show()
     }
 }

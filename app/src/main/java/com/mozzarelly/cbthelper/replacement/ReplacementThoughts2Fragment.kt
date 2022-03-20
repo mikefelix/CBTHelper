@@ -22,10 +22,13 @@ class ReplacementThoughts2Fragment : ReplacementThoughtsFragment() {
                 enableWhenHasValue(viewModel.believeValue)
                 setOnClickListener {
                     println("It's ${viewModel.believeValue.value}")
-                    if (viewModel.believeValue.value!! >= 6)
+                    if (viewModel.believeValue.value!! >= 6) {
                         nextPage()
-                    else
+                    }
+                    else {
+                        viewModel.save()
                         start<EmotionHelpActivity>(viewModel.id)
+                    }
                 }
             }
 

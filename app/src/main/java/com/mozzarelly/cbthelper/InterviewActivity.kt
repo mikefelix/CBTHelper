@@ -2,10 +2,15 @@
 
 package com.mozzarelly.cbthelper
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.whenStarted
+import com.mozzarelly.cbthelper.databinding.WebviewBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
@@ -47,6 +52,43 @@ abstract class InterviewActivity<V: InterviewViewModel> : CBTActivity<V>() {
 
         setupFragments()
         setupPaging()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_interview, menu)
+        return true
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.action_settings -> startActivity(Intent(this, SettingsActivity::class.java))
+            R.id.action_about -> showAbout()
+            R.id.action_read -> {
+                showPatientGuide()
+                /*val (headingText, explanationText) = viewModel.getReadingPage()
+                showExpandedBottomSheet {
+                    PopupBinding.inflate(layoutInflater, null, false).apply {
+                        done.setOnClickListener { dismiss() }
+                        heading.run {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                                justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
+
+                            text = headingText
+                        }
+                        text.run {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                                justificationMode = LineBreaker.JUSTIFICATION_MODE_INTER_WORD
+
+                            text = explanationText
+                        }
+                    }.root
+                }*/
+            }
+            else -> error("Unknown menu item")
+        }
+
+        return true
     }
 
     private fun setupPaging() {

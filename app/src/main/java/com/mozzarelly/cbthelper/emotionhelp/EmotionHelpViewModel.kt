@@ -35,6 +35,9 @@ class EmotionHelpViewModel : InterviewViewModel() {
 
             changePage(1)
         }
+    }
 
+    override val patientGuidePage = when (page){
+        else -> PatientGuide.Page.FourB2
     }
 }

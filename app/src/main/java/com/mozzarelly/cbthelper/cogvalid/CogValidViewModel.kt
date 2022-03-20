@@ -27,16 +27,16 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
             copyFrom(cogValid)
 
             changePage(when {
-                answer10 != null -> 12
-                answer9 != null -> 11
-                answer8 != null -> 10
-                answer7 != null -> 9
-                answer6 != null -> 8
-                answer5 != null -> 7
-                answer4 != null -> 6
-                answer3 != null -> 5
-                answer2 != null -> 4
-                answer1 != null -> 3
+                answer10 != null -> 2
+                answer9 != null -> 12
+                answer8 != null -> 11
+                answer7 != null -> 10
+                answer6 != null -> 9
+                answer5 != null -> 8
+                answer4 != null -> 7
+                answer3 != null -> 6
+                answer2 != null -> 5
+                answer1 != null -> 4
                 else -> 1
             })
         }
@@ -121,5 +121,10 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
     override var skippedBecause: Boolean?
         get() = skippedBecauseValue.value
         set(value) { skippedBecauseValue.value = value }
+
+    override val patientGuidePage = when {
+        currPage <= 1 -> PatientGuide.Page.ThreeA
+        else -> PatientGuide.Page.ThreeB
+    }
 
 }

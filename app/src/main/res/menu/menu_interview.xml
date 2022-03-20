@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mozzarelly.cbthelper.MainActivity">
+    <item
+        android:id="@+id/action_read"
+        android:orderInCategory="1"
+        android:icon="@drawable/ic_book"
+        android:iconTint="@color/colorOnBackground"
+        android:title="@string/action_read"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="90"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_about"
+        android:orderInCategory="100"
+        android:title="@string/action_about"
+        app:showAsAction="never" />
+</menu>

@@ -50,6 +50,9 @@ abstract class InterviewViewModel : CBTViewModel(){
 
     val page = MutableLiveData<Pair<Int, Int?>>(Pair(0, null))
 
+    val currPage: Int
+        get() = page.value?.first ?: 0
+
     val numPages: Int
         get() = numberOfPages.int
 
@@ -69,9 +72,6 @@ abstract class InterviewViewModel : CBTViewModel(){
 
     private val changingPageChannel = BroadcastChannel<Pair<Int, Int?>>(Channel.BUFFERED)
     val changingPage = changingPageChannel.asFlow()
-
-    val currPage: Int
-        get() = page.value?.first ?: 0
 
     fun save() {
         viewModelScope.launch {

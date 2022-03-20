@@ -188,6 +188,10 @@ class EditEntryViewModel : InterviewViewModel(), EntryModel {
         }
     }
 
+    override val patientGuidePage = when {
+        currPage in listOf(1, 2) -> PatientGuide.Page.OneA
+        else -> PatientGuide.Page.TwoA
+    }
 }
 
 
