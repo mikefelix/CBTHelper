@@ -19,7 +19,8 @@ class AddEntry6Fragment : AddEntryFragment() {
             question.display(R.string.assumptionsQuestion, if (viewModel.situationType) "in this situation" else "during this conversation")
 
             readMore.setOnClickListener {
-                showExplanationPopup(R.string.assumptionsReadMoreHeading, R.string.assumptionsReadMore)
+//                showExplanationPopup(R.string.assumptionsReadMoreHeading, R.string.assumptionsReadMore)
+                act.showPatientGuide()
             }
 
             buttons.previous.setOnClickListener {

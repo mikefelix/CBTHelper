@@ -26,7 +26,8 @@ class AnalyzeCogValidSummaryFragment : CBTFragment() {
                 text4.showIf(wasValid) { display(getString(R.string.validitySummary4Rational)) }
                 readMore.showIf(wasValid) {
                     setOnClickListener {
-                        showExplanationPopup(R.string.negative_emotion_heading, R.string.negative_emotion_explanation)
+                        //showExplanationPopup(R.string.negative_emotion_heading, R.string.negative_emotion_explanation)
+                        act.showPatientGuide()
                     }
                 }
 

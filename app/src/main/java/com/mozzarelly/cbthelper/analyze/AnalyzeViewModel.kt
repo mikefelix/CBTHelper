@@ -111,7 +111,7 @@ class AnalyzeViewModel : CBTViewModel() {
         }
     }
 
-    override val patientGuidePage = PatientGuide.Page.FourB2
+    override fun patientGuidePage() = PatientGuide.Page.FourB2
 
 /*    fun save(){
         comparison.value?.takeIf { it != ratRep.value?.comparison }?.let {

@@ -26,7 +26,8 @@ class EmotionHelp1Fragment : EmotionHelpFragment(){
             emotionSelection.bind(viewModel.desiredEmotion)
 
             readMore.setOnClickListener {
-                showExplanationPopup(R.string.negative_emotion_heading, R.string.negative_emotion_explanation)
+                //showExplanationPopup(R.string.negative_emotion_heading, R.string.negative_emotion_explanation)
+                act.showPatientGuide()
             }
 
         }.root

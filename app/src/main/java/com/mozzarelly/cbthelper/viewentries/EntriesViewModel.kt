@@ -45,5 +45,5 @@ class EntriesViewModel : CBTViewModel() {
         }
     }
 
-    override val patientGuidePage = PatientGuide.Page.Intro
+    override fun patientGuidePage() = PatientGuide.Page.Intro
 }

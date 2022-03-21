@@ -122,7 +122,7 @@ class CogValidViewModel : InterviewViewModel(), CogValidModel {
         get() = skippedBecauseValue.value
         set(value) { skippedBecauseValue.value = value }
 
-    override val patientGuidePage = when {
+    override fun patientGuidePage() = when {
         currPage <= 1 -> PatientGuide.Page.ThreeA
         else -> PatientGuide.Page.ThreeB
     }

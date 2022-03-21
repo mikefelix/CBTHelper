@@ -140,12 +140,16 @@ abstract class CBTActivity<V : CBTViewModel> : AppCompatActivity() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    protected fun showPatientGuide() {
+    fun showPatientGuide() {
         showExpandedBottomSheet {
             WebviewBinding.inflate(layoutInflater, null, false).apply {
-                val page = viewModel.patientGuidePage ?: PatientGuide.Page.Intro
+                val page = viewModel.patientGuidePage() ?: PatientGuide.Page.Intro
                 webview.run {
                     webViewClient = object: WebViewClient(){
+                        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                            loadUrl(url)
+                            return false
+                        }
                         override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                             loadUrl(request.url.toString())
                             return false
